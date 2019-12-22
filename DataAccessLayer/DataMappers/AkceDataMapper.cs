@@ -1,6 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,6 +113,25 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 OracleCommand command = db.CreateCommand("DELETE FROM Akce WHERE ID = :ID");
                 command.Parameters.Add(":ID", akce.aid);
+            }
+        }
+
+        public void ExportToCSV(string path)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+                using (var w = new StreamWriter(path))
+                {
+                    List<Akce> toCSV = SelectAll();
+                    for (int i = 0; i < toCSV.Count; i++)
+                    {
+                        Akce v = toCSV[i];
+                        string line = v.aid + ", " + v.Nazev + ", " + v.DatumK + ", " + v.Cena + ", " + v.VedouciA.vid + ", " + v.HodnostiA.hid;
+                        w.WriteLine(line);
+                        w.Flush();
+                    }
+                }
             }
         }
     }

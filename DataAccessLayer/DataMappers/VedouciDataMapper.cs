@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -146,5 +147,24 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
+        public void ExportToCSV(string path)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+                using (var w = new StreamWriter(path))
+                {
+                    List<Vedouci> toCSV = SelectAll();
+                    for (int i = 0; i < toCSV.Count; i++)
+                    {
+                        Vedouci v = toCSV[i];
+                        string line = v.vid + ", " + v.Jmeno + ", " + v.Pw + ", " + v.DatumN + ", " + v.Kontakt;
+                        w.WriteLine(line);
+                        w.Flush();
+                    }
+                }
+                
+            }
+        }
     }
 } 

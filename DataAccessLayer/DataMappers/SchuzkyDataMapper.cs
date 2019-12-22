@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,6 +104,26 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 OracleCommand command = db.CreateCommand("DELETE FROM Schuzky WHERE ID = :ID");
                 command.Parameters.Add(":ID", schuzky.sid);
 
+
+            }
+        }
+
+        public void ExportToCSV(string path)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+                using (var w = new StreamWriter(path))
+                {
+                    List<Schuzky> toCSV = SelectAll();
+                    for (int i = 0; i < toCSV.Count; i++)
+                    {
+                        Schuzky v = toCSV[i];
+                        string line = v.sid + ", " + v.Nazev + ", " + v.PocetD + ", " + v.DatumK + ", " + v.VedouciS.vid;
+                        w.WriteLine(line);
+                        w.Flush();
+                    }
+                }
 
             }
         }

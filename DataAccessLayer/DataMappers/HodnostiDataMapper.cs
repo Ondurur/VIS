@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,5 +102,26 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
             }
         }
+
+        public void ExportToCSV(string path)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+                using (var w = new StreamWriter(path))
+                {
+                    List<Hodnosti> toCSV = SelectAll();
+                    for (int i = 0; i < toCSV.Count; i++)
+                    {
+                        Hodnosti v = toCSV[i];
+                        string line = v.hid + ", " + v.Nazev + ", " + v.MinVek;
+                        w.WriteLine(line);
+                        w.Flush();
+                    }
+                }
+
+            }
+        }
     }
 }
+

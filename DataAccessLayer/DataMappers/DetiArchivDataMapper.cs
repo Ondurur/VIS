@@ -1,6 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,6 +106,25 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 command.Parameters.Add(":ID", detiArchiv.did);
 
 
+            }
+        }
+
+        public void ExportToCSV(string path)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+                using (var w = new StreamWriter(path))
+                {
+                    List<DetiArchiv> toCSV = SelectAll();
+                    for (int i = 0; i < toCSV.Count; i++)
+                    {
+                        DetiArchiv v = toCSV[i];
+                        string line = v.did + ", " + v.Jmeno + ", " + v.DatumN + ", " + v.kontaktNR + ", " + v.archivD.did;
+                        w.WriteLine(line);
+                        w.Flush();
+                    }
+                }
             }
         }
     }
