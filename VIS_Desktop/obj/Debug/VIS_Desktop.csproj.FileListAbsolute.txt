@@ -1,0 +1,11 @@
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\bin\Debug\VIS_Desktop.exe.config
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\bin\Debug\VIS_Desktop.exe
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\bin\Debug\VIS_Desktop.pdb
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.csprojAssemblyReference.cache
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.Login.resources
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.Properties.Resources.resources
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.csproj.GenerateResource.cache
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.csproj.CoreCompileInputs.cache
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.exe
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.pdb
+C:\Users\th3bl\source\repos\VIS_Desktop\VIS_Desktop\obj\Debug\VIS_Desktop.MainForm.resources
