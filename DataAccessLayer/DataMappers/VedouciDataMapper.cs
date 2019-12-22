@@ -121,7 +121,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     }
                     else
                     {
-                        command.CommandText = "INSERT INTO Vedouci (vid, jmeno, pw, datum_narozeni, kontakt) VALUES (:vid, :Jmeno, :pw, :DatumN, :Kontakt)";
+                        command.CommandText = "INSERT INTO Vedouci (vid, jmeno, pw, datumN, kontakt) VALUES (:vid, :Jmeno, :pw, :DatumN, :Kontakt)";
                     }
                     command.Parameters.Add(":vid", vedouci.vid);
                     command.Parameters.Add(":Jmeno", vedouci.Jmeno);
