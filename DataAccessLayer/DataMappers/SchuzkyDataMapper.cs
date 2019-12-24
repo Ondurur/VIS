@@ -46,7 +46,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Schuzky WHERE sid = :sid");
+                OracleCommand command = db.CreateCommand("SELECT MIN(sid) FROM Schuzky WHERE sid = :sid");
 
                 command.Parameters.Add(":sid", sid);
 
@@ -70,7 +70,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Schuzky WHERE sid = :sid");
+                OracleCommand command = db.CreateCommand("SELECT MIN(sid) FROM Schuzky WHERE sid = :sid");
 
                 command.Parameters.Add(":ID", schuzky.sid);
 

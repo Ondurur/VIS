@@ -33,5 +33,17 @@ namespace BussinessLayer.Services
             DetiDataMapper ddm = new DetiDataMapper();
             return true;
         }
+
+        public Tuple<int, string, string>/*<id,nick,role>*/ LoginAsCSV(string username, string pw)
+        {
+
+            Deti d = detiDataMapper.TryLoginCSV(username, pw);
+            if (d == null)
+            {
+                return new Tuple<int, string, string>(d.did, d.Jmeno, "Dite");
+            }
+            return null;
+        }
+
     }
 }

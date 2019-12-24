@@ -44,12 +44,17 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
+        public Deti TryLoginCSV(string username, string pw)
+        {
+            return null;
+        }
+
         public Deti SelectById(int did)
         {
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Deti WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM Deti WHERE did = :did");
 
                 command.Parameters.Add(":did", did);
 
@@ -71,7 +76,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Deti d WHERE d.Nickname = :nick AND d.Pw = :pw");
+                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM Deti d WHERE d.Nickname = :nick AND d.Pw = :pw");
 
                 command.Parameters.Add(":nick", nick);
                 command.Parameters.Add(":pw", pw);
@@ -94,7 +99,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Deti WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM Deti WHERE did = :did");
 
                 command.Parameters.Add(":did", deti.did);
 

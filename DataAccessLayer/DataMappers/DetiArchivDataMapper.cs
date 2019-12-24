@@ -46,7 +46,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM DetiArchiv WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM DetiArchiv WHERE did = :did");
 
                 command.Parameters.Add(":did", did);
 
@@ -71,7 +71,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM DetiArchiv WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM DetiArchiv WHERE did = :did");
 
                 command.Parameters.Add(":did", detiArchiv.did);
 

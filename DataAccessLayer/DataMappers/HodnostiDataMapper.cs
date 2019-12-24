@@ -44,7 +44,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Hodnosti WHERE hid = :hid");
+                OracleCommand command = db.CreateCommand("SELECT MIN(hid) FROM Hodnosti WHERE hid = :hid");
 
                 command.Parameters.Add(":hid", hid);
 
@@ -67,7 +67,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Hodnosti WHERE hid = :hid");
+                OracleCommand command = db.CreateCommand("SELECT MIN(hid) FROM Hodnosti WHERE hid = :hid");
 
                 command.Parameters.Add(":hid", hodnosti.hid);
 

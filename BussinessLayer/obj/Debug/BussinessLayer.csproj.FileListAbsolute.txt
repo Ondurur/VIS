@@ -10,3 +10,15 @@ C:\Users\th3bl\source\repos\VIS_Desktop\BussinessLayer\bin\Debug\DataAccessLayer
 C:\Users\th3bl\source\repos\VIS_Desktop\BussinessLayer\obj\Debug\BussinessLayer.csproj.CopyComplete
 C:\Users\th3bl\source\repos\VIS_Desktop\BussinessLayer\obj\Debug\BussinessLayer.exe
 C:\Users\th3bl\source\repos\VIS_Desktop\BussinessLayer\obj\Debug\BussinessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\obj\Debug\BussinessLayer.csprojAssemblyReference.cache
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\obj\Debug\BussinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\obj\Debug\BussinessLayer.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\obj\Debug\BussinessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\bin\Debug\BussinessLayer.exe.config
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\bin\Debug\BussinessLayer.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\bin\Debug\BussinessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\bin\Debug\DataAccessLayer.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\bin\Debug\DataAccessLayer.exe.config
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\BussinessLayer\obj\Debug\BussinessLayer.csproj.CopyComplete

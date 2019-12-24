@@ -30,16 +30,20 @@ namespace VIS_Desktop
         {
             this.username = textBox1.Text;
             this.pw = textBox2.Text;
-            
-            if (loginSuccessfull(username, pw))
+            if (!checkBoxCSV.Checked)
             {
-                MainForm mainForm = new MainForm(this);
-                mainForm.Show();
-                this.Hide();
+                if (loginSuccessfullDB(username, pw))
+                {
+                    this.Hide();
+                }
+                else
+                {
+                    label3.Visible = true;
+                }
             }
             else
             {
-                label3.Visible = true;
+
             }
         }
 
@@ -48,7 +52,7 @@ namespace VIS_Desktop
             label3.Visible = false;
         }
 
-        private bool loginSuccessfull(string username, string pw)
+        private bool loginSuccessfullDB(string username, string pw)
         {
             DetiServices ds = new DetiServices();
             VedouciServices vs = new VedouciServices();
@@ -69,6 +73,12 @@ namespace VIS_Desktop
 
             }
 
+
+            return false;
+        }
+
+        private bool loginSuccessfullCSV(string username, string pw)
+        {
 
             return false;
         }

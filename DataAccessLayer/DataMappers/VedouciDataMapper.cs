@@ -46,7 +46,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Vedouci WHERE Jmeno = :nick AND Pw = :pw");
+                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE Jmeno = :nick AND Pw = :pw");
 
                 command.Parameters.Add(":nick", username);
                 command.Parameters.Add(":pw", pw);
@@ -66,7 +66,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Vedouci WHERE vid = :vid");
+                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE vid = :vid");
 
                 command.Parameters.Add(":vid", vid);
 
@@ -87,7 +87,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Vedouci WHERE Jmeno = :jmeno");
+                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE Jmeno = :jmeno");
 
                 command.Parameters.Add(":jmeno", name);
 
@@ -110,7 +110,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM Vedouci WHERE vID = :ID");
+                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE vID = :ID");
 
                     command.Parameters.Add(":ID", vedouci.vid);
 

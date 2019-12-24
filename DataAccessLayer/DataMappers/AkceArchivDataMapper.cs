@@ -1,6 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM AkceArchiv aa WHERE aa.aid = :aid");
+                OracleCommand command = db.CreateCommand("SELECT MIN(aid) FROM AkceArchiv aa WHERE aa.aid = :aid");
 
                 command.Parameters.Add(":aid", aid);
 
@@ -69,7 +70,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT TOP 1 * FROM AkceArchiv WHERE aid = :aid");
+                OracleCommand command = db.CreateCommand("SELECT MIN(aid) FROM AkceArchiv WHERE aid = :aid");
 
                 command.Parameters.Add(":aid", akceArchiv.aid);
 
@@ -107,6 +108,25 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 command.ExecuteNonQuery();
 
+            }
+        }
+
+        public void ExportToCSV(string path)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+                using (var w = new StreamWriter(path))
+                {
+                    List<AkceArchiv> toCSV = SelectAll();
+                    for (int i = 0; i < toCSV.Count; i++)
+                    {
+                        AkceArchiv v = toCSV[i];
+                        string line = v.aid + ", " + v.Nazev + ", " + v.DatumK + ", " + v.Cena + ", " + v.archivA.aid;
+                        w.WriteLine(line);
+                        w.Flush();
+                    }
+                }
             }
         }
     }

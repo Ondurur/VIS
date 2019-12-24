@@ -7,3 +7,12 @@ C:\Users\th3bl\source\repos\VIS_Desktop\DataAccessLayer\bin\Debug\Oracle.Managed
 C:\Users\th3bl\source\repos\VIS_Desktop\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 C:\Users\th3bl\source\repos\VIS_Desktop\DataAccessLayer\obj\Debug\DataAccessLayer.exe
 C:\Users\th3bl\source\repos\VIS_Desktop\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\obj\Debug\DataAccessLayer.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\bin\Debug\DataAccessLayer.exe.config
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\bin\Debug\DataAccessLayer.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
