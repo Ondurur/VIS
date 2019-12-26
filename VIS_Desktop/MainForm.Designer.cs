@@ -88,12 +88,9 @@
             // eventsListBox
             // 
             this.eventsListBox.FormattingEnabled = true;
-            this.eventsListBox.Items.AddRange(new object[] {
-            "event1",
-            "event2"});
             this.eventsListBox.Location = new System.Drawing.Point(31, 102);
             this.eventsListBox.Name = "eventsListBox";
-            this.eventsListBox.Size = new System.Drawing.Size(196, 259);
+            this.eventsListBox.Size = new System.Drawing.Size(302, 259);
             this.eventsListBox.TabIndex = 7;
             // 
             // btnChangeInf

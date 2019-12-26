@@ -34,13 +34,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxEventName = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.textBoxResponsible = new System.Windows.Forms.TextBox();
             this.comboBoxRankRestriction = new System.Windows.Forms.ComboBox();
             this.numericUpDownPrice = new System.Windows.Forms.NumericUpDown();
             this.btnCheck = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.errorLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrice)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,13 +100,13 @@
             this.textBoxEventName.Size = new System.Drawing.Size(200, 20);
             this.textBoxEventName.TabIndex = 5;
             // 
-            // dateTimePicker1
+            // dateTimePicker
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(153, 73);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 6;
-            this.dateTimePicker1.Value = new System.DateTime(2019, 12, 1, 0, 0, 0, 0);
+            this.dateTimePicker.Location = new System.Drawing.Point(153, 73);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker.TabIndex = 6;
+            this.dateTimePicker.Value = new System.DateTime(2019, 12, 1, 0, 0, 0, 0);
             // 
             // textBoxResponsible
             // 
@@ -116,6 +117,12 @@
             // 
             // comboBoxRankRestriction
             // 
+            this.comboBoxRankRestriction.AutoCompleteCustomSource.AddRange(new string[] {
+            "Newcomer",
+            "Benjamin",
+            "Scout",
+            "Rover/Ranger",
+            "Leader"});
             this.comboBoxRankRestriction.FormattingEnabled = true;
             this.comboBoxRankRestriction.Location = new System.Drawing.Point(153, 130);
             this.comboBoxRankRestriction.Name = "comboBoxRankRestriction";
@@ -141,6 +148,7 @@
             // 
             // btnAccept
             // 
+            this.btnAccept.Enabled = false;
             this.btnAccept.Location = new System.Drawing.Point(210, 194);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(75, 23);
@@ -158,18 +166,32 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "Red entries are mandatory";
             // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(56, 227);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(69, 13);
+            this.errorLabel.TabIndex = 13;
+            this.errorLabel.Text = "Error Label";
+            this.errorLabel.Visible = false;
+            // 
             // NewEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(372, 252);
+            this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.numericUpDownPrice);
             this.Controls.Add(this.comboBoxRankRestriction);
             this.Controls.Add(this.textBoxResponsible);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateTimePicker);
             this.Controls.Add(this.textBoxEventName);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -192,12 +214,13 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxEventName;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.TextBox textBoxResponsible;
         private System.Windows.Forms.ComboBox comboBoxRankRestriction;
         private System.Windows.Forms.NumericUpDown numericUpDownPrice;
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label errorLabel;
     }
 }

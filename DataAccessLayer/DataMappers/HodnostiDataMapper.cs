@@ -73,7 +73,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 var reader = command.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.HasRows)
                 {
                     command.CommandText = "UPDATE Hodnosti SET Nazev = :Nazev, MinVek = :MinVek WHERE hid = :hid";
                 }

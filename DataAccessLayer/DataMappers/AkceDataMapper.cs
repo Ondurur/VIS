@@ -31,18 +31,25 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 db.Connect();
                 OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce");
 
-                List<Akce> data = null;
+                List<Akce> data = new List<Akce>();
                 
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
-                    int? cena = reader.GetInt32(3);
-                    if(cena == null)
+
+                    int? cena;
+
+                    if (!reader.IsDBNull(3))
                     {
-                        cena = 0;
+                        cena = reader.GetInt32(3);
                     }
+                    else
+                    {
+                        cena = null;
+                    }
+
                     data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(id), hdm.SelectById(id)));
                 }
                 return data;
@@ -84,6 +91,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 var reader = command.ExecuteReader();
 
+                reader.Read();
                 if (reader.HasRows)
                 {
                     command.CommandText = "UPDATE Akce SET Nazev = :Nazev, Nickname = :Nickname, DatumK = :DatumK, Cena = :Cena, VedouciA = :VedouciA, HodnostiA = :HodnostiA WHERE aid = :aid";

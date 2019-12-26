@@ -77,7 +77,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 var reader = command.ExecuteReader();
 
-                while (reader.Read())
+                if (reader.HasRows)
                 {
                     command.CommandText = "UPDATE DetiArchiv SET Jmeno = :Jmeno, DatumN = :DatumN, kontaktNR = :kontaktNR, archivD=:archivD WHERE did = :did";
                 }

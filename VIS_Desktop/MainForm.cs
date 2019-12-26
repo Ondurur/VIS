@@ -59,7 +59,12 @@ namespace VIS_Desktop
 
         private void btnEventSignIn_Click(object sender, EventArgs e)
         {
-
+            string checkedItems = string.Empty;
+            foreach (object Item in eventsListBox.CheckedItems)
+            {
+                checkedItems += Item.ToString();
+            }
+            MessageBox.Show(checkedItems);
         }
     }
 }

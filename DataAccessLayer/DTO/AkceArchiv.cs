@@ -8,7 +8,7 @@ namespace VIS_Desktop.DTO
 {
     public class AkceArchiv
     {
-        public AkceArchiv(int aid, string Nazev, DateTime DatumK, int Cena, Akce archivA)
+        public AkceArchiv(int aid, string Nazev, DateTime DatumK, int? Cena, Akce archivA)
         {
             this.aid = aid;
             this.Nazev = Nazev;
