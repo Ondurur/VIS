@@ -20,7 +20,7 @@ namespace VIS_Desktop.DTO
         public int aid { get; set; }
         public String Nazev { get; set; }
         public DateTime DatumK { get; set; }
-        public int Cena { get; set; }
+        public int? Cena { get; set; }
         public Akce archivA { get; set; }
     }
 }

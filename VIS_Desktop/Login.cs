@@ -62,7 +62,9 @@ namespace VIS_Desktop
                 MainForm mf = new MainForm(this);
                 mf.Show();
                 mf.labelSigned.Text = "Signed as: " + username;
-                mf.labelRole.Text = "Role: Dite"; 
+                mf.labelRole.Text = "Role: Dite";
+
+                return true;
             }
             if(vs.LoginAs(username, pw) != null)
             {
@@ -71,6 +73,7 @@ namespace VIS_Desktop
                 mf.labelSigned.Text = "Signed as: " + username;
                 mf.labelRole.Text = "Role: Admin";
 
+                return true;
             }
 
 

@@ -26,7 +26,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT * FROM Vedouci");
+                OracleCommand command = db.CreateCommand("SELECT vid, jmeno, pw, datumN, kontakt FROM Vedouci");
 
                 List<Vedouci> data = null;
 
@@ -46,15 +46,21 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE Jmeno = :nick AND Pw = :pw");
+                OracleCommand command = db.CreateCommand("SELECT vid, jmeno, pw, datumN, kontakt FROM Vedouci WHERE Jmeno = :nick AND Pw = :pw AND rownum = 1");
 
-                command.Parameters.Add(":nick", username);
-                command.Parameters.Add(":pw", pw);
+                command.Parameters.AddWithValue(":nick", username);
+                command.Parameters.AddWithValue(":pw", pw);
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
+                    int id = reader.GetInt32(0);
+                    string jmeno = reader.GetString(1);
+                    string password = reader.GetString(2);
+                    DateTime datumN = reader.GetDateTime(3);
+                    string kontakt = reader.GetString(4);
+                    Console.Out.WriteLine(" " + jmeno + " " + password + " " + datumN.ToLongDateString() + " " + kontakt);
                     return new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4));
                 }
                 return null;
@@ -66,15 +72,15 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE vid = :vid");
+                OracleCommand command = db.CreateCommand("SELECT vid, jmeno, pw, datumN, kontakt FROM Vedouci WHERE vid = :vid AND rownum = 1");
 
-                command.Parameters.Add(":vid", vid);
+                command.Parameters.AddWithValue(":vid", vid);
 
                 Vedouci data = null;
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     data = new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4));
                 }
@@ -87,9 +93,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE Jmeno = :jmeno");
+                OracleCommand command = db.CreateCommand("SELECT * FROM Vedouci WHERE Jmeno = :jmeno AND rownum = 1");
 
-                command.Parameters.Add(":jmeno", name);
+                command.Parameters.AddWithValue(":jmeno", name);
 
                 Vedouci data = null;
 
@@ -110,25 +116,25 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT MIN(vid) FROM Vedouci WHERE vID = :ID");
+                OracleCommand command = db.CreateCommand("SELECT * FROM Vedouci WHERE vID = :ID AND rownum = 1");
 
-                    command.Parameters.Add(":ID", vedouci.vid);
+                    command.Parameters.AddWithValue(":ID", vedouci.vid);
 
                     var reader = command.ExecuteReader();
 
-                    if (reader.HasRows)
-                    {
+                if (reader.HasRows)
+                {
                         command.CommandText = "UPDATE Vedouci SET Jmeno = :Jmeno, pw = :pw, DatumN = :DatumN, Kontakt = :Kontakt WHERE vid = :vid";
                     }
                     else
                     {
                         command.CommandText = "INSERT INTO Vedouci (vid, jmeno, pw, datumN, kontakt) VALUES (:vid, :Jmeno, :pw, :DatumN, :Kontakt)";
                     }
-                    command.Parameters.Add(":vid", vedouci.vid);
-                    command.Parameters.Add(":Jmeno", vedouci.Jmeno);
-                    command.Parameters.Add(":pw", vedouci.Pw);
-                    command.Parameters.Add(":DatumN", vedouci.DatumN);
-                    command.Parameters.Add(":Kontakt", vedouci.Kontakt);
+                    command.Parameters.AddWithValue(":vid", vedouci.vid);
+                    command.Parameters.AddWithValue(":Jmeno", vedouci.Jmeno);
+                    command.Parameters.AddWithValue(":pw", vedouci.Pw);
+                    command.Parameters.AddWithValue(":DatumN", vedouci.DatumN);
+                    command.Parameters.AddWithValue(":Kontakt", vedouci.Kontakt);
 
                     command.ExecuteNonQuery();
                 
@@ -141,7 +147,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using(db.GetConnection()){
                 db.Connect();
                 OracleCommand command = db.CreateCommand("DELETE FROM Vedouci WHERE ID = :ID");
-                command.Parameters.Add(":ID", vedouci.vid);
+                command.Parameters.AddWithValue(":ID", vedouci.vid);
 
                 
             }

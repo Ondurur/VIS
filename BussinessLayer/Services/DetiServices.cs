@@ -21,7 +21,7 @@ namespace BussinessLayer.Services
         {
             
             Deti d = detiDataMapper.TryLogin(username, pw);
-            if(d == null)
+            if(d != null)
             {
                 return new Tuple<int, string, string>(d.did, d.Jmeno, "Dite");
             }

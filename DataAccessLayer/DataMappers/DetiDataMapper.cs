@@ -54,14 +54,14 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM Deti WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT * FROM Deti WHERE did = :did AND rownum = 1");
 
-                command.Parameters.Add(":did", did);
+                command.Parameters.AddWithValue(":did", did);
 
                 Deti data = null;
 
                 var reader = command.ExecuteReader();
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
                     data = new Deti(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5), hdm.SelectById(id), sdm.SelectById(id));
@@ -76,14 +76,14 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM Deti d WHERE d.Nickname = :nick AND d.Pw = :pw");
+                OracleCommand command = db.CreateCommand("SELECT * FROM Deti d WHERE d.Nickname = :nick AND d.Pw = :pw AND rownum = 1");
 
-                command.Parameters.Add(":nick", nick);
-                command.Parameters.Add(":pw", pw);
+                command.Parameters.AddWithValue(":nick", nick);
+                command.Parameters.AddWithValue(":pw", pw);
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
                     return new Deti(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5), hdm.SelectById(id), sdm.SelectById(id));
@@ -99,9 +99,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM Deti WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT * FROM Deti WHERE did = :did AND rownum = 1");
 
-                command.Parameters.Add(":did", deti.did);
+                command.Parameters.AddWithValue(":did", deti.did);
 
                 var reader = command.ExecuteReader();
 
@@ -113,14 +113,14 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     command.CommandText = "INSERT INTO Deti (did, Jmeno, Nickname,Pw,DatumN,KontaktNR, HodnostD,SchuzkyD) VALUES (:did, :Jmeno, :Nickname,:Pw,:DatumN,:KontaktNR, :HodnostD,:SchuzkyD)";
                 }
-                command.Parameters.Add(":did", deti.did);
-                command.Parameters.Add(":Jmeno", deti.Jmeno);
-                command.Parameters.Add(":Nickname", deti.Nickname);
-                command.Parameters.Add(":Pw", deti.Pw);
-                command.Parameters.Add(":DatumN", deti.DatumN);
-                command.Parameters.Add(":KontaktNR", deti.KontaktNR);
-                command.Parameters.Add(":HodnostD", deti.HodnostD.hid);
-                command.Parameters.Add(":SchuzkyD", deti.SchuzkyD.sid);
+                command.Parameters.AddWithValue(":did", deti.did);
+                command.Parameters.AddWithValue(":Jmeno", deti.Jmeno);
+                command.Parameters.AddWithValue(":Nickname", deti.Nickname);
+                command.Parameters.AddWithValue(":Pw", deti.Pw);
+                command.Parameters.AddWithValue(":DatumN", deti.DatumN);
+                command.Parameters.AddWithValue(":KontaktNR", deti.KontaktNR);
+                command.Parameters.AddWithValue(":HodnostD", deti.HodnostD.hid);
+                command.Parameters.AddWithValue(":SchuzkyD", deti.SchuzkyD.sid);
 
                 command.ExecuteNonQuery();
 
@@ -139,7 +139,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 
                 db.Connect();
                 OracleCommand command = db.CreateCommand("DELETE FROM Deti WHERE ID = :ID");
-                command.Parameters.Add(":ID", deti.did);
+                command.Parameters.AddWithValue(":ID", deti.did);
             }
         }
 

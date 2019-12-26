@@ -21,7 +21,7 @@ namespace VIS_Desktop.DTO
         public int aid { get; set; }
         public String Nazev { get; set; }
         public DateTime DatumK { get; set; }
-        public int Cena { get; set; }
+        public int? Cena { get; set; }
         public Vedouci VedouciA { get; set; }
         public Hodnosti HodnostiA { get; set; }
     }

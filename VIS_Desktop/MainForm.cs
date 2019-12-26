@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BussinessLayer.Services;
 
 namespace VIS_Desktop
 {
@@ -14,13 +15,20 @@ namespace VIS_Desktop
     {
         public String username;
         private String Role = "Administrator";
+        AkceServices ac;
 
         public MainForm(Login l)
         {
+            ac = new AkceServices();
+
             InitializeComponent();
             this.username = l.username;
             labelSigned.Text = "Signed as: " + this.username;
             labelRole.Text = "Role: " + Role;
+            for(int i = 0; i<ac.IDs.Length; i++)
+            {
+                eventsListBox.Items.Add(ac.IDs[i] + " " + ac.names[i] + " " + ac.prices[i] + " " + ac.dateTimes[i].ToString());
+            }
             switch (Role)
             {
                 case "Administrator":
@@ -47,6 +55,11 @@ namespace VIS_Desktop
         {
             NewEvent nw = new NewEvent();
             nw.Show();
+        }
+
+        private void btnEventSignIn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

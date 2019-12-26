@@ -29,7 +29,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT * FROM Akce");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce");
 
                 List<Akce> data = null;
                 
@@ -38,7 +38,12 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
-                    data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), reader.GetInt32(3), vdm.SelectById(id), hdm.SelectById(id)));
+                    int? cena = reader.GetInt32(3);
+                    if(cena == null)
+                    {
+                        cena = 0;
+                    }
+                    data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(id), hdm.SelectById(id)));
                 }
                 return data;
     }
@@ -49,15 +54,15 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(aid) FROM Akce WHERE aid = :aid");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce WHERE aid = :aid AND rownum = 1");
 
-                command.Parameters.Add(":aid", aid);
+                command.Parameters.AddWithValue(":aid", aid);
 
                 Akce data = null;
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
                     data = new Akce(id, reader.GetString(1), reader.GetDateTime(2), reader.GetInt32(3), vdm.SelectById(id), hdm.SelectById(id));
@@ -73,9 +78,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT MIN(aid) FROM Akce WHERE aid = :aid");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce WHERE aid = :aid AND rownum = 1");
 
-                command.Parameters.Add(":aid", akce.aid);
+                command.Parameters.AddWithValue(":aid", akce.aid);
 
                 var reader = command.ExecuteReader();
 
@@ -87,12 +92,12 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     command.CommandText = "INSERT INTO Akce (aid, Nazev, DatumK,Cena, VedouciA, HodnostiA) VALUES (:aid, :Nazev, :DatumK, :Cena, :VedouciA, :HodnostiA)";
                 }
-                command.Parameters.Add(":aid", akce.aid);
-                command.Parameters.Add(":Nazev", akce.Nazev);
-                command.Parameters.Add(":DatumK", akce.DatumK);
-                command.Parameters.Add(":Cena", akce.Cena);
-                command.Parameters.Add(":VedouciA", akce.VedouciA.vid);
-                command.Parameters.Add(":HodnostiA", akce.HodnostiA.hid);
+                command.Parameters.AddWithValue(":aid", akce.aid);
+                command.Parameters.AddWithValue(":Nazev", akce.Nazev);
+                command.Parameters.AddWithValue(":DatumK", akce.DatumK);
+                command.Parameters.AddWithValue(":Cena", akce.Cena);
+                command.Parameters.AddWithValue(":VedouciA", akce.VedouciA.vid);
+                command.Parameters.AddWithValue(":HodnostiA", akce.HodnostiA.hid);
 
                 command.ExecuteNonQuery();
 
@@ -112,7 +117,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 aadm.Save(aa);
 
                 OracleCommand command = db.CreateCommand("DELETE FROM Akce WHERE ID = :ID");
-                command.Parameters.Add(":ID", akce.aid);
+                command.Parameters.AddWithValue(":ID", akce.aid);
             }
         }
 

@@ -21,7 +21,7 @@ namespace BussinessLayer.Services
         {
             VedouciDataMapper vdm = new VedouciDataMapper();
             Vedouci d = vdm.TryLogin(username, pw);
-            if (d == null)
+            if (d != null)
             {
                 return new Tuple<int, string, string>(d.vid, d.Jmeno, "Administrator");
             }

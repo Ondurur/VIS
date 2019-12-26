@@ -46,9 +46,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM DetiArchiv WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT * FROM DetiArchiv WHERE did = :did AND rownum = 1");
 
-                command.Parameters.Add(":did", did);
+                command.Parameters.AddWithValue(":did", did);
 
                 DetiArchiv data = null;
 
@@ -56,7 +56,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 DetiDataMapper ddm = new DetiDataMapper();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     data = new DetiArchiv(reader.GetInt32(0), reader.GetString(1), reader.GetDateTime(2), reader.GetString(3), ddm.SelectById(did));
                 }
@@ -71,13 +71,13 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT MIN(did) FROM DetiArchiv WHERE did = :did");
+                OracleCommand command = db.CreateCommand("SELECT * FROM DetiArchiv WHERE did = :did AND rownum = 1");
 
-                command.Parameters.Add(":did", detiArchiv.did);
+                command.Parameters.AddWithValue(":did", detiArchiv.did);
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     command.CommandText = "UPDATE DetiArchiv SET Jmeno = :Jmeno, DatumN = :DatumN, kontaktNR = :kontaktNR, archivD=:archivD WHERE did = :did";
                 }
@@ -85,11 +85,11 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     command.CommandText = "INSERT INTO DetiArchiv (did, Jmeno, DatumN, kontaktNR, archivD) VALUES (:did, :Jmeno, :DatumN, :kontaktNR, :archivD)";
                 }
-                command.Parameters.Add(":did", detiArchiv.did);
-                command.Parameters.Add(":Jmeno", detiArchiv.Jmeno);
-                command.Parameters.Add(":DatumN", detiArchiv.DatumN);
-                command.Parameters.Add(":kontaktNR", detiArchiv.kontaktNR);
-                command.Parameters.Add(":archivD", detiArchiv.archivD.did);
+                command.Parameters.AddWithValue(":did", detiArchiv.did);
+                command.Parameters.AddWithValue(":Jmeno", detiArchiv.Jmeno);
+                command.Parameters.AddWithValue(":DatumN", detiArchiv.DatumN);
+                command.Parameters.AddWithValue(":kontaktNR", detiArchiv.kontaktNR);
+                command.Parameters.AddWithValue(":archivD", detiArchiv.archivD.did);
 
                 command.ExecuteNonQuery();
 
@@ -103,7 +103,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
                 OracleCommand command = db.CreateCommand("DELETE FROM DetiArchiv WHERE ID = :ID");
-                command.Parameters.Add(":ID", detiArchiv.did);
+                command.Parameters.AddWithValue(":ID", detiArchiv.did);
 
 
             }

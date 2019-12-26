@@ -46,15 +46,15 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(sid) FROM Schuzky WHERE sid = :sid");
+                OracleCommand command = db.CreateCommand("SELECT * FROM Schuzky WHERE sid = :sid AND rownum = 1");
 
-                command.Parameters.Add(":sid", sid);
+                command.Parameters.AddWithValue(":sid", sid);
 
                 Schuzky data = null;
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
                     data = new Schuzky(id, reader.GetString(1), reader.GetInt32(2), reader.GetInt32(3), vdm.SelectById(id));
@@ -70,9 +70,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT MIN(sid) FROM Schuzky WHERE sid = :sid");
+                OracleCommand command = db.CreateCommand("SELECT * FROM Schuzky WHERE sid = :sid AND rownum = 1");
 
-                command.Parameters.Add(":ID", schuzky.sid);
+                command.Parameters.AddWithValue(":ID", schuzky.sid);
 
                 var reader = command.ExecuteReader();
 
@@ -84,11 +84,11 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     command.CommandText = "INSERT INTO Schuzky (sid, Nazev, pocetD, DatumK, vedouciS) VALUES (:sid, :Nazev, :pocetD, :DatumK, :vedouciS)";
                 }
-                command.Parameters.Add(":sid", schuzky.sid);
-                command.Parameters.Add(":Nazev", schuzky.Nazev);
-                command.Parameters.Add(":pocetD", schuzky.PocetD);
-                command.Parameters.Add(":DatumK", schuzky.DatumK);
-                command.Parameters.Add(":vedouciS", schuzky.VedouciS);
+                command.Parameters.AddWithValue(":sid", schuzky.sid);
+                command.Parameters.AddWithValue(":Nazev", schuzky.Nazev);
+                command.Parameters.AddWithValue(":pocetD", schuzky.PocetD);
+                command.Parameters.AddWithValue(":DatumK", schuzky.DatumK);
+                command.Parameters.AddWithValue(":vedouciS", schuzky.VedouciS);
 
                 command.ExecuteNonQuery();
 
@@ -102,7 +102,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
                 OracleCommand command = db.CreateCommand("DELETE FROM Schuzky WHERE ID = :ID");
-                command.Parameters.Add(":ID", schuzky.sid);
+                command.Parameters.AddWithValue(":ID", schuzky.sid);
 
 
             }

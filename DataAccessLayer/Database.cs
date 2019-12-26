@@ -10,7 +10,7 @@ namespace VIS_Desktop.DataAccessLayer
 {
     public class Database
     {
-        private const string ConnectionString = "Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=dbsys.cs.vsb.cz)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=oracle.dbsys.cs.vsb.cz)));User Id=hor0404;Password=oq7UusDh4P;Connection Timeout=45";
+        private const string ConnectionString = "Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=dbsys.cs.vsb.cz)(PORT=1521)))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=oracle.dbsys.cs.vsb.cz)));User Id=hor0404;Password=oq7UusDh4P;Connection Timeout=20";
 
         private OracleConnection Connection { get; set; }
         private OracleTransaction SqlTransaction { get; set; }
@@ -43,14 +43,7 @@ namespace VIS_Desktop.DataAccessLayer
             if (Connection.State != System.Data.ConnectionState.Open)
             {
                 Connection.ConnectionString = conString;
-                try
-                {
-                    Connection.Open();
-                }
-                catch(Exception e)
-                {
-                    return false;
-                }
+                Connection.Open();
             }
             return true;
         }

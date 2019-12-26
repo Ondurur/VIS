@@ -63,6 +63,7 @@
     <Compile Include="DTO\Hodnosti.cs" />
     <Compile Include="DTO\Schuzky.cs" />
     <Compile Include="DTO\Vedouci.cs" />
+    <Compile Include="Extension.cs" />
     <Compile Include="ForeignMappers\ForeignMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

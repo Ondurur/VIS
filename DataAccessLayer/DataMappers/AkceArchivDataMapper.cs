@@ -34,7 +34,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
                     data.Add(new AkceArchiv(id, reader.GetString(1), reader.GetDateTime(2), reader.GetInt32(3), adm.SelectById(id)));
@@ -48,9 +48,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT MIN(aid) FROM AkceArchiv aa WHERE aa.aid = :aid");
+                OracleCommand command = db.CreateCommand("SELECT * FROM AkceArchiv aa WHERE aa.aid = :aid AND rownum = 1");
 
-                command.Parameters.Add(":aid", aid);
+                command.Parameters.AddWithValue(":aid", aid);
 
                 AkceArchiv data = null;
                 
@@ -70,9 +70,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT MIN(aid) FROM AkceArchiv WHERE aid = :aid");
+                OracleCommand command = db.CreateCommand("SELECT * FROM AkceArchiv WHERE aid = :aid AND rownum = 1");
 
-                command.Parameters.Add(":aid", akceArchiv.aid);
+                command.Parameters.AddWithValue(":aid", akceArchiv.aid);
 
                 var reader = command.ExecuteReader();
 
@@ -84,11 +84,11 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     command.CommandText = "INSERT INTO AkceArchiv (aid, Nazev, DatumK,Cena, archivA) VALUES (:aid, :Nazev, :DatumK, :Cena, :archivA)";
                 }
-                command.Parameters.Add(":aid", akceArchiv.aid);
-                command.Parameters.Add(":Nazev", akceArchiv.Nazev);
-                command.Parameters.Add(":DatumK", akceArchiv.DatumK);
-                command.Parameters.Add(":Cena", akceArchiv.Cena);
-                command.Parameters.Add(":archivA", akceArchiv.archivA.aid);
+                command.Parameters.AddWithValue(":aid", akceArchiv.aid);
+                command.Parameters.AddWithValue(":Nazev", akceArchiv.Nazev);
+                command.Parameters.AddWithValue(":DatumK", akceArchiv.DatumK);
+                command.Parameters.AddWithValue(":Cena", akceArchiv.Cena);
+                command.Parameters.AddWithValue(":archivA", akceArchiv.archivA.aid);
 
                 command.ExecuteNonQuery();
 
@@ -104,7 +104,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 db.Connect();
 
                 OracleCommand command = db.CreateCommand("DELETE FROM AkceArchiv WHERE ID = :ID");
-                command.Parameters.Add(":ID", akceArchiv.aid);
+                command.Parameters.AddWithValue(":ID", akceArchiv.aid);
 
                 command.ExecuteNonQuery();
 
