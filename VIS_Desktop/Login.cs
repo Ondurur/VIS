@@ -59,12 +59,13 @@ namespace VIS_Desktop
 
             if(ds.LoginAs(username, pw)!=null)
             {
+                this.username = ds.LoginAs(username, pw).Item2;
                 MainForm mf = new MainForm(this);
                 mf.Activate();
                 mf.Show();
                 mf.labelSigned.Text = "Signed as: " + ds.LoginAs(username,pw).Item2;
                 mf.labelRole.Text = "Role: " + ds.LoginAs(username,pw).Item3;
-                MessageBox.Show(ds.LoginAs(username, pw).Item3);
+                //MessageBox.Show(ds.LoginAs(username, pw).Item3);
 
                 return true;
             }

@@ -11,7 +11,6 @@ INSERT INTO Vedouci (vid, jmeno, pw, datumN, kontakt) VALUES (4, 'Cyp007', 'Bond
 
 INSERT INTO Akce (aid, nazev, datumk, cena, vedoucia, hodnostia, detilist) VALUES (0, 'OndurNedostaneBC', TO_DATE('2020-05-15', 'YYYY-MM-DD'), null, 0, 0, ' ');
 INSERT INTO Akce (aid, nazev, datumk, cena, vedoucia, hodnostia, detilist) VALUES (1, 'OndurMoznaDostaneBC', TO_DATE('2020-03-15', 'YYYY-MM-DD'), null, 1, 1, ' ');
-INSERT INTO Akce (aid, nazev, datumk, cena, vedoucia, hodnostia, detilist) VALUES (2, 'OndurUrciteDostaneBC', TO_DATE('2020-02-15', 'YYYY-MM-DD'), null, 1, 1, ' ');
 INSERT INTO Akce (aid, nazev, datumk, cena, vedoucia, hodnostia, detilist) VALUES (3, 'Jedna random akce', TO_DATE('2020-01-13', 'YYYY-MM-DD'), null, 3, 2, ' ');
 
 INSERT INTO Schuzky (sid, nazev, pocetd, datumk, vedoucis) VALUES (0, 'Ta nejlepsi schuzka', 228, 3, 0);

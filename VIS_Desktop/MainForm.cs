@@ -62,9 +62,25 @@ namespace VIS_Desktop
         private void btnEventSignIn_Click(object sender, EventArgs e)
         {
             string checkedItems = string.Empty;
+            refreshSignedOn();
             foreach (object Item in eventsListBox.CheckedItems)
             {
-                checkedItems += Item.ToString().Substring(0, Item.ToString().IndexOf("\t")) + ";";
+                bool Possible = true;
+                foreach (object RegisteredItem in checkedListBoxSignedOn.CheckedItems)
+                {
+                    if(Item == RegisteredItem)
+                    {
+                        Possible = false;
+                    }
+                    if (!ac.checkDateCollision(Item, RegisteredItem))
+                    {
+                        Possible = false;
+                    }
+                }
+                if (Possible)
+                {
+                    checkedItems += Item.ToString().Substring(0, Item.ToString().IndexOf("\t")) + ";";
+                }
             }
             //MessageBox.Show(checkedItems);
             ac.SignMeOnEvent(checkedItems, username);
@@ -113,14 +129,27 @@ namespace VIS_Desktop
             {
                 checkedItems += Item.ToString().Substring(0, Item.ToString().IndexOf("\t")) + ";";
             }
-            MessageBox.Show(checkedItems);
-            ac.removeFromEvent(checkedItems, username);
+            //MessageBox.Show(checkedItems);
+            ac.RemoveFromEvent(checkedItems, username);
             refreshSignedOn();
         }
 
         private void btnCSVExport_Click(object sender, EventArgs e)
         {
-
+            string checkedItems = string.Empty;
+            foreach (object Item in checkedListBoxSignedOn.CheckedItems)
+            {
+                checkedItems += Item.ToString() + "\n";
+            }
+            if (ac.ExportCSV(checkedItems))
+            {
+                MessageBox.Show("Successfuly Exported!");
+            }
+            else
+            {
+                MessageBox.Show("An error occurred!");
+            }
+            
         }
 
         private void btnCustomSQL_Click(object sender, EventArgs e)

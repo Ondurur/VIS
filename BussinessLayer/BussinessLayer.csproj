@@ -43,12 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AkceServices.cs" />
     <Compile Include="Services\DetiServices.cs" />
     <Compile Include="Services\VedouciServices.cs" />
-    <Compile Include="TestConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

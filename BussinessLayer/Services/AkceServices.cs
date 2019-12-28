@@ -70,6 +70,25 @@ namespace BussinessLayer.Services
             return true;
         }
 
+        public bool checkDateCollision(object item, object registeredItem)
+        {
+            string prvni = item.ToString();
+            string druhy = registeredItem.ToString();
+            prvni.Reverse();
+            druhy.Reverse();
+            prvni = prvni.Substring(0, prvni.IndexOf(';'));
+            druhy = druhy.Substring(0, druhy.IndexOf(';'));
+
+            prvni.Reverse();
+            druhy.Reverse();
+
+            if(prvni == druhy)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool NewEvent()
         {
             adm.Save(newEvent);
@@ -78,61 +97,32 @@ namespace BussinessLayer.Services
 
         public bool SignMeOnEvent(string events, string Name)
         {
-            string length = events.Replace(";", "");
-            int[] IDs = new int[events.Length];
-            int j = 0;
-            string temp = "";
-            for (int i = 0; i<IDs.Length; i++)
-            {
-
-                if(events[i] == ';')
-                {
-                    IDs[j] = int.Parse(temp);
-                    j++;
-                    temp = "";
-                }
-                else
-                {
-                    temp += events[i];
-                }
-            }
+            string[] IDs = events.Substring(0,events.Length-1).Split(';');
 
             for(int i = 0; i< IDs.Length; i++)
             {
-                Akce tempAkce = adm.SelectById(IDs[i]);
+                int j = Convert.ToInt32(IDs[i]);
+                Akce tempAkce = adm.SelectById(j);
                 tempAkce.detiList += Name + ";";
                 adm.Save(tempAkce);
             }
             return true;
         }
 
-        public void removeFromEvent(string events,string username)
+        public bool RemoveFromEvent(string events,string Name)
         {
-            string length = events.Replace(";", "");
-            int[] IDs = new int[events.Length];
-            int j = 0;
-            string temp = "";
-            for (int i = 0; i < IDs.Length; i++)
-            {
+            string[] IDs = events.Substring(0, events.Length - 1).Split(';');
 
-                if (events[i] == ';')
-                {
-                    IDs[j] = int.Parse(temp);
-                    j++;
-                    temp = "";
-                }
-                else
-                {
-                    temp += events[i];
-                }
-            }
             for (int i = 0; i < IDs.Length; i++)
             {
-                Akce tempAkce = adm.SelectById(IDs[i]);
-                tempAkce.detiList.Replace(username + ";", "");
+                int j = Convert.ToInt32(IDs[i]);
+                Akce tempAkce = adm.SelectById(j);
+                int zacatek = tempAkce.detiList.IndexOf(Name[0]);
+                string tempStr = tempAkce.detiList.Remove(zacatek, Name.Length);
+                tempAkce.detiList = tempStr;
                 adm.Save(tempAkce);
             }
-
+            return true;
         }
 
         public List<string> getSignedOn(string username)
@@ -166,6 +156,20 @@ namespace BussinessLayer.Services
                 Akce temp = all.ElementAt(i);
                 temp.detiList = "";
                 adm.Save(temp);
+            }
+        }
+
+        public bool ExportCSV(string lines)
+        {
+            try
+            {
+                Logger l = Logger.GetLogger();
+                l.WriteMessage(lines);
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
             }
         }
     }

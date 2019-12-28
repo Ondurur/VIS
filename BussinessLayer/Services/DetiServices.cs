@@ -22,23 +22,25 @@ namespace BussinessLayer.Services
             Deti d = null;
             int role;
             d = detiDataMapper.TryLogin(username, pw);
+            if (d != null)
+            {
+                if (d.Nickname == username)
+                {
+                    role = 1;
+                }
+                else
+                {
+                    role = 0;
+                }
 
-            if (d.Nickname == username)
-            {
-                role = 1;
-            }
-            else
-            {
-                role = 0;
-            }
-
-            if (d != null && role == 0)
-            {
-                return new Tuple<int, string, string>(d.did, d.Jmeno, "Child");
-            }
-            else if(d!= null && role == 1)
-            {
-                return new Tuple<int, string, string>(d.did, d.Jmeno, "Parent");
+                if (role == 0)
+                {
+                    return new Tuple<int, string, string>(d.did, d.Jmeno, "Child");
+                }
+                else if (role == 1)
+                {
+                    return new Tuple<int, string, string>(d.did, d.Jmeno, "Parent");
+                }
             }
             return null;
         }

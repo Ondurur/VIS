@@ -17,17 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		sqlTablescript.txt = sqlTablescript.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalDB", "LocalDB", "{2FF0D258-381D-4970-9993-5E1DCA1659D4}"
-	ProjectSection(SolutionItems) = preProject
-		AkceArchivCSV.csv = AkceArchivCSV.csv
-		AkceCSV.csv = AkceCSV.csv
-		DetiArchivCSV.csv = DetiArchivCSV.csv
-		DetiCSV.csv = DetiCSV.csv
-		HodnostiCSV.csv = HodnostiCSV.csv
-		SchuzkyCSV.csv = SchuzkyCSV.csv
-		VedouciCSV.csv = VedouciCSV.csv
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

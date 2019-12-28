@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSVLoader.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="DataMappers\AkceArchivDataMapper.cs" />
     <Compile Include="DataMappers\AkceDataMapper.cs" />
@@ -63,7 +62,6 @@
     <Compile Include="DTO\Schuzky.cs" />
     <Compile Include="DTO\Vedouci.cs" />
     <Compile Include="Extension.cs" />
-    <Compile Include="ForeignMappers\ForeignMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
