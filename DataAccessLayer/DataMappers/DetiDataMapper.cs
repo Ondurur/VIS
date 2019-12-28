@@ -76,19 +76,22 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT * FROM Deti d WHERE d.Nickname = :nick AND d.Pw = :pw AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT did, Jmeno, Nickname,Pw,DatumN,KontaktNR, HodnostD,SchuzkyD FROM Deti WHERE (Nickname = :nick OR Jmeno = :jmeno) AND Pw = :pw AND rownum = 1");
 
                 command.Parameters.AddWithValue(":nick", nick);
+                command.Parameters.AddWithValue(":jmeno", nick);
                 command.Parameters.AddWithValue(":pw", pw);
 
                 var reader = command.ExecuteReader();
 
+                Deti ret = null; ;
+
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
-                    return new Deti(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5), hdm.SelectById(id), sdm.SelectById(id));
+                    ret = new Deti(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetString(5), hdm.SelectById(id), sdm.SelectById(id));
                 }
-                return null;
+                return ret ;
             }
         }
 

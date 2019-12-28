@@ -19,11 +19,26 @@ namespace BussinessLayer.Services
 
         public Tuple<int,string,string>/*<id,nick,role>*/ LoginAs(string username, string pw)
         {
-            
-            Deti d = detiDataMapper.TryLogin(username, pw);
-            if(d != null)
+            Deti d = null;
+            int role;
+            d = detiDataMapper.TryLogin(username, pw);
+
+            if (d.Nickname == username)
             {
-                return new Tuple<int, string, string>(d.did, d.Jmeno, "Dite");
+                role = 1;
+            }
+            else
+            {
+                role = 0;
+            }
+
+            if (d != null && role == 0)
+            {
+                return new Tuple<int, string, string>(d.did, d.Jmeno, "Child");
+            }
+            else if(d!= null && role == 1)
+            {
+                return new Tuple<int, string, string>(d.did, d.Jmeno, "Parent");
             }
             return null;
         }
@@ -32,17 +47,6 @@ namespace BussinessLayer.Services
         {
             DetiDataMapper ddm = new DetiDataMapper();
             return true;
-        }
-
-        public Tuple<int, string, string>/*<id,nick,role>*/ LoginAsCSV(string username, string pw)
-        {
-
-            Deti d = detiDataMapper.TryLoginCSV(username, pw);
-            if (d == null)
-            {
-                return new Tuple<int, string, string>(d.did, d.Jmeno, "Dite");
-            }
-            return null;
         }
 
     }

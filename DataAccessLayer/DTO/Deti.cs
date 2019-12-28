@@ -8,7 +8,7 @@ namespace VIS_Desktop.DTO
 {
     public class Deti
     {
-        public Deti(int did, string jmeno, string pw, string nickname, DateTime datumN, string kontaktNR, Hodnosti hodnostD, Schuzky schuzkyD)
+        public Deti(int did, string jmeno, string nickname, string pw, DateTime datumN, string kontaktNR, Hodnosti hodnostD, Schuzky schuzkyD)
         {
             this.did = did;
             Jmeno = jmeno;
@@ -23,7 +23,7 @@ namespace VIS_Desktop.DTO
         public int did { set; get; }
         public String Jmeno { set; get; }
         public String Nickname { set; get; }
-        public String Pw { get; }
+        public String Pw { set; get; }
         public DateTime DatumN { set; get; }
         public String KontaktNR { set; get; }
         public Hodnosti HodnostD { set; get; }

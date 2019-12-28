@@ -29,7 +29,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA, detilist FROM Akce");
 
                 List<Akce> data = new List<Akce>();
                 
@@ -40,6 +40,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     int id = reader.GetInt32(0);
 
                     int? cena;
+                    string detiList;
 
                     if (!reader.IsDBNull(3))
                     {
@@ -49,8 +50,16 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     {
                         cena = null;
                     }
+                    if (!reader.IsDBNull(6))
+                    {
+                        detiList = reader.GetString(6);
+                    }
+                    else
+                    {
+                        detiList = "";
+                    }
 
-                    data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(id), hdm.SelectById(id)));
+                    data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(id), hdm.SelectById(id), detiList));
                 }
                 return data;
     }
@@ -61,7 +70,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce WHERE aid = :aid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA, detilist FROM Akce WHERE aid = :aid AND rownum = 1");
 
                 command.Parameters.AddWithValue(":aid", aid);
 
@@ -72,7 +81,28 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(0);
-                    data = new Akce(id, reader.GetString(1), reader.GetDateTime(2), reader.GetInt32(3), vdm.SelectById(id), hdm.SelectById(id));
+
+                    int? cena;
+                    string detiList;
+
+                    if (!reader.IsDBNull(3))
+                    {
+                        cena = reader.GetInt32(3);
+                    }
+                    else
+                    {
+                        cena = null;
+                    }
+                    if (!reader.IsDBNull(6))
+                    {
+                        detiList = reader.GetString(6);
+                    }
+                    else
+                    {
+                        detiList = "";
+                    }
+
+                    data = new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(id), hdm.SelectById(id), detiList);
                 }
                 return data;
             }
@@ -85,7 +115,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce WHERE aid = :aid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce WHERE aid = :aid AND rownum = 1"), commandUpdate, commandInsert;
 
                 command.Parameters.AddWithValue(":aid", akce.aid);
 
@@ -94,21 +124,33 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 reader.Read();
                 if (reader.HasRows)
                 {
-                    command.CommandText = "UPDATE Akce SET Nazev = :Nazev, Nickname = :Nickname, DatumK = :DatumK, Cena = :Cena, VedouciA = :VedouciA, HodnostiA = :HodnostiA WHERE aid = :aid";
+                    Console.Out.Write("jak kurwa");
+                    commandUpdate = db.CreateCommand("UPDATE Akce SET Nazev = :Nazev , DatumK = :DatumK , Cena = :Cena , VedouciA = :VedouciA , HodnostiA = :HodnostiA , detilist = :detilist WHERE aid = :aid");
+                    commandUpdate.Parameters.AddWithValue(":Nazev", akce.Nazev);
+                    commandUpdate.Parameters.AddWithValue(":DatumK", akce.DatumK);
+                    commandUpdate.Parameters.AddWithValue(":Cena", akce.Cena);
+                    commandUpdate.Parameters.AddWithValue(":VedouciA", akce.VedouciA.vid);
+                    commandUpdate.Parameters.AddWithValue(":HodnostiA", akce.HodnostiA.hid);
+                    commandUpdate.Parameters.AddWithValue(":detilist", akce.detiList);
+                    commandUpdate.Parameters.AddWithValue(":aid", akce.aid);
+
+                    commandUpdate.ExecuteNonQuery();
                 }
                 else
                 {
-                    command.CommandText = "INSERT INTO Akce (aid, Nazev, DatumK,Cena, VedouciA, HodnostiA) VALUES (:aid, :Nazev, :DatumK, :Cena, :VedouciA, :HodnostiA)";
+                    commandInsert = db.CreateCommand("INSERT INTO Akce (aid, nazev, datumk, cena, vedoucia, hodnostia, detilist) VALUES ( :aid , :Nazev , :DatumK , :Cena , :VedouciA , :HodnostiA , :detilist )");
+                    commandInsert.Parameters.AddWithValue(":aid", akce.aid);
+                    commandInsert.Parameters.AddWithValue(":Nazev", akce.Nazev);
+                    commandInsert.Parameters.AddWithValue(":DatumK", akce.DatumK);
+                    commandInsert.Parameters.AddWithValue(":Cena", akce.Cena);
+                    commandInsert.Parameters.AddWithValue(":VedouciA", akce.VedouciA.vid);
+                    commandInsert.Parameters.AddWithValue(":HodnostiA", akce.HodnostiA.hid);
+                    commandInsert.Parameters.AddWithValue(":detilist", akce.detiList);
+
+                    commandInsert.ExecuteNonQuery();
+
+
                 }
-                command.Parameters.AddWithValue(":aid", akce.aid);
-                command.Parameters.AddWithValue(":Nazev", akce.Nazev);
-                command.Parameters.AddWithValue(":DatumK", akce.DatumK);
-                command.Parameters.AddWithValue(":Cena", akce.Cena);
-                command.Parameters.AddWithValue(":VedouciA", akce.VedouciA.vid);
-                command.Parameters.AddWithValue(":HodnostiA", akce.HodnostiA.hid);
-
-                command.ExecuteNonQuery();
-
             }
         }
 

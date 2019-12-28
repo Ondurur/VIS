@@ -38,9 +38,9 @@ namespace VIS_Desktop
                 }
 
             }
-            else
+            else if(textBoxResponsible.Text.Length <= 0)
             {
-                errorLabel.Text = "Enter Event Name and Respnsible Person";
+                errorLabel.Text = "Enter Event Name and Responsible Person";
                 errorLabel.Visible = true;
             }
 

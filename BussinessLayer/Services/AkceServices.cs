@@ -50,27 +50,122 @@ namespace BussinessLayer.Services
 
         public bool checkNewEvent(string Name, DateTime dateTime, string Responsible, int Price, int Restrict)
         {
+            bool resp = false;
             for (int i = 0; i < dateTimes.Length; i++)
             {
                 if (dateTime.DayOfYear == dateTimes[i].DayOfYear && dateTime.Year == dateTimes[i].Year)
                 {
                     return false;
                 }
+                else if(Responsible == this.resp[i])
+                {
+                    resp = true;
+                }
             }
-            newEvent = new Akce(adm.SelectAll().Count, Name, dateTime, Price, vdm.SelectByName(Responsible), hdm.SelectById(Restrict));
+            if (!resp)
+            {
+                return resp;
+            }
+            newEvent = new Akce(adm.SelectAll().Count, Name, dateTime, Price, vdm.SelectByName(Responsible), hdm.SelectById(Restrict), "");
             return true;
         }
 
         public bool NewEvent()
         {
-            try
+            adm.Save(newEvent);
+            return true;
+        }
+
+        public bool SignMeOnEvent(string events, string Name)
+        {
+            string length = events.Replace(";", "");
+            int[] IDs = new int[events.Length];
+            int j = 0;
+            string temp = "";
+            for (int i = 0; i<IDs.Length; i++)
             {
-                adm.Save(newEvent);
-                return true;
+
+                if(events[i] == ';')
+                {
+                    IDs[j] = int.Parse(temp);
+                    j++;
+                    temp = "";
+                }
+                else
+                {
+                    temp += events[i];
+                }
             }
-            catch(Exception e)
+
+            for(int i = 0; i< IDs.Length; i++)
             {
-                return false;
+                Akce tempAkce = adm.SelectById(IDs[i]);
+                tempAkce.detiList += Name + ";";
+                adm.Save(tempAkce);
+            }
+            return true;
+        }
+
+        public void removeFromEvent(string events,string username)
+        {
+            string length = events.Replace(";", "");
+            int[] IDs = new int[events.Length];
+            int j = 0;
+            string temp = "";
+            for (int i = 0; i < IDs.Length; i++)
+            {
+
+                if (events[i] == ';')
+                {
+                    IDs[j] = int.Parse(temp);
+                    j++;
+                    temp = "";
+                }
+                else
+                {
+                    temp += events[i];
+                }
+            }
+            for (int i = 0; i < IDs.Length; i++)
+            {
+                Akce tempAkce = adm.SelectById(IDs[i]);
+                tempAkce.detiList.Replace(username + ";", "");
+                adm.Save(tempAkce);
+            }
+
+        }
+
+        public List<string> getSignedOn(string username)
+        {
+            List<string> ret = new List<string>();
+            foreach(Akce a in all)
+            {
+                int count = 0;
+                foreach (char c in a.detiList)
+                    if (c == ';') count++;
+                for (int i = 0; i<count; i++)
+                {
+                    int index = a.detiList.IndexOf(';');
+                    if (username == a.detiList.Substring(0, index))
+                    {
+                        ret.Add(a.aid + "\t" + a.Nazev + "\t" + a.Cena + "\t" + a.DatumK.ToString());
+                    }
+                    else
+                    {
+                        a.detiList = a.detiList.Substring(index+1);
+                    }
+                }
+            }
+            return ret;
+        }
+
+        public void Save()
+        {
+            for(int i = 0; i< 5; i++)
+            {
+                Akce temp = all.ElementAt(i);
+                temp.detiList = "";
+                adm.Save(temp);
             }
         }
     }

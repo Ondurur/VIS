@@ -60,15 +60,18 @@ namespace VIS_Desktop
             if(ds.LoginAs(username, pw)!=null)
             {
                 MainForm mf = new MainForm(this);
+                mf.Activate();
                 mf.Show();
-                mf.labelSigned.Text = "Signed as: " + username;
-                mf.labelRole.Text = "Role: Dite";
+                mf.labelSigned.Text = "Signed as: " + ds.LoginAs(username,pw).Item2;
+                mf.labelRole.Text = "Role: " + ds.LoginAs(username,pw).Item3;
+                MessageBox.Show(ds.LoginAs(username, pw).Item3);
 
                 return true;
             }
             if(vs.LoginAs(username, pw) != null)
             {
                 MainForm mf = new MainForm(this);
+                mf.Activate();
                 mf.Show();
                 mf.labelSigned.Text = "Signed as: " + username;
                 mf.labelRole.Text = "Role: Admin";
@@ -82,7 +85,6 @@ namespace VIS_Desktop
 
         private bool loginSuccessfullCSV(string username, string pw)
         {
-
             return false;
         }
 

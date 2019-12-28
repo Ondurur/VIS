@@ -8,7 +8,7 @@ namespace VIS_Desktop.DTO
 {
     public class Akce
     {
-        public Akce(int aid, string Nazev, DateTime DatumK, int? Cena, Vedouci VedouciA, Hodnosti HodnostiA)
+        public Akce(int aid, string Nazev, DateTime DatumK, int? Cena, Vedouci VedouciA, Hodnosti HodnostiA, string detiList)
         {
             this.aid = aid;
             this.Nazev = Nazev;
@@ -16,6 +16,7 @@ namespace VIS_Desktop.DTO
             this.Cena = Cena;
             this.VedouciA = VedouciA;
             this.HodnostiA = HodnostiA;
+            this.detiList = detiList;
         }
 
         public int aid { get; set; }
@@ -24,5 +25,6 @@ namespace VIS_Desktop.DTO
         public int? Cena { get; set; }
         public Vedouci VedouciA { get; set; }
         public Hodnosti HodnostiA { get; set; }
+        public string detiList { get; set; }
     }
 }

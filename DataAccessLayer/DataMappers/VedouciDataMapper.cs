@@ -60,7 +60,6 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     string password = reader.GetString(2);
                     DateTime datumN = reader.GetDateTime(3);
                     string kontakt = reader.GetString(4);
-                    Console.Out.WriteLine(" " + jmeno + " " + password + " " + datumN.ToLongDateString() + " " + kontakt);
                     return new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4));
                 }
                 return null;

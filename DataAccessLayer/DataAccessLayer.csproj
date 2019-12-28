@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSVLoader.cs" />
-    <Compile Include="CSVOperations\SelectAll.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="DataMappers\AkceArchivDataMapper.cs" />
     <Compile Include="DataMappers\AkceDataMapper.cs" />
