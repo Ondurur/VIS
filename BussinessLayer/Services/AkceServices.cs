@@ -13,7 +13,7 @@ namespace BussinessLayer.Services
         AkceDataMapper adm;
         VedouciDataMapper vdm;
         HodnostiDataMapper hdm;
-        List<Akce> all;
+        public List<Akce> all;
         public int[] IDs;
         public string[] names;
         public DateTime[] dateTimes;
@@ -138,7 +138,7 @@ namespace BussinessLayer.Services
                     int index = a.detiList.IndexOf(';');
                     if (username == a.detiList.Substring(0, index))
                     {
-                        ret.Add(a.aid + "\t" + a.Nazev + "\t" + a.Cena + "\t" + a.DatumK.ToString());
+                        ret.Add(a.aid + "\t" + a.Nazev + "\t" + a.Cena + "\t" + a.DatumK.ToString());                        
                     }
                     else
                     {

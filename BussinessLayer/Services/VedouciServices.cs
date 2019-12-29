@@ -27,5 +27,10 @@ namespace BussinessLayer.Services
             }
             return null;
         }
+
+        public List<Vedouci> GetAll()
+        {
+            return vdm.SelectAll();
+        }
     }
 }

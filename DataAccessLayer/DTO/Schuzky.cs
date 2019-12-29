@@ -8,7 +8,7 @@ namespace VIS_Desktop.DTO
 {
     public class Schuzky
     {
-        public Schuzky(int sid, string nazev, int datumK, int pocetD, Vedouci vedouciS)
+        public Schuzky(int sid, string nazev, int pocetD, int datumK,  Vedouci vedouciS)
         {
             this.sid = sid;
             this.Nazev = nazev;

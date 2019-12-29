@@ -31,7 +31,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 db.Connect();
                 OracleCommand command = db.CreateCommand("SELECT * FROM Deti");
 
-                List<Deti> data = null;
+                List<Deti> data = new List<Deti>();
 
                 var reader = command.ExecuteReader();
 

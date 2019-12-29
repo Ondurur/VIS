@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VIS_Desktop.DataAccessLayer;
-using VIS_Desktop.DataAccessLayer.ForeignMappers;
 using VIS_Desktop.DTO;
 
 namespace VIS_Desktop.DataAccessLayer.DataMappers
@@ -30,7 +29,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 db.Connect();
                 OracleCommand command = db.CreateCommand("SELECT * FROM AkceArchiv aa");
 
-                List<AkceArchiv> data = null;
+                List<AkceArchiv> data = new List<AkceArchiv>();
 
                 var reader = command.ExecuteReader();
 

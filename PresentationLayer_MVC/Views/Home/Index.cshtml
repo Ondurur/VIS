@@ -1,31 +1,103 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="row" style="border:1px solid black;">
+    <h4>Upcoming Events Table</h4>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Date</th>
+            <th>Responsible</th>
+        </tr>
+        @for (int i = 0; i < Model.Events.Count; i++)
+        {
+            var events = Model.Events[i];
+            int? cena = events.Cena;
+            if (events.Cena == null)
+            {
+                cena = 0;
+            }
+
+            <tr>
+                <td width = "30%">@events.Nazev</td>
+                <td width="30%">@cena.ToString()</td>
+                <td width = "30%">@events.DatumK.ToShortDateString()</td>
+                <td width = "30%">@events.VedouciA.Jmeno</td>
+            </tr>
+        }
+    </table>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+<div class="row" style="border:1px solid black;">
+    <h4>Leaders Table</h4>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Contact</th>
+        </tr>
+        @for (int i = 0; i < Model.Leaders.Count; i++)
+        {
+            var events = Model.Leaders[i];
+
+            <tr>
+                <td width = "30%">@events.Jmeno</td>
+                <td width = "30%">@events.DatumN.ToShortDateString()</td>
+                <td width = "30%">@events.Kontakt</td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div class="row" style="border:1px solid black;">
+    <h4>Scheduled Meetings Table</h4>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Child Count</th>
+            <th>Day of Week</th>
+            <th>Responsible</th>
+        </tr>
+        @for (int i = 0; i < Model.Scheduled.Count; i++)
+        {
+            var events = Model.Scheduled[i];
+            string DenVTydnu = "";
+            switch (events.DatumK)
+            {
+                case 1:
+                    DenVTydnu = "Pondeli";
+                    break;
+                case 2:
+                    DenVTydnu = "Utery";
+                    break;
+                case 3:
+                    DenVTydnu = "Streda";
+                    break;
+                case 4:
+                    DenVTydnu = "Ctvrtek";
+                    break;
+                case 5:
+                    DenVTydnu = "Patek";
+                    break;
+                case 6:
+                    DenVTydnu = "Sobota";
+                    break;
+                case 7:
+                    DenVTydnu = "Nedele";
+                    break;
+                default:
+                    break;
+            }
+
+            <tr>
+                <td width = "30%">@events.Nazev</td>
+                <td width="30%">@events.PocetD.ToString()</td>
+                <td width = "30%">@DenVTydnu</td>
+                <td width = "30%">@events.VedouciS.Jmeno</td>
+            </tr>
+        }
+    </table>
 </div>

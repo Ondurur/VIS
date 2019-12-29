@@ -28,7 +28,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 db.Connect();
                 OracleCommand command = db.CreateCommand("SELECT * FROM Schuzky");
 
-                List<Schuzky> data = null;
+                List<Schuzky> data = new List<Schuzky>();
 
                 var reader = command.ExecuteReader();
 

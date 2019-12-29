@@ -27,7 +27,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 db.Connect();
                 OracleCommand command = db.CreateCommand("SELECT * FROM Hodnosti");
 
-                List<Hodnosti> data = null;
+                List<Hodnosti> data = new List<Hodnosti>();
 
                 var reader = command.ExecuteReader();
 
