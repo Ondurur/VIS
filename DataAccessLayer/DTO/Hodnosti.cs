@@ -8,15 +8,15 @@ namespace VIS_Desktop.DTO
 {
     public class Hodnosti
     {
-        public Hodnosti(int hid, string nazev, int minVek)
+        public Hodnosti(int hid, string nazev, int minimalni_vek)
         {
-            this.hid = hid;
-            Nazev = nazev;
-            MinVek = minVek;
+            this.Hid = hid;
+            this.Nazev = nazev;
+            this.Minimalni_vek = minimalni_vek;
         }
 
-        public int hid { set; get; }
+        public int Hid { set; get; }
         public String Nazev { set; get; }
-        public int MinVek { set; get; }
+        public int Minimalni_vek { set; get; }
     }
 }

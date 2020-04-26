@@ -8,19 +8,21 @@ namespace VIS_Desktop.DTO
 {
     public class Vedouci
     {
-        public int vid { set; get; }
+        public int Vid { set; get; }
         public String Jmeno { set; get; }
-        public String Pw { get; }
-        public DateTime DatumN { set; get; }
+        public String Heslo { get; }
+        public DateTime Datum_narozeni { set; get; }
         public String Kontakt { set; get; }
+        public Funkce Funkce_fid { get; set; }
 
-        public Vedouci(int vid, string jmeno, string pw, DateTime datumN, string kontakt)
+        public Vedouci(int vid, string jmeno, string heslo, DateTime datum_narozeni, string kontakt, Funkce funkce)
         {
-            this.vid = vid;
+            this.Vid = vid;
             this.Jmeno = jmeno;
-            this.Pw = pw;
-            this.DatumN = datumN;
+            this.Heslo = heslo;
+            this.Datum_narozeni = datum_narozeni;
             this.Kontakt = kontakt;
+            this.Funkce_fid = funkce;
         }
     }
 }

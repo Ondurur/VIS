@@ -35,11 +35,11 @@ namespace BussinessLayer.Services
 
                 if (role == 0)
                 {
-                    return new Tuple<int, string, string>(d.did, d.Jmeno, "Child");
+                    return new Tuple<int, string, string>(d.Did, d.Jmeno, "Child");
                 }
                 else if (role == 1)
                 {
-                    return new Tuple<int, string, string>(d.did, d.Jmeno, "Parent");
+                    return new Tuple<int, string, string>(d.Did, d.Jmeno, "Parent");
                 }
             }
             return null;

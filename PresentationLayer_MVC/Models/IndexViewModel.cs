@@ -16,7 +16,7 @@ namespace PresentationLayer_MVC.Models
 
         public void idk()
         {
-            this.Scheduled.ElementAt(5).DatumK.ToString();
+            this.Scheduled.ElementAt(5).Datum_konani.ToString();
         }
     }
 }

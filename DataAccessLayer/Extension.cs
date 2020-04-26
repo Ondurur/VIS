@@ -11,6 +11,7 @@ namespace VIS_Desktop.DataAccessLayer
     {
         public static void AddWithValue(this OracleParameterCollection cmd, string parameterName, object value)
         {
+            //Console.Write("Addwithvalue: " + parameterName + " " + value);
             cmd.Add(parameterName, value);
         }
     }

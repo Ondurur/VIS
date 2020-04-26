@@ -29,7 +29,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA, detilist FROM Akce");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, datum_konani,Cena, vedouci_vid, hodnosti_hid, max_pocet_deti FROM Akce");
 
                 List<Akce> data = new List<Akce>();
                 
@@ -40,7 +40,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     int id = reader.GetInt32(0);
 
                     int? cena;
-                    string detiList;
+                    int? max_pocet_deti;
 
                     if (!reader.IsDBNull(3))
                     {
@@ -52,14 +52,14 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     }
                     if (!reader.IsDBNull(6))
                     {
-                        detiList = reader.GetString(6);
+                        max_pocet_deti = reader.GetInt32(6);
                     }
                     else
                     {
-                        detiList = "";
+                        max_pocet_deti = 300;
                     }
 
-                    data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(id), hdm.SelectById(id), detiList));
+                    data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(reader.GetInt32(4)), hdm.SelectById(reader.GetInt32(5)), max_pocet_deti));
                 }
                 return data;
     }
@@ -70,7 +70,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA, detilist FROM Akce WHERE aid = :aid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, datum_konani,Cena, vedouci_vid, hodnosti_hid, max_pocet_deti FROM Akce WHERE aid = :aid AND rownum = 1");
 
                 command.Parameters.AddWithValue(":aid", aid);
 
@@ -83,7 +83,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     int id = reader.GetInt32(0);
 
                     int? cena;
-                    string detiList;
+                    int? max_pocet_deti;
 
                     if (!reader.IsDBNull(3))
                     {
@@ -95,14 +95,14 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     }
                     if (!reader.IsDBNull(6))
                     {
-                        detiList = reader.GetString(6);
+                        max_pocet_deti = reader.GetInt32(6);
                     }
                     else
                     {
-                        detiList = "";
+                        max_pocet_deti = 300;
                     }
 
-                    data = new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(id), hdm.SelectById(id), detiList);
+                    data = new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, vdm.SelectById(reader.GetInt32(4)), hdm.SelectById(reader.GetInt32(5)), max_pocet_deti);
                 }
                 return data;
             }
@@ -115,41 +115,38 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, DatumK,Cena, VedouciA, HodnostiA FROM Akce WHERE aid = :aid AND rownum = 1"), commandUpdate, commandInsert;
+                OracleCommand command = db.CreateCommand("SELECT aid, Nazev, datum_konani,Cena, vedouci_vid, hodnosti_hid FROM Akce WHERE aid = :aid AND rownum = 1"), commandUpdate, commandInsert;
 
-                command.Parameters.AddWithValue(":aid", akce.aid);
+                command.Parameters.AddWithValue(":aid", akce.Aid);
 
                 var reader = command.ExecuteReader();
 
                 reader.Read();
                 if (reader.HasRows)
                 {
-                    Console.Out.Write("jak kurwa");
-                    commandUpdate = db.CreateCommand("UPDATE Akce SET Nazev = :Nazev , DatumK = :DatumK , Cena = :Cena , VedouciA = :VedouciA , HodnostiA = :HodnostiA , detilist = :detilist WHERE aid = :aid");
+                    commandUpdate = db.CreateCommand("UPDATE Akce SET Nazev = :Nazev , datum_konani = :datum_konani , Cena = :Cena , vedouci_vid = :vedouci_vid , hodnosti_hid = :hodnosti_hid , max_pocet_deti = :max_pocet_deti WHERE aid = :aid");
                     commandUpdate.Parameters.AddWithValue(":Nazev", akce.Nazev);
-                    commandUpdate.Parameters.AddWithValue(":DatumK", akce.DatumK);
+                    commandUpdate.Parameters.AddWithValue(":datum_konani", akce.Datum_konani);
                     commandUpdate.Parameters.AddWithValue(":Cena", akce.Cena);
-                    commandUpdate.Parameters.AddWithValue(":VedouciA", akce.VedouciA.vid);
-                    commandUpdate.Parameters.AddWithValue(":HodnostiA", akce.HodnostiA.hid);
-                    commandUpdate.Parameters.AddWithValue(":detilist", akce.detiList);
-                    commandUpdate.Parameters.AddWithValue(":aid", akce.aid);
+                    commandUpdate.Parameters.AddWithValue(":vedouci_vid", akce.Vedouci_vid.Vid);
+                    commandUpdate.Parameters.AddWithValue(":hodnosti_hid", akce.Hodnosti_hid.Hid);
+                    commandUpdate.Parameters.AddWithValue(":max_pocet_deti", akce.Max_pocet_deti);
+                    commandUpdate.Parameters.AddWithValue(":aid", akce.Aid);
 
                     commandUpdate.ExecuteNonQuery();
                 }
                 else
                 {
-                    commandInsert = db.CreateCommand("INSERT INTO Akce (aid, nazev, datumk, cena, vedoucia, hodnostia, detilist) VALUES ( :aid , :Nazev , :DatumK , :Cena , :VedouciA , :HodnostiA , :detilist )");
-                    commandInsert.Parameters.AddWithValue(":aid", akce.aid);
+                    commandInsert = db.CreateCommand("INSERT INTO Akce (aid, nazev, datum_konani, cena, vedouci_vid, hodnosti_hid, max_pocet_deti) VALUES ( :aid , :Nazev , :datum_konani , :Cena , :vedouci_vid , :hodnosti_hid , :max_pocet_deti )");
+                    commandInsert.Parameters.AddWithValue(":aid", akce.Aid);
                     commandInsert.Parameters.AddWithValue(":Nazev", akce.Nazev);
-                    commandInsert.Parameters.AddWithValue(":DatumK", akce.DatumK);
+                    commandInsert.Parameters.AddWithValue(":datum_konani", akce.Datum_konani);
                     commandInsert.Parameters.AddWithValue(":Cena", akce.Cena);
-                    commandInsert.Parameters.AddWithValue(":VedouciA", akce.VedouciA.vid);
-                    commandInsert.Parameters.AddWithValue(":HodnostiA", akce.HodnostiA.hid);
-                    commandInsert.Parameters.AddWithValue(":detilist", akce.detiList);
+                    commandInsert.Parameters.AddWithValue(":vedouci_vid", akce.Vedouci_vid.Vid);
+                    commandInsert.Parameters.AddWithValue(":hodnosti_hid", akce.Hodnosti_hid.Hid);
+                    commandInsert.Parameters.AddWithValue(":max_pocet_deti", akce.Max_pocet_deti);
 
                     commandInsert.ExecuteNonQuery();
-
-
                 }
             }
         }
@@ -160,14 +157,10 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                
-                AkceArchivDataMapper aadm = new AkceArchivDataMapper();
-                List<AkceArchiv> akceArchivList = aadm.SelectAll();
-                AkceArchiv aa = new AkceArchiv(akceArchivList.Count, akce.Nazev, akce.DatumK, akce.Cena, akce);
-                aadm.Save(aa);
+                OracleCommand command = db.CreateCommand("DELETE FROM Akce WHERE aid = :aid");
+                command.Parameters.AddWithValue(":aid", akce.Aid);
 
-                OracleCommand command = db.CreateCommand("DELETE FROM Akce WHERE ID = :ID");
-                command.Parameters.AddWithValue(":ID", akce.aid);
+                command.ExecuteNonQuery();
             }
         }
 
@@ -182,7 +175,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     for (int i = 0; i < toCSV.Count; i++)
                     {
                         Akce v = toCSV[i];
-                        string line = v.aid + ", " + v.Nazev + ", " + v.DatumK + ", " + v.Cena + ", " + v.VedouciA.vid + ", " + v.HodnostiA.hid;
+                        string line = v.Aid + ", " + v.Nazev + ", " + v.Datum_konani + ", " + v.Cena + ", " + v.Vedouci_vid.Vid + ", " + v.Hodnosti_hid.Hid;
                         w.WriteLine(line);
                         w.Flush();
                     }

@@ -38,12 +38,12 @@ namespace BussinessLayer.Services
 
             for (int i = 0; i < all.Count; i++)
             {
-                IDs[i] = all.ElementAt(i).aid;
+                IDs[i] = all.ElementAt(i).Aid;
                 names[i] = all.ElementAt(i).Nazev;
-                dateTimes[i] = all.ElementAt(i).DatumK;
-                resp[i] = all.ElementAt(i).VedouciA.Jmeno;
+                dateTimes[i] = all.ElementAt(i).Datum_konani;
+                resp[i] = all.ElementAt(i).Vedouci_vid.Jmeno;
                 prices[i] = all.ElementAt(i).Cena;
-                restricts[i] = all.ElementAt(i).HodnostiA.hid;
+                Console.Write("yikes");
             }
 
         }
@@ -66,7 +66,7 @@ namespace BussinessLayer.Services
             {
                 return resp;
             }
-            newEvent = new Akce(adm.SelectAll().Count, Name, dateTime, Price, vdm.SelectByName(Responsible), hdm.SelectById(Restrict), "");
+            newEvent = new Akce(adm.SelectAll().Count, Name, dateTime, Price, vdm.SelectByName(Responsible), hdm.SelectById(Restrict), 300);
             return true;
         }
 
@@ -97,66 +97,66 @@ namespace BussinessLayer.Services
 
         public bool SignMeOnEvent(string events, string Name)
         {
-            string[] IDs = events.Substring(0,events.Length-1).Split(';');
+            //string[] IDs = events.Substring(0,events.Length-1).Split(';');
 
-            for(int i = 0; i< IDs.Length; i++)
-            {
-                int j = Convert.ToInt32(IDs[i]);
-                Akce tempAkce = adm.SelectById(j);
-                tempAkce.detiList += Name + ";";
-                adm.Save(tempAkce);
-            }
+            //for(int i = 0; i< IDs.Length; i++)
+            //{
+            //    int j = Convert.ToInt32(IDs[i]);
+            //    Akce tempAkce = adm.SelectById(j);
+            //    tempAkce.detiList += Name + ";";
+            //    adm.Save(tempAkce);
+            //}
             return true;
         }
 
         public bool RemoveFromEvent(string events,string Name)
         {
-            string[] IDs = events.Substring(0, events.Length - 1).Split(';');
+            //string[] IDs = events.Substring(0, events.Length - 1).Split(';');
 
-            for (int i = 0; i < IDs.Length; i++)
-            {
-                int j = Convert.ToInt32(IDs[i]);
-                Akce tempAkce = adm.SelectById(j);
-                int zacatek = tempAkce.detiList.IndexOf(Name[0]);
-                string tempStr = tempAkce.detiList.Remove(zacatek, Name.Length);
-                tempAkce.detiList = tempStr;
-                adm.Save(tempAkce);
-            }
+            //for (int i = 0; i < IDs.Length; i++)
+            //{
+            //    int j = Convert.ToInt32(IDs[i]);
+            //    Akce tempAkce = adm.SelectById(j);
+            //    int zacatek = tempAkce.detiList.IndexOf(Name[0]);
+            //    string tempStr = tempAkce.detiList.Remove(zacatek, Name.Length);
+            //    tempAkce.detiList = tempStr;
+            //    adm.Save(tempAkce);
+            //}
             return true;
         }
 
         public List<string> getSignedOn(string username)
-        {
+        {/*
             List<string> ret = new List<string>();
-            foreach(Akce a in all)
+            foreach (Akce a in all)
             {
                 int count = 0;
                 foreach (char c in a.detiList)
                     if (c == ';') count++;
-                for (int i = 0; i<count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     int index = a.detiList.IndexOf(';');
                     if (username == a.detiList.Substring(0, index))
                     {
-                        ret.Add(a.aid + "\t" + a.Nazev + "\t" + a.Cena + "\t" + a.DatumK.ToString());                        
+                        ret.Add(a.aid + "\t" + a.Nazev + "\t" + a.Cena + "\t" + a.datum_konani.ToString());
                     }
                     else
                     {
-                        a.detiList = a.detiList.Substring(index+1);
+                        a.detiList = a.detiList.Substring(index + 1);
                     }
                 }
-            }
-            return ret;
+            }*/
+            return null;
         }
 
         public void Save()
         {
-            for(int i = 0; i< 5; i++)
-            {
-                Akce temp = all.ElementAt(i);
-                temp.detiList = "";
-                adm.Save(temp);
-            }
+            //for(int i = 0; i< 5; i++)
+            //{
+            //    Akce temp = all.ElementAt(i);
+            //    temp.detiList = "";
+            //    adm.Save(temp);
+            //}
         }
 
         public bool ExportCSV(string lines)

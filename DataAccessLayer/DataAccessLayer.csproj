@@ -47,19 +47,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
-    <Compile Include="DataMappers\AkceArchivDataMapper.cs" />
+    <Compile Include="DataMappers\AkceDetiDataMapper.cs" />
     <Compile Include="DataMappers\AkceDataMapper.cs" />
-    <Compile Include="DataMappers\DetiArchivDataMapper.cs" />
+    <Compile Include="DataMappers\FunkceDataMapper.cs" />
+    <Compile Include="DataMappers\RodicDataMapper.cs" />
     <Compile Include="DataMappers\DetiDataMapper.cs" />
     <Compile Include="DataMappers\HodnostiDataMapper.cs" />
     <Compile Include="DataMappers\SchuzkyDataMapper.cs" />
+    <Compile Include="DataMappers\LogDataMapper.cs" />
     <Compile Include="DataMappers\VedouciDataMapper.cs" />
     <Compile Include="DTO\Akce.cs" />
-    <Compile Include="DTO\AkceArchiv.cs" />
+    <Compile Include="DTO\AkceDeti.cs" />
     <Compile Include="DTO\Deti.cs" />
-    <Compile Include="DTO\DetiArchiv.cs" />
+    <Compile Include="DTO\Funkce.cs" />
+    <Compile Include="DTO\Rodic.cs" />
     <Compile Include="DTO\Hodnosti.cs" />
     <Compile Include="DTO\Schuzky.cs" />
+    <Compile Include="DTO\Log.cs" />
     <Compile Include="DTO\Vedouci.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Program.cs" />

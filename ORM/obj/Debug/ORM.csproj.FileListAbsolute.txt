@@ -1,0 +1,12 @@
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\bin\Debug\ORM.exe.config
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\bin\Debug\ORM.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\bin\Debug\ORM.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\bin\Debug\DataAccessLayer.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\bin\Debug\DataAccessLayer.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\bin\Debug\DataAccessLayer.exe.config
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\obj\Debug\ORM.csprojAssemblyReference.cache
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\obj\Debug\ORM.csproj.CoreCompileInputs.cache
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\obj\Debug\ORM.csproj.CopyComplete
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\obj\Debug\ORM.exe
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\ORM\obj\Debug\ORM.pdb

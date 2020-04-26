@@ -26,7 +26,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT * FROM Schuzky");
+                OracleCommand command = db.CreateCommand("SELECT sid,nazev_druziny, pocet_deti, datum_konani, vedouci_vid FROM Schuzky");
 
                 List<Schuzky> data = new List<Schuzky>();
 
@@ -46,7 +46,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT * FROM Schuzky WHERE sid = :sid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT sid,nazev_druziny, pocet_deti, datum_konani, vedouci_vid FROM Schuzky WHERE sid = :sid AND rownum = 1");
 
                 command.Parameters.AddWithValue(":sid", sid);
 
@@ -70,27 +70,34 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT * FROM Schuzky WHERE sid = :sid AND rownum = 1");
+                OracleCommand select = db.CreateCommand("SELECT sid,nazev_druziny, pocet_deti, datum_konani, vedouci_vid FROM Schuzky WHERE sid = :sid AND rownum = 1");
 
-                command.Parameters.AddWithValue(":ID", schuzky.sid);
+                select.Parameters.AddWithValue(":ID", schuzky.Sid);
 
-                var reader = command.ExecuteReader();
+                var reader = select.ExecuteReader();
 
                 if (reader.HasRows)
                 {
-                    command.CommandText = "UPDATE Schuzky SET Nazev = :Nazev, pocetD = :pocetD, DatumK = :DatumK, vedouciS = :vedouciS WHERE sid = :sid";
+                    OracleCommand command = db.CreateCommand("UPDATE Schuzky SET Nazev = :Nazev_druziny, pocet_deti = :pocet_deti, datum_konani = :datum_konani, vedouci_vid = :vedouci_vid WHERE sid = :sid");
+                    command.Parameters.AddWithValue(":sid", schuzky.Sid);
+                    command.Parameters.AddWithValue(":Nazev_druziny", schuzky.Nazev);
+                    command.Parameters.AddWithValue(":pocet_deti", schuzky.Pocet_Deti);
+                    command.Parameters.AddWithValue(":datum_konani", schuzky.Datum_konani);
+                    command.Parameters.AddWithValue(":vedouci_vid", schuzky.Vedouci_vid.Vid);
+
+                    command.ExecuteNonQuery();
                 }
                 else
                 {
-                    command.CommandText = "INSERT INTO Schuzky (sid, Nazev, pocetD, DatumK, vedouciS) VALUES (:sid, :Nazev, :pocetD, :DatumK, :vedouciS)";
-                }
-                command.Parameters.AddWithValue(":sid", schuzky.sid);
-                command.Parameters.AddWithValue(":Nazev", schuzky.Nazev);
-                command.Parameters.AddWithValue(":pocetD", schuzky.PocetD);
-                command.Parameters.AddWithValue(":DatumK", schuzky.DatumK);
-                command.Parameters.AddWithValue(":vedouciS", schuzky.VedouciS);
+                    OracleCommand command = db.CreateCommand("INSERT INTO Schuzky (sid, Nazev, pocet_deti, datum_konani, vedouci_vid) VALUES (:sid, :Nazev_druziny, :pocet_deti, :datum_konani, :vedouci_vid)");
+                    command.Parameters.AddWithValue(":sid", schuzky.Sid);
+                    command.Parameters.AddWithValue(":Nazev_druziny", schuzky.Nazev);
+                    command.Parameters.AddWithValue(":pocet_deti", schuzky.Pocet_Deti);
+                    command.Parameters.AddWithValue(":datum_konani", schuzky.Datum_konani);
+                    command.Parameters.AddWithValue(":vedouci_vid", schuzky.Vedouci_vid.Vid);
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
 
             }
         }
@@ -101,10 +108,10 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("DELETE FROM Schuzky WHERE ID = :ID");
-                command.Parameters.AddWithValue(":ID", schuzky.sid);
+                OracleCommand command = db.CreateCommand("DELETE FROM Schuzky WHERE sid = :sid");
+                command.Parameters.AddWithValue(":sid", schuzky.Sid);
 
-
+                command.ExecuteNonQuery();
             }
         }
 
@@ -119,7 +126,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     for (int i = 0; i < toCSV.Count; i++)
                     {
                         Schuzky v = toCSV[i];
-                        string line = v.sid + ", " + v.Nazev + ", " + v.PocetD + ", " + v.DatumK + ", " + v.VedouciS.vid;
+                        string line = v.Sid + ", " + v.Nazev + ", " + v.Pocet_Deti + ", " + v.Datum_konani + ", " + v.Vedouci_vid.Vid;
                         w.WriteLine(line);
                         w.Flush();
                     }

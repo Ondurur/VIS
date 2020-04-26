@@ -8,23 +8,23 @@ namespace VIS_Desktop.DTO
 {
     public class Akce
     {
-        public Akce(int aid, string Nazev, DateTime DatumK, int? Cena, Vedouci VedouciA, Hodnosti HodnostiA, string detiList)
+        public Akce(int aid, string Nazev, DateTime datum_konani, int? Cena, Vedouci vedouci_vid, Hodnosti hodnosti_hid, int? max_pocet_deti)
         {
-            this.aid = aid;
+            this.Aid = aid;
             this.Nazev = Nazev;
-            this.DatumK = DatumK;
+            this.Datum_konani = datum_konani;
             this.Cena = Cena;
-            this.VedouciA = VedouciA;
-            this.HodnostiA = HodnostiA;
-            this.detiList = detiList;
+            this.Max_pocet_deti = max_pocet_deti;
+            this.Vedouci_vid = vedouci_vid;
+            this.Hodnosti_hid = hodnosti_hid;
         }
 
-        public int aid { get; set; }
+        public int Aid { get; set; }
         public String Nazev { get; set; }
-        public DateTime DatumK { get; set; }
+        public DateTime Datum_konani { get; set; }
         public int? Cena { get; set; }
-        public Vedouci VedouciA { get; set; }
-        public Hodnosti HodnostiA { get; set; }
-        public string detiList { get; set; }
+        public int? Max_pocet_deti { get; set; }
+        public Vedouci Vedouci_vid { get; set; }
+        public Hodnosti Hodnosti_hid { get; set; }
     }
 }

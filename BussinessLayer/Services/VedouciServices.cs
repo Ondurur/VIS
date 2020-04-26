@@ -23,7 +23,7 @@ namespace BussinessLayer.Services
             Vedouci d = vdm.TryLogin(username, pw);
             if (d != null)
             {
-                return new Tuple<int, string, string>(d.vid, d.Jmeno, "Administrator");
+                return new Tuple<int, string, string>(d.Vid, d.Jmeno, "Administrator");
             }
             return null;
         }

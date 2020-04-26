@@ -1,0 +1,726 @@
+﻿--------------------------------------------------------
+--  File created - Støeda-dubna-22-2020   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table AKCE
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."AKCE" 
+   (	"AID" NUMBER(*,0), 
+	"NAZEV" VARCHAR2(100 BYTE), 
+	"DATUM_KONANI" DATE, 
+	"CENA" NUMBER(*,0), 
+	"MAX_POCET_DETI" NUMBER(*,0), 
+	"VEDOUCI_VID" NUMBER(*,0), 
+	"HODNOSTI_HID" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table Akce-Deti
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."Akce-Deti" 
+   (	"DETI_DID" NUMBER(*,0), 
+	"AKCE_AID" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table DETI
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."DETI" 
+   (	"DID" NUMBER(*,0), 
+	"JMENO" VARCHAR2(100 BYTE), 
+	"NICKNAME" VARCHAR2(100 BYTE), 
+	"HESLO" VARCHAR2(100 BYTE), 
+	"DATUM_NAROZENI" DATE, 
+	"STAV" NUMBER(*,0), 
+	"DOBA_PUSOBNOSTI" NUMBER(*,0), 
+	"HODNOSTI_HID" NUMBER(*,0), 
+	"SCHUZKY_SID" NUMBER(*,0), 
+	"REG_AKCI" NUMBER(*,0), 
+	"RODIC_RID" NUMBER(*,0) DEFAULT 1
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table FUNKCE
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."FUNKCE" 
+   (	"FID" NUMBER(*,0), 
+	"NAZEV" VARCHAR2(100 BYTE), 
+	"POVINNOSTI" VARCHAR2(500 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table HODNOSTI
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."HODNOSTI" 
+   (	"HID" NUMBER(*,0), 
+	"NAZEV" VARCHAR2(100 BYTE), 
+	"MINIMALNI_VEK" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table LOG
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."LOG" 
+   (	"LID" NUMBER(*,0), 
+	"POCET_VEDOUCICH" NUMBER(*,0), 
+	"POCET_DETI" NUMBER(*,0), 
+	"DATUM_ZALOHY" DATE, 
+	"VEDOUCI_VID" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table RODIC
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."RODIC" 
+   (	"RID" NUMBER(*,0), 
+	"JMENO" VARCHAR2(100 BYTE), 
+	"LOGIN" VARCHAR2(100 BYTE), 
+	"HESLO" VARCHAR2(100 BYTE), 
+	"KONTAKT" VARCHAR2(100 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table SCHUZKY
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."SCHUZKY" 
+   (	"SID" NUMBER(*,0), 
+	"NAZEV_DRUZINY" VARCHAR2(100 BYTE), 
+	"POCET_DETI" NUMBER(*,0), 
+	"DATUM_KONANI" NUMBER(*,0), 
+	"VEDOUCI_VID" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table VEDOUCI
+--------------------------------------------------------
+
+  CREATE TABLE "HOR0404"."VEDOUCI" 
+   (	"VID" NUMBER(*,0), 
+	"JMENO" VARCHAR2(100 BYTE), 
+	"HESLO" VARCHAR2(100 BYTE), 
+	"DATUM_NAROZENI" DATE, 
+	"KONTAKT" VARCHAR2(13 BYTE), 
+	"DOBA_PUSOBNOSTI" NUMBER(*,0), 
+	"FUNKCE_FID" NUMBER(*,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+REM INSERTING into HOR0404.AKCE
+SET DEFINE OFF;
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('1','Cesta na helfstyn',to_date('16.03.17','DD.MM.RR'),'150','30','2','1');
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('2','Tabor 2017',to_date('25.07.17','DD.MM.RR'),'4000','35','1','1');
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('3','Prvni schuzka',to_date('04.09.17','DD.MM.RR'),null,null,'7',null);
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('4','Vylet do U6 v Ostrave',to_date('15.10.17','DD.MM.RR'),'100','20','3','1');
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('5','Chata',to_date('13.11.17','DD.MM.RR'),'300','20','5','4');
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('6','Vanocni schuzka',to_date('19.12.17','DD.MM.RR'),null,null,'6',null);
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('7','Tabor 2018',to_date('28.07.18','DD.MM.RR'),'4000','35','1','2');
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('8','Geralt z Rivie se vraci',to_date('13.09.18','DD.MM.RR'),null,null,'7','2');
+Insert into HOR0404.AKCE (AID,NAZEV,DATUM_KONANI,CENA,MAX_POCET_DETI,VEDOUCI_VID,HODNOSTI_HID) values ('9','Tabor feedback',to_date('15.09.18','DD.MM.RR'),'200',null,'5','4');
+REM INSERTING into HOR0404."Akce-Deti"
+SET DEFINE OFF;
+Insert into HOR0404."Akce-Deti" (DETI_DID,AKCE_AID) values ('1','6');
+Insert into HOR0404."Akce-Deti" (DETI_DID,AKCE_AID) values ('2','1');
+Insert into HOR0404."Akce-Deti" (DETI_DID,AKCE_AID) values ('2','3');
+Insert into HOR0404."Akce-Deti" (DETI_DID,AKCE_AID) values ('2','6');
+Insert into HOR0404."Akce-Deti" (DETI_DID,AKCE_AID) values ('5','1');
+Insert into HOR0404."Akce-Deti" (DETI_DID,AKCE_AID) values ('10','6');
+REM INSERTING into HOR0404.DETI
+SET DEFINE OFF;
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('1','Franta Skacel','ASNick','ASPw',to_date('18.05.01','DD.MM.RR'),'1','2','4','4',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('2','stepan Postava','ASNick','ASPw',to_date('06.04.02','DD.MM.RR'),'0','7','4','4',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('3','Vendula Bestova','ASNick','ASPw',to_date('03.08.04','DD.MM.RR'),'0','6','3','1',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('4','Marek Neuwirth','ASNick','ASPw',to_date('18.06.05','DD.MM.RR'),'0','5','3','1',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('5','Adela Krivankova','ASNick','ASPw',to_date('17.07.07','DD.MM.RR'),'0','2','2','2',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('6','Veronika Velka','ASNick','ASPw',to_date('23.09.04','DD.MM.RR'),'0','4','3','3',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('7','Jara Cimrman Jr','ASNick','ASPw',to_date('19.09.06','DD.MM.RR'),'0','8','3','1',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('8','Napad Dosel','ASNick','ASPw',to_date('16.08.03','DD.MM.RR'),'0','6','3','1',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('9','Helena Postavova','ASNick','ASPw',to_date('19.03.05','DD.MM.RR'),'0','6','3','3',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('10','Eliska Postavova','ASNick','ASPw',to_date('20.08.01','DD.MM.RR'),'0','8','4','4',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('11','Honza Velky','ASNick','ASPw',to_date('30.07.05','DD.MM.RR'),'0','4','3','3',null,'1');
+Insert into HOR0404.DETI (DID,JMENO,NICKNAME,HESLO,DATUM_NAROZENI,STAV,DOBA_PUSOBNOSTI,HODNOSTI_HID,SCHUZKY_SID,REG_AKCI,RODIC_RID) values ('12','Adela Skacelova','ASNick','ASPw',to_date('12.01.04','DD.MM.RR'),'0','1','1','4',null,'1');
+REM INSERTING into HOR0404.FUNKCE
+SET DEFINE OFF;
+Insert into HOR0404.FUNKCE (FID,NAZEV,POVINNOSTI) values ('1','Vedouci strediska','Osoba pravne zastupujici stredisko,Ma pravo rozhodovat o deni strediska na strediskovych radach');
+Insert into HOR0404.FUNKCE (FID,NAZEV,POVINNOSTI) values ('2','Zastupce vedouciho strediska','Zastupuje vedouciho v dobe nepritomnosti,Ma pravo rozhodovat o deni strediska na strediskovych radach');
+Insert into HOR0404.FUNKCE (FID,NAZEV,POVINNOSTI) values ('3','Voleny clen strediskove rady','Ma pravo rozhodovat o deni strediska na strediskovych radach');
+Insert into HOR0404.FUNKCE (FID,NAZEV,POVINNOSTI) values ('4','Zdravotnik','Stara se o zdravotnicke potreby a vi jak s nimi zachazet');
+Insert into HOR0404.FUNKCE (FID,NAZEV,POVINNOSTI) values ('5','Hospodar strediska','Stara se o finance strediska a resi dotace');
+Insert into HOR0404.FUNKCE (FID,NAZEV,POVINNOSTI) values ('6','Oddilovy vudce','Vede schuzky');
+REM INSERTING into HOR0404.HODNOSTI
+SET DEFINE OFF;
+Insert into HOR0404.HODNOSTI (HID,NAZEV,MINIMALNI_VEK) values ('1','clen skautskeho strediska',null);
+Insert into HOR0404.HODNOSTI (HID,NAZEV,MINIMALNI_VEK) values ('2','Vlce/Svetluska',null);
+Insert into HOR0404.HODNOSTI (HID,NAZEV,MINIMALNI_VEK) values ('3','Skaut/Skautka','12');
+Insert into HOR0404.HODNOSTI (HID,NAZEV,MINIMALNI_VEK) values ('4','Rover/Ranger','15');
+Insert into HOR0404.HODNOSTI (HID,NAZEV,MINIMALNI_VEK) values ('5','Vedouci','18');
+REM INSERTING into HOR0404.LOG
+SET DEFINE OFF;
+Insert into HOR0404.LOG (LID,POCET_VEDOUCICH,POCET_DETI,DATUM_ZALOHY,VEDOUCI_VID) values ('0','9','21',to_date('06.04.20','DD.MM.RR'),'1');
+REM INSERTING into HOR0404.RODIC
+SET DEFINE OFF;
+Insert into HOR0404.RODIC (RID,JMENO,LOGIN,HESLO,KONTAKT) values ('1','prvni rodic','prvniR','prvniRpw','nejakyrandommail@mail.cz');
+REM INSERTING into HOR0404.SCHUZKY
+SET DEFINE OFF;
+Insert into HOR0404.SCHUZKY (SID,NAZEV_DRUZINY,POCET_DETI,DATUM_KONANI,VEDOUCI_VID) values ('5','Pata schuzka','3','4','6');
+Insert into HOR0404.SCHUZKY (SID,NAZEV_DRUZINY,POCET_DETI,DATUM_KONANI,VEDOUCI_VID) values ('1','Akatsuki','12','5','5');
+Insert into HOR0404.SCHUZKY (SID,NAZEV_DRUZINY,POCET_DETI,DATUM_KONANI,VEDOUCI_VID) values ('2','Lysky','17','2','4');
+Insert into HOR0404.SCHUZKY (SID,NAZEV_DRUZINY,POCET_DETI,DATUM_KONANI,VEDOUCI_VID) values ('3','Mimuti','7','3','8');
+Insert into HOR0404.SCHUZKY (SID,NAZEV_DRUZINY,POCET_DETI,DATUM_KONANI,VEDOUCI_VID) values ('4','Eridor','15','5','6');
+REM INSERTING into HOR0404.VEDOUCI
+SET DEFINE OFF;
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('1','Tomas Adamek','TAskaut',to_date('06.02.81','DD.MM.RR'),'+420605507148','23','1');
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('2','Stanovsky Jan','SJskaut',to_date('05.05.87','DD.MM.RR'),'+420732285678','21','2');
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('3','Hornicek Ondrej','HOskaut',to_date('15.05.98','DD.MM.RR'),'+420737379829','15','3');
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('4','Gelnar Jakub','GJskaut',to_date('07.08.99','DD.MM.RR'),'+420000000000','12','4');
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('5','Hornicek Jiri','HJskaut',to_date('31.01.97','DD.MM.RR'),'+420736749751','15','5');
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('7','Milan Krivanek','MKskaut',to_date('06.08.99','DD.MM.RR'),'+420775432212','12','3');
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('9','Honkova Lucie','HLskaut',to_date('28.11.00','DD.MM.RR'),'+420624879321','9','6');
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('6','Barbora Blazkova','BBskaut',to_date('07.07.99','DD.MM.RR'),'+420603981284','7',null);
+Insert into HOR0404.VEDOUCI (VID,JMENO,HESLO,DATUM_NAROZENI,KONTAKT,DOBA_PUSOBNOSTI,FUNKCE_FID) values ('8','Besta Ondrej','BOskaut',to_date('14.03.01','DD.MM.RR'),'+420604435560','6',null);
+--------------------------------------------------------
+--  DDL for Index AKCE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."AKCE_PK" ON "HOR0404"."AKCE" ("AID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index Akce-Deti_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."Akce-Deti_PK" ON "HOR0404"."Akce-Deti" ("DETI_DID", "AKCE_AID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index DETI_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."DETI_PK" ON "HOR0404"."DETI" ("DID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index FUNKCE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."FUNKCE_PK" ON "HOR0404"."FUNKCE" ("FID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index HODNOSTI_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."HODNOSTI_PK" ON "HOR0404"."HODNOSTI" ("HID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index LOG_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."LOG_PK" ON "HOR0404"."LOG" ("LID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index RODIC_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."RODIC_PK" ON "HOR0404"."RODIC" ("RID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index SCHÙZKY_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."SCHÙZKY_PK" ON "HOR0404"."SCHUZKY" ("SID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index VEDOUCI_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOR0404"."VEDOUCI_PK" ON "HOR0404"."VEDOUCI" ("VID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Procedure ADDAKCETODITE
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "HOR0404"."ADDAKCETODITE" (p_dID integer, p_aID integer)
+AS
+v_DiteMaAkci integer;
+v_PotrebnaHodnost integer;
+v_HodnostDitete integer;
+v_MaxPocetDeti integer;
+v_LidiNaAkci integer;
+BEGIN
+    SELECT COUNT(*) INTO v_DiteMaAkci FROM "Akce-Deti" ad WHERE ad.akce_aid = p_aID AND ad.deti_did = p_dID;
+    IF v_DiteMaAkci >= 1 
+    THEN 
+        --already registered--
+        RETURN ;
+    ELSE
+        --register to event--
+        SELECT COUNT(*) INTO v_LidiNaAkci FROM "Akce-Deti" ad WHERE ad.akce_aid = p_aID;
+        SELECT COALESCE(max_pocet_deti, v_LidiNaAkci+1), COALESCE(hodnosti_hid,1) INTO v_MaxPocetDeti, v_PotrebnaHodnost FROM akce a WHERE a.aid = p_aID;
+        SELECT hodnosti_hid INTO v_HodnostDitete FROM deti d WHERE d.did = p_dID;
+        IF v_LidiNaAkci >= v_MaxPocetDeti 
+        THEN        
+            DBMS_OUTPUT.PUT_LINE('Error, plna akce' || v_lidinaakci ||  ' ' || v_maxpocetdeti);
+            RETURN;
+        END IF;
+        DBMS_OUTPUT.PUT_LINE('check poctu done');
+        IF v_PotrebnaHodnost > v_hodnostDitete
+        THEN
+            DBMS_OUTPUT.PUT_LINE('Error, spatna hodnost' || v_potrebnahodnost ||  ' ' || v_hodnostditete);
+            RETURN;
+        END IF;
+        INSERT INTO "Akce-Deti"(deti_did, akce_aid) VALUES(p_dID, p_aID);
+        COMMIT;
+    END IF;
+END AddAkceToDite;
+
+/
+--------------------------------------------------------
+--  DDL for Procedure DITEBECOMEVEDOUCI
+--------------------------------------------------------
+set define off;
+
+create or replace PROCEDURE DiteBecomeVedouci(p_dID integer)
+AS
+BEGIN
+    INSERT INTO vedouci(vID, jmeno, heslo, datum_narozeni, kontakt, funkce_fid) 
+    VALUES((SELECT COUNT(*)+1 FROM vedouci),
+    (SELECT d.jmeno FROM deti d WHERE d.dID = p_dID),
+    (SELECT d.heslo FROM deti d WHERE d.dID = p_dID), 
+    (SELECT d.datum_narozeni FROM deti d WHERE d.dID = p_dID),
+    (SELECT r.kontakt FROM rodic r LEFT JOIN deti d ON d.rodic_rid = r.rid WHERE d.did = p_dID),
+    0);
+    UPDATE deti SET stav = 1 WHERE dID = p_dID;
+END DiteBecomeVedouci;
+
+/
+--------------------------------------------------------
+--  DDL for Procedure MAKELOG
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "HOR0404"."MAKELOG" (p_vedouciID INTEGER)
+AS
+v_detiCount Integer;
+v_vedouciCount Integer;
+v_currentDate DATE;
+v_countLogs Integer;
+BEGIN
+    SELECT COUNT(*) INTO v_detiCount FROM deti d WHERE d.stav = 0;
+    SELECT COUNT(*) INTO v_vedouciCount FROM vedouci ;
+    SELECT COUNT(*) INTO v_countLogs FROM "LOG";
+    SELECT CURRENT_DATE into v_currentDate FROM DUAL ;
+    v_countLogs := v_countLogs + 1;
+    INSERT INTO "LOG"(lID, pocet_vedoucich, pocet_deti, datum_zalohy, vedouci_vid) VALUES (v_countLogs, v_vedouciCount, v_detiCount, v_currentDate, p_vedouciID );
+END MakeLog;
+
+/
+--------------------------------------------------------
+--  DDL for Procedure VYTVOR_FUNKCI
+--------------------------------------------------------
+set define off;
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "HOR0404"."VYTVOR_FUNKCI" (p_nazev VARCHAR, p_povinnosti)
+AS
+	v_stejne INTEGER;
+	v_vedouciID INTEGER;
+	v_fID INTEGER;
+BEGIN
+	--viz. 1.1
+	INSERT INTO funkce(nazev, povinnosti)
+	VALUES('nova funkce', 'povinnosti fukce');
+
+	EXCEPTION
+      WHEN DUP_VAL_ON_INDEX
+      THEN
+         DBMS_OUTPUT.PUT_LINE("Stejna funkce jiz existuje");
+
+	--viz. 3.1
+	SELECT MIN(v.vID) INTO v_vedouciID
+	FROM vedouci v WHERE v.funkce_fid IS NULL;
+
+	--viz. 4.1
+	SELECT MAX(f.fID) INTO v_fID
+	FROM funkce
+
+	--viz. 5.1
+	IF v_vedouciID IS NOT NULL
+	THEN
+		UPDATE vedouci SET funkce_fid = v_fID WHERE fID = ;
+	ELSE
+		INSERT INTO vedouci(jmeno, datum_narozeni, kontakt)
+		VALUES('temp', DATE(CURRENT_DATE), '+420123456789') -- vratit se potom na zacatek tohohle IF-u
+	END IF;
+END; 
+
+CREATE OR REPLACE PROCEDURE DiteBecomeVedouci(p_dID INTEGER)
+AS
+BEGIN
+	INSERT INTO vedouci(jmeno, datum_narozeni, kontakt, doba_pusobnosti) 
+    SELECT d.dID, d.datum_narozeni, d.kontakt_na_rodice, d.doba_pusobnosti  
+    FROM deti d WHERE d.dID LIKE p_dID; 
+
+    INSERT INTO detiarchiv(jmeno, datum_narozeni, kontakt_na_rodice, doba_pusobnosti) 
+    SELECT d.dID, d.datum_narozeni, d.kontakt_na_rodice, d.doba_pusobnosti  
+    FROM deti d WHERE d.dID LIKE p_dID; 
+
+    DELETE FROM deti WHERE did = p_dID;
+END;
+
+CREATE OR REPLACE PROCEDURE DiteArchive(p_dID INTEGER)
+AS
+    v_daid INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO v_daid FROM detiarchiv;
+    v_daid:= v_daid+1;
+
+	INSERT INTO detiarchiv(did, jmeno, datum_narozeni, kontakt_na_rodice, doba_pusobnosti, deti_did) 
+    SELECT v_daID,d.jmeno, d.datum_narozeni, d.kontakt_na_rodice, d.doba_pusobnosti, d.did
+    FROM deti d WHERE d.dID LIKE p_dID; 
+
+    UPDATE deti SET stav = 1 WHERE did = p_dID;
+END;
+
+
+
+SELECT * FROM akcearchiv
+EXEC akcearchive(9);
+
+create or replace PROCEDURE zalohuj
+AS
+    v_max_lid INTEGER;
+    v_pocetD INTEGER;
+    v_pocetV INTEGER;
+BEGIN
+    SELECT MAX(lid) INTO v_max_lid FROM "LOG";
+    v_max_lid := v_max_lid+1;
+
+    SELECT COUNT(*) INTO v_pocetD FROM deti;
+
+    SELECT COUNT(*) INTO v_pocetV FROM vedouci;
+
+	INSERT INTO "LOG"(lid, datum_zalohy, pocet_deti, pocet_vedoucich)
+	VALUES ( v_max_lid ,TO_DATE(TO_CHAR(SYSDATE, 'DD-MON-YYYY')), v_pocetD, v_pocetV);
+END;
+
+ALTER TABLE "LOG" 
+
+SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY HH:MI:SS') FROM dual;
+
+CREATE OR REPLACE TRIGGER ZalohaV
+AFTER INSERT OR DELETE
+ON vedouci
+FOR EACH ROW
+DECLARE
+    v_pocetD INTEGER;
+    v_pocetV INTEGER;
+    v_pocet INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO v_pocetD FROM deti;
+    SELECT COUNT(*) INTO v_pocetV FROM vedouci;
+
+    v_pocet:= v_pocetV + v_pocetD;
+
+    IF MOD(v_pocet, 5) = 0 THEN
+        zalohuj;
+    END IF;    
+END;
+SELECT * FROM detiarchiv
+SELECT * FROM vedouci
+SELECT * FROM deti
+SELECT * FROM "LOG"
+EXEC zalohuj;
+
+SELECT * from funkce
+
+SELECT * FROM akce
+SELECT * FROM hodnosti
+
+SELECT d.jmeno, s.nazev_druziny FROM Deti d LEFT JOIN Schuzky s ON s.sid = d.schuzky_sid AND s.sid = 3
+WHERE s.nazev_druziny IS NOT NULL
+
+
+SELECT v.jmeno, s.nazev_druziny, d.jmeno, p.umisteni FROM vedouci v JOIN schuzky s ON v.vid = s.sid AND v.jmeno LIKE '%a%' 
+JOIN deti d ON d.schuzky_sid =( SELECT did FROM deti WHERE datum_narozeni = (SELECT MIN(datum_narozeni) FROM deti) AND d.schuzky_sid = s.sid) JOIN prostory p ON p.pid = s.prostory_pid
+
+SELECT * FROM Akce
+
+/
+--------------------------------------------------------
+--  DDL for Function FADDSTUDENT
+--------------------------------------------------------
+
+  CREATE OR REPLACE EDITIONABLE FUNCTION "HOR0404"."FADDSTUDENT" (p_login VARCHAR, p_fname VARCHAR, p_lname VARCHAR, p_tallness INT)
+RETURN VARCHAR
+AS
+BEGIN
+    AddStudent(p_login, p_fname,p_lname,p_tallness);
+    RETURN 'ok';
+    EXCEPTION
+        WHEN OTHERS THEN
+            RETURN 'error!' || SQLERRM || SQLCODE;
+END;
+
+/
+--------------------------------------------------------
+--  Constraints for Table FUNKCE
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."FUNKCE" MODIFY ("FID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."FUNKCE" MODIFY ("NAZEV" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."FUNKCE" ADD CONSTRAINT "FUNKCE_PK" PRIMARY KEY ("FID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "HOR0404"."FUNKCE" ADD UNIQUE ("NAZEV")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table RODIC
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."RODIC" MODIFY ("RID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."RODIC" MODIFY ("JMENO" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."RODIC" MODIFY ("LOGIN" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."RODIC" MODIFY ("HESLO" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."RODIC" MODIFY ("KONTAKT" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."RODIC" ADD CONSTRAINT "RODIC_PK" PRIMARY KEY ("RID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table AKCE
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."AKCE" MODIFY ("AID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."AKCE" MODIFY ("NAZEV" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."AKCE" MODIFY ("DATUM_KONANI" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."AKCE" MODIFY ("VEDOUCI_VID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."AKCE" ADD CONSTRAINT "AKCE_PK" PRIMARY KEY ("AID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table VEDOUCI
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."VEDOUCI" MODIFY ("VID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."VEDOUCI" MODIFY ("JMENO" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."VEDOUCI" MODIFY ("HESLO" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."VEDOUCI" MODIFY ("DATUM_NAROZENI" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."VEDOUCI" MODIFY ("KONTAKT" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."VEDOUCI" ADD CONSTRAINT "VEDOUCI_PK" PRIMARY KEY ("VID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table HODNOSTI
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."HODNOSTI" MODIFY ("HID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."HODNOSTI" MODIFY ("NAZEV" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."HODNOSTI" ADD CONSTRAINT "HODNOSTI_PK" PRIMARY KEY ("HID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table DETI
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("RODIC_RID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("DID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("JMENO" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("NICKNAME" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("HESLO" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("DATUM_NAROZENI" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("STAV" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("HODNOSTI_HID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" MODIFY ("SCHUZKY_SID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."DETI" ADD CONSTRAINT "DETI_PK" PRIMARY KEY ("DID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table SCHUZKY
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."SCHUZKY" MODIFY ("SID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."SCHUZKY" MODIFY ("NAZEV_DRUZINY" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."SCHUZKY" MODIFY ("POCET_DETI" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."SCHUZKY" MODIFY ("DATUM_KONANI" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."SCHUZKY" MODIFY ("VEDOUCI_VID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."SCHUZKY" ADD CONSTRAINT "SCHÙZKY_PK" PRIMARY KEY ("SID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table LOG
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."LOG" MODIFY ("LID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."LOG" MODIFY ("POCET_VEDOUCICH" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."LOG" MODIFY ("POCET_DETI" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."LOG" MODIFY ("DATUM_ZALOHY" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."LOG" ADD CONSTRAINT "LOG_PK" PRIMARY KEY ("LID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table Akce-Deti
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."Akce-Deti" MODIFY ("DETI_DID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."Akce-Deti" MODIFY ("AKCE_AID" NOT NULL ENABLE);
+  ALTER TABLE "HOR0404"."Akce-Deti" ADD CONSTRAINT "Akce-Deti_PK" PRIMARY KEY ("DETI_DID", "AKCE_AID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table AKCE
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."AKCE" ADD CONSTRAINT "AKCE_HODNOSTI_FK" FOREIGN KEY ("HODNOSTI_HID")
+	  REFERENCES "HOR0404"."HODNOSTI" ("HID") ENABLE;
+  ALTER TABLE "HOR0404"."AKCE" ADD CONSTRAINT "AKCE_VEDOUCI_FK" FOREIGN KEY ("VEDOUCI_VID")
+	  REFERENCES "HOR0404"."VEDOUCI" ("VID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table Akce-Deti
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."Akce-Deti" ADD CONSTRAINT "Akce-Deti_Akce_FK" FOREIGN KEY ("AKCE_AID")
+	  REFERENCES "HOR0404"."AKCE" ("AID") ENABLE;
+  ALTER TABLE "HOR0404"."Akce-Deti" ADD CONSTRAINT "Akce-Deti_Deti_FK" FOREIGN KEY ("DETI_DID")
+	  REFERENCES "HOR0404"."DETI" ("DID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table DETI
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."DETI" ADD CONSTRAINT "DETI_RODIC_FK" FOREIGN KEY ("RODIC_RID")
+	  REFERENCES "HOR0404"."RODIC" ("RID") ENABLE;
+  ALTER TABLE "HOR0404"."DETI" ADD CONSTRAINT "DETI_HODNOSTI_FK" FOREIGN KEY ("HODNOSTI_HID")
+	  REFERENCES "HOR0404"."HODNOSTI" ("HID") ENABLE;
+  ALTER TABLE "HOR0404"."DETI" ADD CONSTRAINT "DETI_SCHÙZKY_FK" FOREIGN KEY ("SCHUZKY_SID")
+	  REFERENCES "HOR0404"."SCHUZKY" ("SID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table LOG
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."LOG" ADD CONSTRAINT "LOG_VEDOUCI_FK" FOREIGN KEY ("VEDOUCI_VID")
+	  REFERENCES "HOR0404"."VEDOUCI" ("VID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table SCHUZKY
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."SCHUZKY" ADD CONSTRAINT "SCHÙZKY_VEDOUCI_FK" FOREIGN KEY ("VEDOUCI_VID")
+	  REFERENCES "HOR0404"."VEDOUCI" ("VID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table VEDOUCI
+--------------------------------------------------------
+
+  ALTER TABLE "HOR0404"."VEDOUCI" ADD CONSTRAINT "VEDOUCI_FUNKCE_FK" FOREIGN KEY ("FUNKCE_FID")
+	  REFERENCES "HOR0404"."FUNKCE" ("FID") ENABLE;

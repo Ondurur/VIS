@@ -25,7 +25,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT * FROM Hodnosti");
+                OracleCommand command = db.CreateCommand("SELECT hid, nazev, minimalni_vek FROM Hodnosti");
 
                 List<Hodnosti> data = new List<Hodnosti>();
 
@@ -44,7 +44,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT * FROM Hodnosti WHERE hid = :hid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT hid, nazev, minimalni_vek FROM Hodnosti WHERE hid = :hid AND rownum = 1");
 
                 command.Parameters.AddWithValue(":hid", hid);
 
@@ -67,25 +67,30 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT * FROM Hodnosti WHERE hid = :hid AND rownum = 1");
+                OracleCommand select = db.CreateCommand("SELECT hid, nazev, minimalni_vek FROM Hodnosti WHERE hid = :hid AND rownum = 1");
 
-                command.Parameters.AddWithValue(":hid", hodnosti.hid);
+                select.Parameters.AddWithValue(":hid", hodnosti.Hid);
 
-                var reader = command.ExecuteReader();
+                var reader = select.ExecuteReader();
 
                 if (reader.HasRows)
                 {
-                    command.CommandText = "UPDATE Hodnosti SET Nazev = :Nazev, MinVek = :MinVek WHERE hid = :hid";
+                    OracleCommand command = db.CreateCommand("UPDATE Hodnosti SET Nazev = :Nazev, minimalni_vek = :minimalni_vek WHERE hid = :hid");
+                    command.Parameters.AddWithValue(":hid", hodnosti.Hid);
+                    command.Parameters.AddWithValue(":Nazev", hodnosti.Nazev);
+                    command.Parameters.AddWithValue(":minimalni_vek", hodnosti.Minimalni_vek);
+
+                    command.ExecuteNonQuery();
                 }
                 else
                 {
-                    command.CommandText = "INSERT INTO Hodnosti (hid, Nazev, MinVek) VALUES (:hid, :Nazev, :MinVek)";
-                }
-                command.Parameters.AddWithValue(":hid", hodnosti.hid);
-                command.Parameters.AddWithValue(":Nazev", hodnosti.Nazev);
-                command.Parameters.AddWithValue(":MinVek", hodnosti.MinVek);
+                    OracleCommand command = db.CreateCommand("INSERT INTO Hodnosti (hid, Nazev, minimalni_vek) VALUES (:hid, :Nazev, :minimalni_vek)");
+                    command.Parameters.AddWithValue(":hid", hodnosti.Hid);
+                    command.Parameters.AddWithValue(":Nazev", hodnosti.Nazev);
+                    command.Parameters.AddWithValue(":minimalni_vek", hodnosti.Minimalni_vek);
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                }
 
             }
         }
@@ -96,10 +101,10 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("DELETE FROM Hodnosti WHERE ID = :ID");
-                command.Parameters.AddWithValue(":ID", hodnosti.hid);
+                OracleCommand command = db.CreateCommand("DELETE FROM Hodnosti WHERE hid = :ID");
+                command.Parameters.AddWithValue(":ID", hodnosti.Hid);
 
-
+                command.ExecuteNonQuery();                
             }
         }
 
@@ -114,7 +119,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     for (int i = 0; i < toCSV.Count; i++)
                     {
                         Hodnosti v = toCSV[i];
-                        string line = v.hid + ", " + v.Nazev + ", " + v.MinVek;
+                        string line = v.Hid + ", " + v.Nazev + ", " + v.Minimalni_vek;
                         w.WriteLine(line);
                         w.Flush();
                     }
