@@ -1,0 +1,77 @@
+create or replace PROCEDURE AddAkceToDite(p_dID integer, p_aID integer)
+AS
+v_DiteMaAkci integer;
+v_PotrebnaHodnost integer;
+v_HodnostDitete integer;
+v_MaxPocetDeti integer;
+v_LidiNaAkci integer;
+BEGIN
+    SELECT COUNT(*) INTO v_DiteMaAkci FROM akcedeti ad WHERE ad.akce_aid = p_aID AND ad.deti_did = p_dID;
+    IF v_DiteMaAkci >= 1 
+    THEN 
+        --already registered--
+        RETURN ;
+    ELSE
+        --register to event--
+        SELECT COUNT(*) INTO v_LidiNaAkci FROM akcedeti ad WHERE ad.akce_aid = p_aID;
+        SELECT COALESCE(max_pocet_deti, v_LidiNaAkci+1), COALESCE(hodnosti_hid,1) INTO v_MaxPocetDeti, v_PotrebnaHodnost FROM akce a WHERE a.aid = p_aID;
+        SELECT hodnosti_hid INTO v_HodnostDitete FROM deti d WHERE d.did = p_dID;
+        IF v_LidiNaAkci >= v_MaxPocetDeti 
+        THEN        
+            DBMS_OUTPUT.PUT_LINE('Error, plna akce' || v_lidinaakci ||  ' ' || v_maxpocetdeti);
+            RETURN;
+        END IF;
+        DBMS_OUTPUT.PUT_LINE('check poctu done');
+        IF v_PotrebnaHodnost > v_hodnostDitete
+        THEN
+            DBMS_OUTPUT.PUT_LINE('Error, spatna hodnost' || v_potrebnahodnost ||  ' ' || v_hodnostditete);
+            RETURN;
+        END IF;
+        INSERT INTO akcedeti(deti_did, akce_aid) VALUES(p_dID, p_aID);
+        UPDATE deti SET reg_akci = (reg_akci+1) WHERE did = p_dID;
+    END IF;
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;
+END AddAkceToDite;
+
+create or replace PROCEDURE DiteBecomeVedouci(p_dID integer)
+AS
+BEGIN
+    INSERT INTO vedouci(vID, jmeno, heslo, datum_narozeni, kontakt, funkce_fid) 
+    VALUES((SELECT COUNT(*)+1 FROM vedouci),
+    (SELECT d.jmeno FROM deti d WHERE d.dID = p_dID),
+    (SELECT d.heslo FROM deti d WHERE d.dID = p_dID), 
+    (SELECT d.datum_narozeni FROM deti d WHERE d.dID = p_dID),
+    (SELECT r.kontakt FROM rodic r LEFT JOIN deti d ON d.rodic_rid = r.rid WHERE d.did = p_dID),
+    0);
+    UPDATE deti SET stav = 1 WHERE dID = p_dID;
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;
+END DiteBecomeVedouci;
+
+create or replace PROCEDURE vytvor_funkci(p_nazev VARCHAR, p_povinnosti VARCHAR)
+AS
+	v_vedouciID INTEGER;
+	v_fID INTEGER;
+BEGIN    
+
+    SELECT MIN(v.vID) INTO v_vedouciID
+	FROM vedouci v WHERE v.funkce_fid IS NULL;
+    
+    IF v_vedouciID IS NULL THEN
+        DBMS_OUTPUT.PUT_LINE('Nebyl nalezen volny vedouci');
+        return;
+    END IF;
+    
+    INSERT INTO funkce(fid, nazev, povinnosti)
+	VALUES((SELECT COUNT(*) FROM funkce)+1,p_nazev, p_povinnosti);
+
+    SELECT MAX(f.fID) INTO v_fID
+	FROM funkce f;
+
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;            
+END vytvor_funkci; 

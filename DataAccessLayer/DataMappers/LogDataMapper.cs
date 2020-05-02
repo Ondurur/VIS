@@ -28,7 +28,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT lid, pocet_vedoucich, pocet_deti, datum_zalohy, vedouci_vid FROM Log");
+                OracleCommand command = db.CreateCommand("SELECT l.lid, l.pocet_vedoucich, l.pocet_deti, l.datum_zalohy, v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti  FROM Log l LEFT JOIN vedouci v ON v.vid = l.vedouci_vid LEFT JOIN funkce f ON f.fid = v.funkce_fid");
 
                 List<Log> data = new List<Log>();
 
@@ -39,6 +39,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     data.Add(new Log(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetDateTime(3), vdm.SelectById(reader.GetInt32(4))));                    
                 }             
 
+                reader.Close();
                 return data;
             }
         }
@@ -48,7 +49,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT lid, pocet_vedoucich, pocet_deti, datum_zalohy, vedouci_vid FROM Log WHERE lid = :lid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT l.lid, l.pocet_vedoucich, l.pocet_deti, l.datum_zalohy, v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti  FROM Log l LEFT JOIN vedouci v ON v.vid = l.vedouci_vid LEFT JOIN funkce f ON f.fid = v.funkce_fid WHERE lid = :lid");
 
                 command.Parameters.AddWithValue(":lid", lid);
 
@@ -62,9 +63,12 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     {
                         funkceID = reader.GetInt32(5);
                     }
+                    Funkce f = new Funkce(reader.GetInt32(9), reader.GetString(10), reader.GetString(11));
+                    Vedouci v = new Vedouci(reader.GetInt32(4), reader.GetString(5), reader.GetString(6), reader.GetDateTime(7), reader.GetString(8), f);
 
-                    data = new Log(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetDateTime(3), vdm.SelectById(reader.GetInt32(4)));
+                    data = new Log(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetDateTime(3), v);
                 }
+                reader.Close();
                 return data;
             }
         }

@@ -35,6 +35,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     data.Add(new Hodnosti(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2)));
                 }
+                reader.Close();
                 return data;
             }
         }
@@ -56,6 +57,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     data = new Hodnosti(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2));
                 }
+                reader.Close();
                 return data;
             }
         }

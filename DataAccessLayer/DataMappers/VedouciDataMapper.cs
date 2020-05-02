@@ -28,7 +28,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT vid, jmeno, heslo, datum_narozeni, kontakt, funkce_fid FROM vedouci");
+                OracleCommand command = db.CreateCommand("SELECT v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti FROM vedouci v LEFT JOIN funkce f ON f.fid = v.funkce_fid");
 
                 List<Vedouci> data = new List<Vedouci>();
 
@@ -36,12 +36,11 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 while (reader.Read())
                 {
-                    Funkce funkce = null;
-                    if (!reader.IsDBNull(5))
-                        funkce = fdm.SelectById(reader.GetInt32(5));
-                    data.Add(new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), funkce));                    
+                    Funkce f = new Funkce(reader.GetInt32(5), reader.GetString(6), reader.GetString(7));
+                    data.Add(new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), f));                    
                 }             
 
+                reader.Close();
                 return data;
             }
         }
@@ -51,7 +50,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT vid, jmeno, heslo, datum_narozeni, kontakt, funkce_fid FROM vedouci WHERE Jmeno = :nick AND Heslo = :heslo AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti FROM vedouci v LEFT JOIN funkce f ON f.fid = v.funkce_fid WHERE v.Jmeno = :nick AND v.Heslo = :heslo");
 
                 command.Parameters.AddWithValue(":nick", username);
                 command.Parameters.AddWithValue(":heslo", heslo);
@@ -60,12 +59,8 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 while (reader.Read())
                 {
-                    int id = reader.GetInt32(0);
-                    string jmeno = reader.GetString(1);
-                    string password = reader.GetString(2);
-                    DateTime datum_narozeni = reader.GetDateTime(3);
-                    string kontakt = reader.GetString(4);
-                    return new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), fdm.SelectById(reader.GetInt32(5)));
+                    Funkce f = new Funkce(reader.GetInt32(5), reader.GetString(6), reader.GetString(7));
+                    return new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), f);
                 }
                 return null;
             }
@@ -76,23 +71,19 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT vid, jmeno, heslo, datum_narozeni, kontakt, funkce_fid FROM vedouci WHERE vid = :vid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti FROM vedouci v LEFT JOIN funkce f ON f.fid = v.funkce_fid WHERE v.vid = :vid");
 
                 command.Parameters.AddWithValue(":vid", vid);
 
                 Vedouci data = null;
-                int? funkceID = -1;
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    if (!reader.IsDBNull(5))
-                    {
-                        funkceID = reader.GetInt32(5);
-                    }
-
-                    data = new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), fdm.SelectById(funkceID));
+                    Funkce f = new Funkce(reader.GetInt32(5), reader.GetString(6), reader.GetString(7));
+                    data = new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), f);
                 }
+                reader.Close();
                 return data;
             }
         }
@@ -102,7 +93,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT vid, jmeno, heslo, datum_narozeni, kontakt, funkce_fid FROM Vedouci WHERE Jmeno = :jmeno AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti FROM vedouci v LEFT JOIN funkce f ON f.fid = v.funkce_fid WHERE v.Jmeno = :jmeno");
 
                 command.Parameters.AddWithValue(":jmeno", name);
 
@@ -112,8 +103,10 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 while (reader.Read())
                 {
-                    data = new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), fdm.SelectById(reader.GetInt32(5)));
+                    Funkce f = new Funkce(reader.GetInt32(5), reader.GetString(6), reader.GetString(7));
+                    data = new Vedouci(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetString(4), f);
                 }
+                reader.Close();
                 return data;
             }
         }
@@ -125,7 +118,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             {
                 db.Connect();
 
-                OracleCommand select = db.CreateCommand("SELECT vid, jmeno, heslo, datum_narozeni, kontakt, funkce_fid FROM Vedouci WHERE vID = :ID AND rownum = 1");
+                OracleCommand select = db.CreateCommand("SELECT v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti FROM vedouci v LEFT JOIN funkce f ON f.fid = v.funkce_fid WHERE v.vID = :ID");
 
                     select.Parameters.AddWithValue(":ID", vedouci.Vid);
 
@@ -163,7 +156,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 Tuple<string, string, string> ret = null;
 
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT v.jmeno, (SELECT s.nazev_druziny FROM schuzky s WHERE s.vedouci_vid = v.vid),(SELECT jmeno FROM(SELECT did, jmeno, datum_narozeni FROM deti d JOIN schuzky s ON s.sid = d.schuzky_sid AND s.vedouci_vid = :p_vID WHERE ROWNUM = 1))FROM vedouci v WHERE v.vid = :p_vID");
+                OracleCommand command = db.CreateCommand("SELECT v.jmeno, s.nazev_druziny, d.jmeno FROM vedouci v LEFT JOIN schuzky s ON s.vedouci_vid = v.vid LEFT JOIN deti d ON d.schuzky_sid = s.sid WHERE s.sid IS NOT NULL AND v.vid = :p_vID AND d.datum_narozeni = (SELECT MIN(de.datum_narozeni) FROM deti de WHERE de.schuzky_sid = s.sid)");
 
                 command.Parameters.AddWithValue(":p_vID", p_vID);
 

@@ -38,82 +38,56 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     int id = reader.GetInt32(0);
                     data.Add(new AkceDeti(id, reader.GetInt32(1)));
                 }
-                return data;
+                reader.Close();
+                return data;;
             }
         }
 
-        public AkceDeti SelectByAkceId(int akce_aid)
+        public List<AkceDeti> SelectByAkceId(int akce_aid)
         {
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT akce_aid, deti_did FROM AkceDeti aa WHERE aa.akce_aid = :akce_aid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT akce_aid, deti_did FROM AkceDeti aa WHERE aa.akce_aid = :akce_aid");
 
                 command.Parameters.AddWithValue(":akce_aid", akce_aid);
 
-                AkceDeti data = null;
-                
+                List<AkceDeti> data = new List<AkceDeti>();
+
                 var reader = command.ExecuteReader();
 
-                int id = reader.GetInt32(0);
-                data = new AkceDeti(id, reader.GetInt32(1));
-
-                return data;
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    data.Add(new AkceDeti(id, reader.GetInt32(1)));
+                }
+                reader.Close();
+                return data;;
             }
         }
 
-        public AkceDeti SelectByDetiId(int deti_did)
+        public List<AkceDeti> SelectByDetiId(int deti_did)
         {
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT akce_aid, deti_did FROM AkceDeti aa WHERE aa.deti_did = :deti_did AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT akce_aid, deti_did FROM AkceDeti aa WHERE aa.deti_did = :deti_did");
 
                 command.Parameters.AddWithValue(":deti_did", deti_did);
 
-                AkceDeti data = null;
+                List<AkceDeti> data = new List<AkceDeti>();
 
                 var reader = command.ExecuteReader();
 
-                int id = reader.GetInt32(0);
-                data = new AkceDeti(id, reader.GetInt32(1));
-
-                return data;
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    data.Add(new AkceDeti(id, reader.GetInt32(1)));
+                }
+                reader.Close();
+                return data;;
             }
         }
-
-        //INSERT OR UPDATE
-        /*public void Save(AkceDeti AkceDeti)
-        {
-            using (db.GetConnection())
-            {
-                db.Connect();
-
-                OracleCommand select = db.CreateCommand("SELECT akce_aid, deti_did FROM AkceDeti WHERE akce_aid = :akce_aid AND rownum = 1");
-
-                select.Parameters.AddWithValue(":akce_aid", AkceDeti.Akce_aid);
-
-                var reader = select.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    OracleCommand command = db.CreateCommand("UPDATE AkceDeti SET deti_did = :deti_did, Nickname = :Nickname, DatumK = :DatumK, Cena = :Cena, archivA = :archivA WHERE akce_aid = :akce_aid");
-                    command.Parameters.AddWithValue(":akce_aid", AkceDeti.Akce_aid);
-                    command.Parameters.AddWithValue(":deti_did", AkceDeti.Deti_did);
-
-                    command.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand command = db.CreateCommand("INSERT INTO AkceDeti (akce_aid, deti_did) VALUES (:akce_aid, :deti_did)");
-                    command.Parameters.AddWithValue(":akce_aid", AkceDeti.Akce_aid);
-                    command.Parameters.AddWithValue(":deti_did", AkceDeti.Deti_did);
-
-                    command.ExecuteNonQuery();
-                }
-
-            }
-        }*/
 
         public void AddAkceToDite(int p_dID, int p_aID)
         {
@@ -129,21 +103,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-
-        //REMOVE FROM
-        public void Delete(AkceDeti AkceDeti)
-        {
-            using (db.GetConnection())
-            {
-                db.Connect();
-
-                OracleCommand command = db.CreateCommand("DELETE FROM AkceDeti WHERE akce_aid = :aID AND deti_did = :dID");
-                command.Parameters.AddWithValue(":aID", AkceDeti.Akce_aid);
-                command.Parameters.AddWithValue(":dID", AkceDeti.Deti_did);
-
-                command.ExecuteNonQuery();
-            }
-        }
+        //DELETE NOT USED!
 
         public void ExportToCSV(string path)
         {

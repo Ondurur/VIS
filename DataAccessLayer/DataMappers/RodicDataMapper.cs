@@ -37,6 +37,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     int id = reader.GetInt32(0);
                     data.Add(new Rodic(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4)));
                 }
+                reader.Close();
                 return data;
             }
         }
@@ -59,6 +60,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     int id = reader.GetInt32(0);
                     data = new Rodic(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
                 }
+                reader.Close();
                 return data;
             }
         }

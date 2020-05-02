@@ -31,23 +31,23 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT did, Jmeno, Nickname, Heslo, Datum_Narozeni, stav, hodnosti_hid, schuzky_sid, reg_akci, rodic_rid FROM Deti");
+                OracleCommand command = db.CreateCommand("SELECT d.did, d.Jmeno, d.Nickname, d.Heslo, d.Datum_Narozeni, d.stav, d.reg_akci,h.hid, h.nazev, h.minimalni_vek, s.sid, s.nazev_druziny, s.pocet_deti, s.datum_konani,v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt,f.fid, f.nazev, f.povinnosti,r.rid, r.jmeno, r.login, r.heslo, r.kontakt FROM Deti d LEFT JOIN hodnosti h ON h.hid = d.hodnosti_hid LEFT JOIN Schuzky s ON s.sid = d.schuzky_sid LEFT JOIN vedouci v ON v.vid = s.vedouci_vid LEFT JOIN funkce f ON f.fid = v.funkce_fid LEFT JOIN rodic r ON r.rid = d.rodic_rid");
 
                 List<Deti> data = new List<Deti>();
 
                 var reader = command.ExecuteReader();
-                int regakci = 0;
 
                 while (reader.Read())
                 {
-                    int id = reader.GetInt32(0);
-                    if (!reader.IsDBNull(8))
-                    {
-                        regakci = reader.GetInt32(8);
-                    }
-                    data.Add(new Deti(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5), hdm.SelectById(reader.GetInt32(6)), sdm.SelectById(reader.GetInt32(7)), regakci, rdm.SelectById(reader.GetInt32(9))));
+                    Hodnosti h = new Hodnosti(reader.GetInt32(7), reader.GetString(8), reader.GetInt32(9));
+                    Funkce f = new Funkce(reader.GetInt32(19), reader.GetString(20), reader.GetString(21));
+                    Vedouci v = new Vedouci(reader.GetInt32(14), reader.GetString(15), reader.GetString(16),reader.GetDateTime(17), reader.GetString(18), f);
+                    Schuzky s = new Schuzky(reader.GetInt32(10), reader.GetString(11), reader.GetInt32(12), reader.GetInt32(13), v);
+                    Rodic r = new Rodic(reader.GetInt32(22), reader.GetString(23), reader.GetString(24), reader.GetString(25), reader.GetString(26));
+                    data.Add(new Deti(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5), h, s, reader.GetInt32(6), r));
                 }
-                return data;
+                reader.Close();
+                return data;;
             }
         }
 
@@ -61,25 +61,25 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT did, Jmeno, Nickname, Heslo, Datum_Narozeni, stav, hodnosti_hid, schuzky_sid, reg_akci, rodic_rid FROM Deti WHERE did = :did AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT d.did, d.Jmeno, d.Nickname, d.Heslo, d.Datum_Narozeni, d.stav, d.reg_akci,h.hid, h.nazev, h.minimalni_vek, s.sid, s.nazev_druziny, s.pocet_deti, s.datum_konani,v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt,f.fid, f.nazev, f.povinnosti,r.rid, r.jmeno, r.login, r.heslo, r.kontakt FROM Deti d LEFT JOIN hodnosti h ON h.hid = d.hodnosti_hid LEFT JOIN Schuzky s ON s.sid = d.schuzky_sid LEFT JOIN vedouci v ON v.vid = s.vedouci_vid LEFT JOIN funkce f ON f.fid = v.funkce_fid LEFT JOIN rodic r ON r.rid = d.rodic_rid WHERE d.dID = :dID");
 
-                command.Parameters.AddWithValue(":did", did);
+                command.Parameters.AddWithValue(":dID", did);
 
                 Deti data = null;
-                int regakci = 0;
 
                 var reader = command.ExecuteReader();
+
                 while (reader.Read())
                 {
-                    int id = reader.GetInt32(0);
-                    if (!reader.IsDBNull(8))
-                    {
-                        regakci = reader.GetInt32(8);
-                    }
-                    data = new Deti(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5), hdm.SelectById(reader.GetInt32(6)), sdm.SelectById(reader.GetInt32(7)), regakci, rdm.SelectById(reader.GetInt32(8)));
+                    Hodnosti h = new Hodnosti(reader.GetInt32(7), reader.GetString(8), reader.GetInt32(9));
+                    Funkce f = new Funkce(reader.GetInt32(19), reader.GetString(20), reader.GetString(21));
+                    Vedouci v = new Vedouci(reader.GetInt32(14), reader.GetString(15), reader.GetString(16), reader.GetDateTime(17), reader.GetString(18), f);
+                    Schuzky s = new Schuzky(reader.GetInt32(10), reader.GetString(11), reader.GetInt32(12), reader.GetInt32(13), v);
+                    Rodic r = new Rodic(reader.GetInt32(22), reader.GetString(23), reader.GetString(24), reader.GetString(25), reader.GetString(26));
+                    data = new Deti(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5), h, s, reader.GetInt32(6), r);
                 }
-
-                return data;
+                reader.Close();
+                return data;;
             }
         }
 
@@ -112,49 +112,45 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        public void Save(Deti deti)
+        public void Insert(Deti deti)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT did, Jmeno, Nickname, Heslo, Datum_Narozeni, stav, hodnosti_hid, schuzky_sid, reg_akci, rodic_rid FROM Deti WHERE did = :did AND rownum = 1");
+                OracleCommand commandInsert = db.CreateCommand("INSERT INTO Deti (did, Jmeno, Nickname,Heslo,datum_narozeni,Stav, hodnosti_hid,schuzky_sid, reg_akci, rodic_rid) VALUES (:did, :Jmeno, :Nickname,:Heslo,:datum_narozeni,:Stav, :hodnosti_hid,:schuzky_sid, :reg_akci, :rodic_rid)");
+                commandInsert.Parameters.AddWithValue(":did", deti.Did);
+                commandInsert.Parameters.AddWithValue(":Jmeno", deti.Jmeno);
+                commandInsert.Parameters.AddWithValue(":Nickname", deti.Nickname);
+                commandInsert.Parameters.AddWithValue(":Heslo", deti.Heslo);
+                commandInsert.Parameters.AddWithValue(":datum_narozeni", deti.Datum_narozeni);
+                commandInsert.Parameters.AddWithValue(":Stav", deti.Stav);
+                commandInsert.Parameters.AddWithValue(":hodnosti_hid", deti.Hodnosti_hid.Hid);
+                commandInsert.Parameters.AddWithValue(":schuzky_sid", deti.Schuzky_sid.Sid);
+                commandInsert.Parameters.AddWithValue(":reg_akci", deti.Reg_akci);
+                commandInsert.Parameters.AddWithValue(":rodic_rid", deti.Rodic_rid.Rid);
 
-                command.Parameters.AddWithValue(":did", deti.Did);
+                commandInsert.ExecuteNonQuery();
+            }
+        }
 
-                var reader = command.ExecuteReader();
+        public void Update(Deti deti)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
 
-                if (reader.HasRows)
-                {
-                    OracleCommand commandUpdate = db.CreateCommand("UPDATE Deti SET Jmeno = :Jmeno, Nickname = :Nickname, Heslo = :Heslo, datum_narozeni = :datum_narozeni, Stav = :Stav, hodnosti_hid = :hodnosti_hid, schuzky_sid = :schuzky_sid, rodic_rid = :rodic_rid WHERE did = :did");             commandUpdate.Parameters.AddWithValue(":Jmeno", deti.Jmeno);
-                    commandUpdate.Parameters.AddWithValue(":Nickname", deti.Nickname);
-                    commandUpdate.Parameters.AddWithValue(":Heslo", deti.Heslo);
-                    commandUpdate.Parameters.AddWithValue(":datum_narozeni", deti.Datum_narozeni);
-                    commandUpdate.Parameters.AddWithValue(":Stav", deti.Stav);
-                    commandUpdate.Parameters.AddWithValue(":hodnosti_hid", deti.Hodnosti_hid.Hid);
-                    commandUpdate.Parameters.AddWithValue(":schuzky_sid", deti.Schuzky_sid.Sid);
-                    commandUpdate.Parameters.AddWithValue(":reg_akci", deti.Reg_akci);
-                    commandUpdate.Parameters.AddWithValue(":rodic_rid", deti.Rodic_rid.Rid);
+                OracleCommand commandUpdate = db.CreateCommand("UPDATE Deti SET Jmeno = :Jmeno, Nickname = :Nickname, Heslo = :Heslo, datum_narozeni = :datum_narozeni, Stav = :Stav, hodnosti_hid = :hodnosti_hid, schuzky_sid = :schuzky_sid, rodic_rid = :rodic_rid WHERE did = :did"); commandUpdate.Parameters.AddWithValue(":Jmeno", deti.Jmeno);
+                commandUpdate.Parameters.AddWithValue(":Nickname", deti.Nickname);
+                commandUpdate.Parameters.AddWithValue(":Heslo", deti.Heslo);
+                commandUpdate.Parameters.AddWithValue(":datum_narozeni", deti.Datum_narozeni);
+                commandUpdate.Parameters.AddWithValue(":Stav", deti.Stav);
+                commandUpdate.Parameters.AddWithValue(":hodnosti_hid", deti.Hodnosti_hid.Hid);
+                commandUpdate.Parameters.AddWithValue(":schuzky_sid", deti.Schuzky_sid.Sid);
+                commandUpdate.Parameters.AddWithValue(":reg_akci", deti.Reg_akci);
+                commandUpdate.Parameters.AddWithValue(":rodic_rid", deti.Rodic_rid.Rid);
 
-                    commandUpdate.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand commandInsert = db.CreateCommand("INSERT INTO Deti (did, Jmeno, Nickname,Heslo,datum_narozeni,Stav, hodnosti_hid,schuzky_sid, reg_akci, rodic_rid) VALUES (:did, :Jmeno, :Nickname,:Heslo,:datum_narozeni,:Stav, :hodnosti_hid,:schuzky_sid, :reg_akci, :rodic_rid)");
-                    commandInsert.Parameters.AddWithValue(":did", deti.Did);
-                    commandInsert.Parameters.AddWithValue(":Jmeno", deti.Jmeno);
-                    commandInsert.Parameters.AddWithValue(":Nickname", deti.Nickname);
-                    commandInsert.Parameters.AddWithValue(":Heslo", deti.Heslo);
-                    commandInsert.Parameters.AddWithValue(":datum_narozeni", deti.Datum_narozeni);
-                    commandInsert.Parameters.AddWithValue(":Stav", deti.Stav);
-                    commandInsert.Parameters.AddWithValue(":hodnosti_hid", deti.Hodnosti_hid.Hid);
-                    commandInsert.Parameters.AddWithValue(":schuzky_sid", deti.Schuzky_sid.Sid);
-                    commandInsert.Parameters.AddWithValue(":reg_akci", deti.Reg_akci);
-                    commandInsert.Parameters.AddWithValue(":rodic_rid", deti.Rodic_rid.Rid);
-
-                    commandInsert.ExecuteNonQuery();
-                }
+                commandUpdate.ExecuteNonQuery();
             }
         }
 
@@ -188,7 +184,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //REMOVE FROM
+        //REMOVE FROM - UPDATE "stav" to -1
         public void Delete(Deti deti)
         {
             using (db.GetConnection())

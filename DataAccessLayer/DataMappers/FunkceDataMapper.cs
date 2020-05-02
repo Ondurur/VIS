@@ -35,6 +35,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     data.Add(new Funkce(reader.GetInt32(0), reader.GetString(1), reader.GetString(2)));
                 }
+                reader.Close();
                 return data;
             }
         }
@@ -61,6 +62,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                 {
                     data = new Funkce(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
                 }
+                reader.Close();
                 return data;
             }
         }
@@ -115,18 +117,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //REMOVE FROM
-        public void Delete(Funkce Funkce)
-        {
-            using (db.GetConnection())
-            {
-                db.Connect();
-                OracleCommand command = db.CreateCommand("DELETE FROM Funkce WHERE fid = :ID");
-                command.Parameters.AddWithValue(":ID", Funkce.Fid);
-
-                command.ExecuteNonQuery();
-            }
-        }
+        //DELETE NOT USED!
 
         public void ExportToCSV(string path)
         {
