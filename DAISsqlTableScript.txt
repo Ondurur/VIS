@@ -332,14 +332,14 @@ v_HodnostDitete integer;
 v_MaxPocetDeti integer;
 v_LidiNaAkci integer;
 BEGIN
-    SELECT COUNT(*) INTO v_DiteMaAkci FROM "Akce-Deti" ad WHERE ad.akce_aid = p_aID AND ad.deti_did = p_dID;
+    SELECT COUNT(*) INTO v_DiteMaAkci FROM akcedeti ad WHERE ad.akce_aid = p_aID AND ad.deti_did = p_dID;
     IF v_DiteMaAkci >= 1 
     THEN 
         --already registered--
         RETURN ;
     ELSE
         --register to event--
-        SELECT COUNT(*) INTO v_LidiNaAkci FROM "Akce-Deti" ad WHERE ad.akce_aid = p_aID;
+        SELECT COUNT(*) INTO v_LidiNaAkci FROM akcedeti ad WHERE ad.akce_aid = p_aID;
         SELECT COALESCE(max_pocet_deti, v_LidiNaAkci+1), COALESCE(hodnosti_hid,1) INTO v_MaxPocetDeti, v_PotrebnaHodnost FROM akce a WHERE a.aid = p_aID;
         SELECT hodnosti_hid INTO v_HodnostDitete FROM deti d WHERE d.did = p_dID;
         IF v_LidiNaAkci >= v_MaxPocetDeti 
@@ -353,9 +353,12 @@ BEGIN
             DBMS_OUTPUT.PUT_LINE('Error, spatna hodnost' || v_potrebnahodnost ||  ' ' || v_hodnostditete);
             RETURN;
         END IF;
-        INSERT INTO "Akce-Deti"(deti_did, akce_aid) VALUES(p_dID, p_aID);
-        COMMIT;
+        INSERT INTO akcedeti(deti_did, akce_aid) VALUES(p_dID, p_aID);
+        UPDATE deti SET reg_akci = (reg_akci+1) WHERE did = p_dID;
     END IF;
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;
 END AddAkceToDite;
 
 /
@@ -375,6 +378,9 @@ BEGIN
     (SELECT r.kontakt FROM rodic r LEFT JOIN deti d ON d.rodic_rid = r.rid WHERE d.did = p_dID),
     0);
     UPDATE deti SET stav = 1 WHERE dID = p_dID;
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;
 END DiteBecomeVedouci;
 
 /
@@ -396,6 +402,9 @@ BEGIN
     SELECT CURRENT_DATE into v_currentDate FROM DUAL ;
     v_countLogs := v_countLogs + 1;
     INSERT INTO "LOG"(lID, pocet_vedoucich, pocet_deti, datum_zalohy, vedouci_vid) VALUES (v_countLogs, v_vedouciCount, v_detiCount, v_currentDate, p_vedouciID );
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;
 END MakeLog;
 
 /
@@ -406,144 +415,49 @@ set define off;
 
   CREATE OR REPLACE EDITIONABLE PROCEDURE "HOR0404"."VYTVOR_FUNKCI" (p_nazev VARCHAR, p_povinnosti)
 AS
-	v_stejne INTEGER;
 	v_vedouciID INTEGER;
 	v_fID INTEGER;
-BEGIN
-	--viz. 1.1
-	INSERT INTO funkce(nazev, povinnosti)
-	VALUES('nova funkce', 'povinnosti fukce');
+BEGIN    
 
-	EXCEPTION
-      WHEN DUP_VAL_ON_INDEX
-      THEN
-         DBMS_OUTPUT.PUT_LINE("Stejna funkce jiz existuje");
-
-	--viz. 3.1
-	SELECT MIN(v.vID) INTO v_vedouciID
+    SELECT MIN(v.vID) INTO v_vedouciID
 	FROM vedouci v WHERE v.funkce_fid IS NULL;
 
-	--viz. 4.1
-	SELECT MAX(f.fID) INTO v_fID
-	FROM funkce
+    IF v_vedouciID IS NULL THEN
+        DBMS_OUTPUT.PUT_LINE('Nebyl nalezen volny vedouci');
+        return;
+    END IF;
 
-	--viz. 5.1
-	IF v_vedouciID IS NOT NULL
-	THEN
-		UPDATE vedouci SET funkce_fid = v_fID WHERE fID = ;
-	ELSE
-		INSERT INTO vedouci(jmeno, datum_narozeni, kontakt)
-		VALUES('temp', DATE(CURRENT_DATE), '+420123456789') -- vratit se potom na zacatek tohohle IF-u
-	END IF;
+    INSERT INTO funkce(fid, nazev, povinnosti)
+	VALUES((SELECT COUNT(*) FROM funkce)+1,p_nazev, p_povinnosti);
+
+    SELECT MAX(f.fID) INTO v_fID
+	FROM funkce f;
+
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;
 END; 
-
-CREATE OR REPLACE PROCEDURE DiteBecomeVedouci(p_dID INTEGER)
-AS
-BEGIN
-	INSERT INTO vedouci(jmeno, datum_narozeni, kontakt, doba_pusobnosti) 
-    SELECT d.dID, d.datum_narozeni, d.kontakt_na_rodice, d.doba_pusobnosti  
-    FROM deti d WHERE d.dID LIKE p_dID; 
-
-    INSERT INTO detiarchiv(jmeno, datum_narozeni, kontakt_na_rodice, doba_pusobnosti) 
-    SELECT d.dID, d.datum_narozeni, d.kontakt_na_rodice, d.doba_pusobnosti  
-    FROM deti d WHERE d.dID LIKE p_dID; 
-
-    DELETE FROM deti WHERE did = p_dID;
-END;
-
-CREATE OR REPLACE PROCEDURE DiteArchive(p_dID INTEGER)
-AS
-    v_daid INTEGER;
-BEGIN
-    SELECT COUNT(*) INTO v_daid FROM detiarchiv;
-    v_daid:= v_daid+1;
-
-	INSERT INTO detiarchiv(did, jmeno, datum_narozeni, kontakt_na_rodice, doba_pusobnosti, deti_did) 
-    SELECT v_daID,d.jmeno, d.datum_narozeni, d.kontakt_na_rodice, d.doba_pusobnosti, d.did
-    FROM deti d WHERE d.dID LIKE p_dID; 
-
-    UPDATE deti SET stav = 1 WHERE did = p_dID;
-END;
-
-
-
-SELECT * FROM akcearchiv
-EXEC akcearchive(9);
-
-create or replace PROCEDURE zalohuj
-AS
-    v_max_lid INTEGER;
-    v_pocetD INTEGER;
-    v_pocetV INTEGER;
-BEGIN
-    SELECT MAX(lid) INTO v_max_lid FROM "LOG";
-    v_max_lid := v_max_lid+1;
-
-    SELECT COUNT(*) INTO v_pocetD FROM deti;
-
-    SELECT COUNT(*) INTO v_pocetV FROM vedouci;
-
-	INSERT INTO "LOG"(lid, datum_zalohy, pocet_deti, pocet_vedoucich)
-	VALUES ( v_max_lid ,TO_DATE(TO_CHAR(SYSDATE, 'DD-MON-YYYY')), v_pocetD, v_pocetV);
-END;
-
-ALTER TABLE "LOG" 
-
-SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY HH:MI:SS') FROM dual;
-
-CREATE OR REPLACE TRIGGER ZalohaV
-AFTER INSERT OR DELETE
-ON vedouci
-FOR EACH ROW
-DECLARE
-    v_pocetD INTEGER;
-    v_pocetV INTEGER;
-    v_pocet INTEGER;
-BEGIN
-    SELECT COUNT(*) INTO v_pocetD FROM deti;
-    SELECT COUNT(*) INTO v_pocetV FROM vedouci;
-
-    v_pocet:= v_pocetV + v_pocetD;
-
-    IF MOD(v_pocet, 5) = 0 THEN
-        zalohuj;
-    END IF;    
-END;
-SELECT * FROM detiarchiv
-SELECT * FROM vedouci
-SELECT * FROM deti
-SELECT * FROM "LOG"
-EXEC zalohuj;
-
-SELECT * from funkce
-
-SELECT * FROM akce
-SELECT * FROM hodnosti
-
-SELECT d.jmeno, s.nazev_druziny FROM Deti d LEFT JOIN Schuzky s ON s.sid = d.schuzky_sid AND s.sid = 3
-WHERE s.nazev_druziny IS NOT NULL
-
-
-SELECT v.jmeno, s.nazev_druziny, d.jmeno, p.umisteni FROM vedouci v JOIN schuzky s ON v.vid = s.sid AND v.jmeno LIKE '%a%' 
-JOIN deti d ON d.schuzky_sid =( SELECT did FROM deti WHERE datum_narozeni = (SELECT MIN(datum_narozeni) FROM deti) AND d.schuzky_sid = s.sid) JOIN prostory p ON p.pid = s.prostory_pid
-
-SELECT * FROM Akce
 
 /
 --------------------------------------------------------
 --  DDL for Function FADDSTUDENT
 --------------------------------------------------------
 
-  CREATE OR REPLACE EDITIONABLE FUNCTION "HOR0404"."FADDSTUDENT" (p_login VARCHAR, p_fname VARCHAR, p_lname VARCHAR, p_tallness INT)
-RETURN VARCHAR
+CREATE OR REPLACE EDITIONABLE PROCEDURE "HOR0404"."DiteBecomeVedouci" (p_dID integer)
 AS
 BEGIN
-    AddStudent(p_login, p_fname,p_lname,p_tallness);
-    RETURN 'ok';
-    EXCEPTION
-        WHEN OTHERS THEN
-            RETURN 'error!' || SQLERRM || SQLCODE;
-END;
+    INSERT INTO vedouci(vID, jmeno, heslo, datum_narozeni, kontakt, funkce_fid) 
+    VALUES((SELECT COUNT(*)+1 FROM vedouci),
+    (SELECT d.jmeno FROM deti d WHERE d.dID = p_dID),
+    (SELECT d.heslo FROM deti d WHERE d.dID = p_dID), 
+    (SELECT d.datum_narozeni FROM deti d WHERE d.dID = p_dID),
+    (SELECT r.kontakt FROM rodic r LEFT JOIN deti d ON d.rodic_rid = r.rid WHERE d.did = p_dID),
+    0);
+    UPDATE deti SET stav = 1 WHERE dID = p_dID;
+    COMMIT;
+    EXCEPTION WHEN OTHERS THEN
+            rollback;
+END DiteBecomeVedouci;
 
 /
 --------------------------------------------------------
