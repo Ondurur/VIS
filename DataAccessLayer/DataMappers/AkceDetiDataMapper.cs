@@ -13,15 +13,13 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
     public class AkceDetiDataMapper
     {
         private Database db;
-        AkceDataMapper adm;
 
         public AkceDetiDataMapper()
         {
             db = new Database();
-            adm = new AkceDataMapper();
         }
 
-
+        //SelectAll 9.4
         public List<AkceDeti> SelectAll()
         {
             using (db.GetConnection())
@@ -89,6 +87,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
+        //INSERT 9.1 / 3.6
         public void AddAkceToDite(int p_dID, int p_aID)
         {
             using (db.GetConnection())
@@ -103,7 +102,22 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //DELETE NOT USED!
+        //UPDATE not needed on this datamapper 9.3
+
+        //DELETE 9.2
+        public void Delete(AkceDeti akcedeti)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+
+                OracleCommand command = db.CreateCommand("DELETE FROM akcedeti ad WHERE ad.akce_aid = :aid AND ad.deti_did = :did");
+                command.Parameters.AddWithValue(":aid", akcedeti.Akce_aid);
+                command.Parameters.AddWithValue(":did", akcedeti.Deti_did);
+
+                command.ExecuteNonQuery();
+            }
+        }
 
         public void ExportToCSV(string path)
         {

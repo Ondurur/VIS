@@ -18,7 +18,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             db = new Database();
         }
 
-
+        //SelectAll 2.4
         public List<Rodic> SelectAll()
         {
             using (db.GetConnection())
@@ -65,45 +65,44 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        public void Save(Rodic rodic)
+        //INSERT 2.1
+        public void Insert(Rodic rodic)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
-                OracleCommand command = db.CreateCommand("SELECT rid, jmeno, login, heslo, kontakt FROM Rodic WHERE rid = :rid AND rownum = 1");
-
-                command.Parameters.AddWithValue(":rid", rodic.Rid);
-
-                var reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    OracleCommand commandUpdate = db.CreateCommand("UPDATE Rodic SET jmeno = :jmeno , login = :login , heslo = :heslo , kontakt= :kontakt WHERE rid = :rid");
-                    commandUpdate.Parameters.AddWithValue(":rid", rodic.Rid);
-                    commandUpdate.Parameters.AddWithValue(":jmeno", rodic.Jmeno);
-                    commandUpdate.Parameters.AddWithValue(":login", rodic.Login);
-                    commandUpdate.Parameters.AddWithValue(":heslo", rodic.Heslo);
-                    commandUpdate.Parameters.AddWithValue(":kontakt", rodic.Kontakt);
-                    Console.WriteLine(rodic.Rid + rodic.Jmeno + rodic.Login + rodic.Heslo + rodic.Kontakt);
-                    commandUpdate.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand commandInsert = db.CreateCommand("INSERT INTO Rodic (rid, jmeno, login, heslo, kontakt) VALUES (:rid, :jmeno, :login, :heslo, :kontakt)");
-                    commandInsert.Parameters.AddWithValue(":rid", rodic.Rid);
-                    commandInsert.Parameters.AddWithValue(":jmeno", rodic.Jmeno);
-                    commandInsert.Parameters.AddWithValue(":login", rodic.Login);
-                    commandInsert.Parameters.AddWithValue(":heslo", rodic.Heslo);
-                    commandInsert.Parameters.AddWithValue(":kontakt", rodic.Kontakt);
-                    Console.WriteLine(rodic.Rid + rodic.Jmeno + rodic.Login + rodic.Heslo + rodic.Kontakt);
-                    commandInsert.ExecuteNonQuery();
-                }
+                OracleCommand commandInsert = db.CreateCommand("INSERT INTO Rodic (rid, jmeno, login, heslo, kontakt) VALUES (:rid, :jmeno, :login, :heslo, :kontakt)");
+                commandInsert.Parameters.AddWithValue(":rid", rodic.Rid);
+                commandInsert.Parameters.AddWithValue(":jmeno", rodic.Jmeno);
+                commandInsert.Parameters.AddWithValue(":login", rodic.Login);
+                commandInsert.Parameters.AddWithValue(":heslo", rodic.Heslo);
+                commandInsert.Parameters.AddWithValue(":kontakt", rodic.Kontakt);
+                Console.WriteLine(rodic.Rid + rodic.Jmeno + rodic.Login + rodic.Heslo + rodic.Kontakt);
+                commandInsert.ExecuteNonQuery();
             }
         }
 
-        //REMOVE FROM
+
+        //UPDATE 2.3
+        public void Update(Rodic rodic)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+
+                OracleCommand commandUpdate = db.CreateCommand("UPDATE Rodic SET jmeno = :jmeno , login = :login , heslo = :heslo , kontakt= :kontakt WHERE rid = :rid");
+                commandUpdate.Parameters.AddWithValue(":rid", rodic.Rid);
+                commandUpdate.Parameters.AddWithValue(":jmeno", rodic.Jmeno);
+                commandUpdate.Parameters.AddWithValue(":login", rodic.Login);
+                commandUpdate.Parameters.AddWithValue(":heslo", rodic.Heslo);
+                commandUpdate.Parameters.AddWithValue(":kontakt", rodic.Kontakt);
+                Console.WriteLine(rodic.Rid + rodic.Jmeno + rodic.Login + rodic.Heslo + rodic.Kontakt);
+                commandUpdate.ExecuteNonQuery();
+            }
+        }
+
+        //REMOVE FROM - cant be called due to dependencies 2.2
         public void Delete(Rodic rodic)
         {
             using (db.GetConnection())

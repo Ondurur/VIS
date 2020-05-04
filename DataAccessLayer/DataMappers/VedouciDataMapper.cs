@@ -23,6 +23,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             fdm = new FunkceDataMapper();
         }
         
+        //SELECTALL 6.4
         public List<Vedouci> SelectAll()
         {
             using (db.GetConnection())
@@ -111,44 +112,43 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        public void Save(Vedouci vedouci)
+        //INSERT 6.1
+        public void Insert(Vedouci vedouci)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
-                OracleCommand select = db.CreateCommand("SELECT v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti FROM vedouci v LEFT JOIN funkce f ON f.fid = v.funkce_fid WHERE v.vID = :ID");
+                OracleCommand command = db.CreateCommand("INSERT INTO Vedouci (vid, jmeno, heslo, datum_narozeni, kontakt) VALUES (:vid, :Jmeno, :heslo, :Datum_narozeni, :Kontakt)");
+                command.Parameters.AddWithValue(":vid", vedouci.Vid);
+                command.Parameters.AddWithValue(":Jmeno", vedouci.Jmeno);
+                command.Parameters.AddWithValue(":heslo", vedouci.Heslo);
+                command.Parameters.AddWithValue(":Datum_narozeni", vedouci.Datum_narozeni);
+                command.Parameters.AddWithValue(":Kontakt", vedouci.Kontakt);
 
-                    select.Parameters.AddWithValue(":ID", vedouci.Vid);
-
-                    var reader = select.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    OracleCommand command = db.CreateCommand("UPDATE Vedouci SET Jmeno = :Jmeno, heslo = :heslo, Datum_narozeni = :Datum_narozeni, Kontakt = :Kontakt WHERE vid = :vid");
-                    command.Parameters.AddWithValue(":vid", vedouci.Vid);
-                    command.Parameters.AddWithValue(":Jmeno", vedouci.Jmeno);
-                    command.Parameters.AddWithValue(":heslo", vedouci.Heslo);
-                    command.Parameters.AddWithValue(":Datum_narozeni", vedouci.Datum_narozeni);
-                    command.Parameters.AddWithValue(":Kontakt", vedouci.Kontakt);
-
-                    command.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand command = db.CreateCommand("INSERT INTO Vedouci (vid, jmeno, heslo, datum_narozeni, kontakt) VALUES (:vid, :Jmeno, :heslo, :Datum_narozeni, :Kontakt)");
-                    command.Parameters.AddWithValue(":vid", vedouci.Vid);
-                    command.Parameters.AddWithValue(":Jmeno", vedouci.Jmeno);
-                    command.Parameters.AddWithValue(":heslo", vedouci.Heslo);
-                    command.Parameters.AddWithValue(":Datum_narozeni", vedouci.Datum_narozeni);
-                    command.Parameters.AddWithValue(":Kontakt", vedouci.Kontakt);
-
-                    command.ExecuteNonQuery();
-                }
+                command.ExecuteNonQuery();
             }
         }
 
+        //UPDATE 6.3
+        public void Update(Vedouci vedouci)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+
+                OracleCommand command = db.CreateCommand("UPDATE Vedouci SET Jmeno = :Jmeno, heslo = :heslo, Datum_narozeni = :Datum_narozeni, Kontakt = :Kontakt WHERE vid = :vid");
+                command.Parameters.AddWithValue(":vid", vedouci.Vid);
+                command.Parameters.AddWithValue(":Jmeno", vedouci.Jmeno);
+                command.Parameters.AddWithValue(":heslo", vedouci.Heslo);
+                command.Parameters.AddWithValue(":Datum_narozeni", vedouci.Datum_narozeni);
+                command.Parameters.AddWithValue(":Kontakt", vedouci.Kontakt);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        //VedouciSchuzkaDite 6.6
         public Tuple<string, string, string> VedouciSchuzkaDite(int p_vID)
         {
             using (db.GetConnection())
@@ -172,18 +172,20 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //REMOVE FROM
+        //REMOVE 6.2
         public void Delete(Vedouci vedouci)
         {
             using(db.GetConnection()){
                 db.Connect();
-                OracleCommand command = db.CreateCommand("DELETE FROM Vedouci WHERE ID = :ID");
+                OracleCommand command = db.CreateCommand("DELETE FROM Vedouci WHERE vID = :ID");
                 command.Parameters.AddWithValue(":ID", vedouci.Vid);
 
                 command.ExecuteNonQuery();
             }
         }
 
+
+        //6.5 DiteBecomeVedouci
         public void DiteBecomeVedouci(int p_dID)
         {
             using (db.GetConnection())

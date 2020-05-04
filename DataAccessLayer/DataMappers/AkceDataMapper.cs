@@ -13,17 +13,13 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
     public class AkceDataMapper
     {
         private Database db;
-        VedouciDataMapper vdm;
-        HodnostiDataMapper hdm;
 
         public AkceDataMapper()
         {
             db = new Database();
-            vdm = new VedouciDataMapper();
-            hdm = new HodnostiDataMapper();
         }
 
-
+        //SelectAll 1.4
         public List<Akce> SelectAll()
         {
             using (db.GetConnection())
@@ -67,6 +63,53 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 reader.Close();
                 return data;;
+            }
+        }
+
+        //SelectUpcoming 1.5
+        public List<Akce> SelectUpcoming()
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+                OracleCommand command = db.CreateCommand("SELECT a.aid, a.Nazev, a.datum_konani, a.Cena, a.max_pocet_deti, v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt, f.fid, f.nazev, f.povinnosti , h.hid, h.nazev, h.minimalni_vek FROM Akce a JOIN hodnosti h ON h.hid = a.hodnosti_hid JOIN vedouci v ON v.vid = a.vedouci_vid JOIN funkce f ON f.fid = v.funkce_fid WHERE a.datum_konani> CURRENT_DATE");
+
+                List<Akce> data = new List<Akce>();
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+
+                    int? cena;
+                    int? max_pocet_deti;
+
+                    if (!reader.IsDBNull(3))
+                    {
+                        cena = reader.GetInt32(3);
+                    }
+                    else
+                    {
+                        cena = null;
+                    }
+                    if (!reader.IsDBNull(4))
+                    {
+                        max_pocet_deti = reader.GetInt32(4);
+                    }
+                    else
+                    {
+                        max_pocet_deti = 300;
+                    }
+                    Hodnosti h = new Hodnosti(reader.GetInt32(13), reader.GetString(14), reader.GetInt32(15));
+                    Vedouci v = new Vedouci(reader.GetInt32(5), reader.GetString(6), reader.GetString(7), reader.GetDateTime(8), reader.GetString(9), new Funkce(reader.GetInt32(10), reader.GetString(11), reader.GetString(12)));
+                    data.Add(new Akce(id, reader.GetString(1), reader.GetDateTime(2), cena, v, h, max_pocet_deti));
+
+                }
+
+
+                reader.Close();
+                return data; ;
             }
         }
 
@@ -115,8 +158,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        //přepracovat na insert update
+        //INSERT 1.1
         public void Insert(Akce akce)
         {
             using (db.GetConnection())
@@ -136,6 +178,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
+        //UPDATE 1.2
         public void Update(Akce akce)
         {
             using (db.GetConnection())
@@ -156,7 +199,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //NOT USED DELETE!
+        //NOT USED DELETE! 1.3
 
         public void ExportToCSV(string path)
         {

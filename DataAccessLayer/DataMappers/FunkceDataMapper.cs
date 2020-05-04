@@ -19,7 +19,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             db = new Database();
         }
 
-
+        //SelectAll 4.4
         public List<Funkce> SelectAll()
         {
             using (db.GetConnection())
@@ -67,42 +67,23 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        public void Save(Funkce Funkce)
+        //UPDATE 4.3
+        public void Update(Funkce Funkce)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
-                OracleCommand select = db.CreateCommand("SELECT fid, nazev,povinnosti FROM Funkce WHERE fid = :fid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("UPDATE Funkce SET Nazev = :Nazev, Povinnosti = :Povinnosti WHERE fid = :fid");
+                command.Parameters.AddWithValue(":fid", Funkce.Fid);
+                command.Parameters.AddWithValue(":Nazev", Funkce.Nazev);
+                command.Parameters.AddWithValue(":Povinnosti", Funkce.Povinnosti);
 
-                select.Parameters.AddWithValue(":fid", Funkce.Fid);
-
-                var reader = select.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    OracleCommand command = db.CreateCommand("UPDATE Funkce SET Nazev = :Nazev, Povinnosti = :Povinnosti WHERE fid = :fid");
-                    command.Parameters.AddWithValue(":fid", Funkce.Fid);
-                    command.Parameters.AddWithValue(":Nazev", Funkce.Nazev);
-                    command.Parameters.AddWithValue(":Povinnosti", Funkce.Povinnosti);
-
-                    command.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand command = db.CreateCommand("INSERT INTO Funkce (fid, Nazev, Povinnosti) VALUES (:fid, :Nazev, :Povinnosti)");
-                    command.Parameters.AddWithValue(":fid", Funkce.Fid);
-                    command.Parameters.AddWithValue(":Nazev", Funkce.Nazev);
-                    command.Parameters.AddWithValue(":Povinnosti", Funkce.Povinnosti);
-
-                    command.ExecuteNonQuery();
-                }
-
+                command.ExecuteNonQuery();
             }
         }
 
-        //STORED PROCEDURE "NOVAFUNKCE"
+        //STORED PROCEDURE "NOVAFUNKCE" 4.1
         public void NovaFunkce(string nazev, string povinnosti)
         {
             using (db.GetConnection())
@@ -117,7 +98,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //DELETE NOT USED!
+        //DELETE NOT USED! 4.2
 
         public void ExportToCSV(string path)
         {

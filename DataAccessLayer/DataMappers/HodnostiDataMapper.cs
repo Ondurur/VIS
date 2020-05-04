@@ -19,7 +19,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             db = new Database();
         }
 
-
+        //SelectAll 7.4
         public List<Hodnosti> SelectAll()
         {
             using (db.GetConnection())
@@ -62,53 +62,39 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        public void Save(Hodnosti hodnosti)
+        //INSERT 7.1
+        public void Insert(Hodnosti hodnosti)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
-                OracleCommand select = db.CreateCommand("SELECT hid, nazev, minimalni_vek FROM Hodnosti WHERE hid = :hid AND rownum = 1");
+                OracleCommand command = db.CreateCommand("INSERT INTO Hodnosti (hid, Nazev, minimalni_vek) VALUES (:hid, :Nazev, :minimalni_vek)");
+                command.Parameters.AddWithValue(":hid", hodnosti.Hid);
+                command.Parameters.AddWithValue(":Nazev", hodnosti.Nazev);
+                command.Parameters.AddWithValue(":minimalni_vek", hodnosti.Minimalni_vek);
 
-                select.Parameters.AddWithValue(":hid", hodnosti.Hid);
-
-                var reader = select.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    OracleCommand command = db.CreateCommand("UPDATE Hodnosti SET Nazev = :Nazev, minimalni_vek = :minimalni_vek WHERE hid = :hid");
-                    command.Parameters.AddWithValue(":hid", hodnosti.Hid);
-                    command.Parameters.AddWithValue(":Nazev", hodnosti.Nazev);
-                    command.Parameters.AddWithValue(":minimalni_vek", hodnosti.Minimalni_vek);
-
-                    command.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand command = db.CreateCommand("INSERT INTO Hodnosti (hid, Nazev, minimalni_vek) VALUES (:hid, :Nazev, :minimalni_vek)");
-                    command.Parameters.AddWithValue(":hid", hodnosti.Hid);
-                    command.Parameters.AddWithValue(":Nazev", hodnosti.Nazev);
-                    command.Parameters.AddWithValue(":minimalni_vek", hodnosti.Minimalni_vek);
-
-                    command.ExecuteNonQuery();
-                }
-
+                command.ExecuteNonQuery();
             }
         }
 
-        //REMOVE FROM
-        public void Delete(Hodnosti hodnosti)
+        //UPDATE 7.3
+        public void Update(Hodnosti hodnosti)
         {
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("DELETE FROM Hodnosti WHERE hid = :ID");
-                command.Parameters.AddWithValue(":ID", hodnosti.Hid);
 
-                command.ExecuteNonQuery();                
+                OracleCommand command = db.CreateCommand("UPDATE Hodnosti SET Nazev = :Nazev, minimalni_vek = :minimalni_vek WHERE hid = :hid");
+                command.Parameters.AddWithValue(":hid", hodnosti.Hid);
+                command.Parameters.AddWithValue(":Nazev", hodnosti.Nazev);
+                command.Parameters.AddWithValue(":minimalni_vek", hodnosti.Minimalni_vek);
+
+                command.ExecuteNonQuery();
             }
         }
+
+        //DELETE NOT USED! 7.2
 
         public void ExportToCSV(string path)
         {

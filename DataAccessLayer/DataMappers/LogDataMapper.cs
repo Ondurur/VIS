@@ -23,6 +23,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             vdm = new VedouciDataMapper();
         }
         
+        //SelectAll 8.4
         public List<Log> SelectAll()
         {
             using (db.GetConnection())
@@ -73,44 +74,27 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        public void Save(Log Log)
+
+        //UPDATE 8.3
+        public void Update(Log Log)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
-                OracleCommand select = db.CreateCommand("SELECT lid, pocet_vedoucich, pocet_deti, datum_zalohy, vedouci_vid FROM Log WHERE lid = :ID AND rownum = 1");
+                OracleCommand command = db.CreateCommand("UPDATE Log SET Pocet_vedoucich = :Pocet_vedoucich, pocet_deti = :pocet_deti, Datum_zalohy = :Datum_zalohy, vedouci_vid = :vedouci_vid WHERE lid = :lid");
+                command.Parameters.AddWithValue(":lid", Log.Lid);
+                command.Parameters.AddWithValue(":Pocet_vedoucich", Log.Pocet_vedoucich);
+                command.Parameters.AddWithValue(":pocet_deti", Log.Pocet_deti);
+                command.Parameters.AddWithValue(":Datum_zalohy", Log.Datum_zalohy);
+                command.Parameters.AddWithValue(":vedouci_vid", Log.Vedouci_vid.Vid);
 
-                    select.Parameters.AddWithValue(":ID", Log.Lid);
-
-                    var reader = select.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    OracleCommand command = db.CreateCommand("UPDATE Log SET Pocet_vedoucich = :Pocet_vedoucich, pocet_deti = :pocet_deti, Datum_zalohy = :Datum_zalohy, vedouci_vid = :vedouci_vid WHERE lid = :lid");
-                    command.Parameters.AddWithValue(":lid", Log.Lid);
-                    command.Parameters.AddWithValue(":Pocet_vedoucich", Log.Pocet_vedoucich);
-                    command.Parameters.AddWithValue(":pocet_deti", Log.Pocet_deti);
-                    command.Parameters.AddWithValue(":Datum_zalohy", Log.Datum_zalohy);
-                    command.Parameters.AddWithValue(":vedouci_vid", Log.Vedouci_vid.Vid);
-
-                    command.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand command = db.CreateCommand("INSERT INTO Log (lid, pocet_vedoucich, pocet_deti, datum_zalohy, vedouci_vid) VALUES (:lid, :Pocet_vedoucich, :pocet_deti, :Datum_zalohy, :vedouci_vid)");
-                    command.Parameters.AddWithValue(":lid", Log.Lid);
-                    command.Parameters.AddWithValue(":Pocet_vedoucich", Log.Pocet_vedoucich);
-                    command.Parameters.AddWithValue(":pocet_deti", Log.Pocet_deti);
-                    command.Parameters.AddWithValue(":Datum_zalohy", Log.Datum_zalohy);
-                    command.Parameters.AddWithValue(":vedouci_vid", Log.Vedouci_vid.Vid);
-
-                    command.ExecuteNonQuery();
-                }
+                command.ExecuteNonQuery();
             }
         }
 
+
+        //INSERT 8.1
         public void MakeLog(int p_vID)
         {
             using (db.GetConnection())
@@ -124,17 +108,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //REMOVE FROM
-        public void Delete(Log Log)
-        {
-            using(db.GetConnection()){
-                db.Connect();
-                OracleCommand command = db.CreateCommand("DELETE FROM Log WHERE lid = :ID");
-                command.Parameters.AddWithValue(":ID", Log.Lid);
-
-                command.ExecuteNonQuery();
-            }
-        }
+        //DELETE NOT USED! 8.2
 
         public void ExportToCSV(string path)
         {

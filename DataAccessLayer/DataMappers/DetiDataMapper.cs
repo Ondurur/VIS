@@ -13,19 +13,14 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
     public class DetiDataMapper
     {
         private Database db;
-        SchuzkyDataMapper sdm;
-        HodnostiDataMapper hdm;
-        RodicDataMapper rdm;
 
         public DetiDataMapper()
         {
             db = new Database();
-            sdm = new SchuzkyDataMapper();
-            hdm = new HodnostiDataMapper();
-            rdm = new RodicDataMapper();
         }
 
 
+        //SelectAll 3.4
         public List<Deti> SelectAll()
         {
             using (db.GetConnection())
@@ -79,7 +74,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
                     data = new Deti(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5), h, s, reader.GetInt32(6), r);
                 }
                 reader.Close();
-                return data;;
+                return data;
             }
         }
 
@@ -96,22 +91,23 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
 
                 var reader = command.ExecuteReader();
 
-                Deti ret = null;
-                int regakci = 0;
+                Deti data = null;
 
                 while (reader.Read())
                 {
-                    int id = reader.GetInt32(0);
-                    if (!reader.IsDBNull(8))
-                    {
-                        regakci = reader.GetInt32(8);
-                    }
-                    ret = new Deti(id, reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5), hdm.SelectById(id), sdm.SelectById(id), regakci, rdm.SelectById(id));
+                    Hodnosti h = new Hodnosti(reader.GetInt32(7), reader.GetString(8), reader.GetInt32(9));
+                    Funkce f = new Funkce(reader.GetInt32(19), reader.GetString(20), reader.GetString(21));
+                    Vedouci v = new Vedouci(reader.GetInt32(14), reader.GetString(15), reader.GetString(16), reader.GetDateTime(17), reader.GetString(18), f);
+                    Schuzky s = new Schuzky(reader.GetInt32(10), reader.GetString(11), reader.GetInt32(12), reader.GetInt32(13), v);
+                    Rodic r = new Rodic(reader.GetInt32(22), reader.GetString(23), reader.GetString(24), reader.GetString(25), reader.GetString(26));
+                    data = new Deti(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4), reader.GetInt32(5), h, s, reader.GetInt32(6), r);
                 }
-                return ret ;
+                reader.Close();
+                return data;
             }
         }
 
+        //INSERT 3.1
         public void Insert(Deti deti)
         {
             using (db.GetConnection())
@@ -134,6 +130,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
+        //UPDATE 3.3
         public void Update(Deti deti)
         {
             using (db.GetConnection())
@@ -154,6 +151,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
+        //NejpocetnejsiAkce 3.5
         public List<Tuple<int, string, int, int>> NejpocetnejsiAkce()
         {
             using (db.GetConnection())
@@ -184,7 +182,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //REMOVE FROM - UPDATE "stav" to -1
+        //REMOVE FROM - UPDATE "stav" to -1 3.2
         public void Delete(Deti deti)
         {
             using (db.GetConnection())

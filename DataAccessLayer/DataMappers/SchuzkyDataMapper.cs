@@ -21,6 +21,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             vdm = new VedouciDataMapper();
         }
 
+        //SelectAll 5.4
         public List<Schuzky> SelectAll()
         {
             using (db.GetConnection())
@@ -70,6 +71,7 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
+        //SelectWithDeti 5.5
         public List<Tuple<Deti,Schuzky>> SelectWithDeti()
         {
             using (db.GetConnection())
@@ -95,57 +97,44 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             }
         }
 
-        //INSERT OR UPDATE
-        public void Save(Schuzky schuzky)
+        //INSERT OR 5.1
+        public void Insert(Schuzky schuzky)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
-                OracleCommand select = db.CreateCommand("SELECT sid,nazev_druziny, pocet_deti, datum_konani, vedouci_vid FROM Schuzky WHERE sid = :sid AND rownum = 1");
-
-                select.Parameters.AddWithValue(":ID", schuzky.Sid);
-
-                var reader = select.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    OracleCommand command = db.CreateCommand("UPDATE Schuzky SET Nazev = :Nazev_druziny, pocet_deti = :pocet_deti, datum_konani = :datum_konani, vedouci_vid = :vedouci_vid WHERE sid = :sid");
-                    command.Parameters.AddWithValue(":sid", schuzky.Sid);
-                    command.Parameters.AddWithValue(":Nazev_druziny", schuzky.Nazev);
-                    command.Parameters.AddWithValue(":pocet_deti", schuzky.Pocet_Deti);
-                    command.Parameters.AddWithValue(":datum_konani", schuzky.Datum_konani);
-                    command.Parameters.AddWithValue(":vedouci_vid", schuzky.Vedouci_vid.Vid);
-
-                    command.ExecuteNonQuery();
-                }
-                else
-                {
-                    OracleCommand command = db.CreateCommand("INSERT INTO Schuzky (sid, Nazev, pocet_deti, datum_konani, vedouci_vid) VALUES (:sid, :Nazev_druziny, :pocet_deti, :datum_konani, :vedouci_vid)");
-                    command.Parameters.AddWithValue(":sid", schuzky.Sid);
-                    command.Parameters.AddWithValue(":Nazev_druziny", schuzky.Nazev);
-                    command.Parameters.AddWithValue(":pocet_deti", schuzky.Pocet_Deti);
-                    command.Parameters.AddWithValue(":datum_konani", schuzky.Datum_konani);
-                    command.Parameters.AddWithValue(":vedouci_vid", schuzky.Vedouci_vid.Vid);
-
-                    command.ExecuteNonQuery();
-                }
-
-            }
-        }
-
-        //REMOVE FROM
-        public void Delete(Schuzky schuzky)
-        {
-            using (db.GetConnection())
-            {
-                db.Connect();
-                OracleCommand command = db.CreateCommand("DELETE FROM Schuzky WHERE sid = :sid");
+                OracleCommand command = db.CreateCommand("INSERT INTO Schuzky (sid, Nazev, pocet_deti, datum_konani, vedouci_vid) VALUES (:sid, :Nazev_druziny, :pocet_deti, :datum_konani, :vedouci_vid)");
                 command.Parameters.AddWithValue(":sid", schuzky.Sid);
+                command.Parameters.AddWithValue(":Nazev_druziny", schuzky.Nazev);
+                command.Parameters.AddWithValue(":pocet_deti", schuzky.Pocet_Deti);
+                command.Parameters.AddWithValue(":datum_konani", schuzky.Datum_konani);
+                command.Parameters.AddWithValue(":vedouci_vid", schuzky.Vedouci_vid.Vid);
 
                 command.ExecuteNonQuery();
             }
         }
+
+
+        //UPDATE 5.3
+        public void Update(Schuzky schuzky)
+        {
+            using (db.GetConnection())
+            {
+                db.Connect();
+
+                OracleCommand command = db.CreateCommand("UPDATE Schuzky SET Nazev = :Nazev_druziny, pocet_deti = :pocet_deti, datum_konani = :datum_konani, vedouci_vid = :vedouci_vid WHERE sid = :sid");
+                command.Parameters.AddWithValue(":sid", schuzky.Sid);
+                command.Parameters.AddWithValue(":Nazev_druziny", schuzky.Nazev);
+                command.Parameters.AddWithValue(":pocet_deti", schuzky.Pocet_Deti);
+                command.Parameters.AddWithValue(":datum_konani", schuzky.Datum_konani);
+                command.Parameters.AddWithValue(":vedouci_vid", schuzky.Vedouci_vid.Vid);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        //DELETE NOT USED! 5.2
 
         public void ExportToCSV(string path)
         {
