@@ -14,13 +14,15 @@ namespace VIS_Desktop
     public partial class MainForm : Form
     {
         public String username;
+        public int id;
         private String Role = "Administrator";
         AkceServices ac;
 
-        public MainForm(Login l)
+        public MainForm(Login l, int id)
         {
             InitializeComponent();
-            
+
+            this.id = id;
 
             refreshListBox();
             refreshSignedOn();
@@ -79,12 +81,11 @@ namespace VIS_Desktop
                 }
                 if (Possible)
                 {
-                    checkedItems += Item.ToString().Substring(0, Item.ToString().IndexOf("\t")) + ";";
+                    ac.SignMeOnEvent(Int32.Parse(Item.ToString().Substring(0, Item.ToString().IndexOf("\t"))), this.id);
                 }
             }
-            //MessageBox.Show(checkedItems);
-            ac.SignMeOnEvent(checkedItems, username);
             refreshListBox();
+            refreshSignedOn();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -115,10 +116,16 @@ namespace VIS_Desktop
         public void refreshSignedOn()
         {
             checkedListBoxSignedOn.Items.Clear();
-            List<string> signedOn = ac.getSignedOn(username);
-            for(int i =0; i< signedOn.Count; i++)
+            List<int> signedOn = ac.getSignedOn(this.id);
+            for(int i = 0; i< signedOn.Count; i++)
             {
-                checkedListBoxSignedOn.Items.Add(signedOn.ElementAt(i));
+                foreach(var akce in ac.all)
+                {
+                    if(akce.Aid == signedOn.ElementAt(i))
+                    {
+                        checkedListBoxSignedOn.Items.Add(akce.Aid + "\t" + akce.Nazev + "\t"  + (akce.Cena == null ? akce.Cena : 0) + "\t" + akce.Datum_konani.ToString());
+                    }
+                }
             }
         }
 
@@ -127,10 +134,10 @@ namespace VIS_Desktop
             string checkedItems = string.Empty;
             foreach (object Item in checkedListBoxSignedOn.CheckedItems)
             {
-                checkedItems += Item.ToString().Substring(0, Item.ToString().IndexOf("\t")) + ";";
+                int itemId = Int32.Parse(Item.ToString().Substring(0, Item.ToString().IndexOf("\t")));
+                ac.RemoveFromEvent(itemId, this.id);
             }
             //MessageBox.Show(checkedItems);
-            ac.RemoveFromEvent(checkedItems, username);
             refreshSignedOn();
         }
 
@@ -158,6 +165,34 @@ namespace VIS_Desktop
             {
                 ac.Save();
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelSigned_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDiteBecomeVed_Click(object sender, EventArgs e)
+        {
+            DiteBecomeVed dbv = new DiteBecomeVed();
+            dbv.Show();
+        }
+
+        private void btnInfoOVed_Click(object sender, EventArgs e)
+        {
+            InfoOVed iov = new InfoOVed();
+            iov.Show();
+        }
+
+        private void btnNejAkce_Click(object sender, EventArgs e)
+        {
+            NejAkce na = new NejAkce();
+            na.Show();
         }
     }
 }

@@ -49,6 +49,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiteBecomeVed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DiteBecomeVed.Designer.cs">
+      <DependentUpon>DiteBecomeVed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfoOVed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfoOVed.Designer.cs">
+      <DependentUpon>InfoOVed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NejAkce.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NejAkce.Designer.cs">
+      <DependentUpon>NejAkce.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewEvent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,11 +87,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DiteBecomeVed.resx">
+      <DependentUpon>DiteBecomeVed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfoOVed.resx">
+      <DependentUpon>InfoOVed.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NejAkce.resx">
+      <DependentUpon>NejAkce.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewEvent.resx">
       <DependentUpon>NewEvent.cs</DependentUpon>
@@ -105,6 +132,10 @@
     <ProjectReference Include="..\BussinessLayer\BussinessLayer.csproj">
       <Project>{7c6d1bc6-fbe4-4f87-9e54-b9da02138a35}</Project>
       <Name>BussinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{99e8a284-b5be-4e54-a558-fbf261d8d0e0}</Project>
+      <Name>DataAccessLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

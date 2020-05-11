@@ -28,6 +28,11 @@ namespace BussinessLayer.Services
             return null;
         }
 
+        public Tuple<string, string, string> VedouciSchuzkaDite(int p_vID)
+        {
+            return vdm.VedouciSchuzkaDite(p_vID);
+        }
+
         public List<Vedouci> GetAll()
         {
             return vdm.SelectAll();

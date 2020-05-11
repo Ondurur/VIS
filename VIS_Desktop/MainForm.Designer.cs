@@ -42,6 +42,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCSVExport = new System.Windows.Forms.Button();
             this.btnCustomSQL = new System.Windows.Forms.Button();
+            this.btnDiteBecomeVed = new System.Windows.Forms.Button();
+            this.btnInfoOVed = new System.Windows.Forms.Button();
+            this.btnNejAkce = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,23 +53,24 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(28, 83);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 13);
+            this.label1.Size = new System.Drawing.Size(100, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Upcoming Events:";
+            this.label1.Text = "Nadcházejicí akce:";
             // 
             // labelSigned
             // 
             this.labelSigned.AutoSize = true;
-            this.labelSigned.Location = new System.Drawing.Point(690, 9);
+            this.labelSigned.Location = new System.Drawing.Point(779, 9);
             this.labelSigned.Name = "labelSigned";
-            this.labelSigned.Size = new System.Drawing.Size(43, 13);
+            this.labelSigned.Size = new System.Drawing.Size(54, 13);
             this.labelSigned.TabIndex = 2;
-            this.labelSigned.Text = "Signed:";
+            this.labelSigned.Text = "Přihlášen:";
+            this.labelSigned.Click += new System.EventHandler(this.labelSigned_Click);
             // 
             // labelRole
             // 
             this.labelRole.AutoSize = true;
-            this.labelRole.Location = new System.Drawing.Point(690, 35);
+            this.labelRole.Location = new System.Drawing.Point(779, 35);
             this.labelRole.Name = "labelRole";
             this.labelRole.Size = new System.Drawing.Size(32, 13);
             this.labelRole.TabIndex = 3;
@@ -74,11 +78,11 @@
             // 
             // btnAddEvent
             // 
-            this.btnAddEvent.Location = new System.Drawing.Point(28, 48);
+            this.btnAddEvent.Location = new System.Drawing.Point(6, 48);
             this.btnAddEvent.Name = "btnAddEvent";
-            this.btnAddEvent.Size = new System.Drawing.Size(70, 23);
+            this.btnAddEvent.Size = new System.Drawing.Size(119, 23);
             this.btnAddEvent.TabIndex = 4;
-            this.btnAddEvent.Text = "Add Event";
+            this.btnAddEvent.Text = "Přidat akci";
             this.btnAddEvent.UseVisualStyleBackColor = true;
             this.btnAddEvent.Visible = false;
             this.btnAddEvent.Click += new System.EventHandler(this.btnAddEvent_Click);
@@ -89,7 +93,7 @@
             this.btnEventSignIn.Name = "btnEventSignIn";
             this.btnEventSignIn.Size = new System.Drawing.Size(126, 23);
             this.btnEventSignIn.TabIndex = 5;
-            this.btnEventSignIn.Text = "Sign in to events";
+            this.btnEventSignIn.Text = "Přihlásit mě na akce";
             this.btnEventSignIn.UseVisualStyleBackColor = true;
             this.btnEventSignIn.Click += new System.EventHandler(this.btnEventSignIn_Click);
             // 
@@ -98,7 +102,7 @@
             this.eventsListBox.FormattingEnabled = true;
             this.eventsListBox.Location = new System.Drawing.Point(31, 102);
             this.eventsListBox.Name = "eventsListBox";
-            this.eventsListBox.Size = new System.Drawing.Size(302, 259);
+            this.eventsListBox.Size = new System.Drawing.Size(380, 259);
             this.eventsListBox.TabIndex = 7;
             // 
             // btnChangeInf
@@ -107,12 +111,12 @@
             this.btnChangeInf.Name = "btnChangeInf";
             this.btnChangeInf.Size = new System.Drawing.Size(119, 23);
             this.btnChangeInf.TabIndex = 8;
-            this.btnChangeInf.Text = "Change Information";
+            this.btnChangeInf.Text = "Změnit informace";
             this.btnChangeInf.UseVisualStyleBackColor = true;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(258, 78);
+            this.btnRefresh.Location = new System.Drawing.Point(336, 73);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 9;
@@ -123,35 +127,38 @@
             // checkedListBoxSignedOn
             // 
             this.checkedListBoxSignedOn.FormattingEnabled = true;
-            this.checkedListBoxSignedOn.Location = new System.Drawing.Point(348, 102);
+            this.checkedListBoxSignedOn.Location = new System.Drawing.Point(417, 102);
             this.checkedListBoxSignedOn.Name = "checkedListBoxSignedOn";
-            this.checkedListBoxSignedOn.Size = new System.Drawing.Size(302, 259);
+            this.checkedListBoxSignedOn.Size = new System.Drawing.Size(359, 259);
             this.checkedListBoxSignedOn.TabIndex = 10;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(363, 83);
+            this.label2.Location = new System.Drawing.Point(432, 83);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(112, 13);
+            this.label2.Size = new System.Drawing.Size(135, 13);
             this.label2.TabIndex = 11;
-            this.label2.Text = "Your signed in events:";
+            this.label2.Text = "Jsi přihlášený na tyto akce:";
             // 
             // btnRemovePerson
             // 
-            this.btnRemovePerson.Location = new System.Drawing.Point(348, 367);
+            this.btnRemovePerson.Location = new System.Drawing.Point(417, 367);
             this.btnRemovePerson.Name = "btnRemovePerson";
             this.btnRemovePerson.Size = new System.Drawing.Size(126, 23);
             this.btnRemovePerson.TabIndex = 12;
-            this.btnRemovePerson.Text = "Remove me from event";
+            this.btnRemovePerson.Text = "Odebrat mě z akcí:";
             this.btnRemovePerson.UseVisualStyleBackColor = true;
             this.btnRemovePerson.Click += new System.EventHandler(this.btnRemovePerson_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnNejAkce);
+            this.groupBox1.Controls.Add(this.btnInfoOVed);
+            this.groupBox1.Controls.Add(this.btnDiteBecomeVed);
             this.groupBox1.Controls.Add(this.btnChangeInf);
             this.groupBox1.Controls.Add(this.btnAddEvent);
-            this.groupBox1.Location = new System.Drawing.Point(693, 65);
+            this.groupBox1.Location = new System.Drawing.Point(782, 65);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(138, 373);
             this.groupBox1.TabIndex = 13;
@@ -160,11 +167,11 @@
             // 
             // btnCSVExport
             // 
-            this.btnCSVExport.Location = new System.Drawing.Point(559, 367);
+            this.btnCSVExport.Location = new System.Drawing.Point(685, 367);
             this.btnCSVExport.Name = "btnCSVExport";
             this.btnCSVExport.Size = new System.Drawing.Size(91, 23);
             this.btnCSVExport.TabIndex = 14;
-            this.btnCSVExport.Text = "Export to CSV";
+            this.btnCSVExport.Text = "Export CSV";
             this.btnCSVExport.UseVisualStyleBackColor = true;
             this.btnCSVExport.Click += new System.EventHandler(this.btnCSVExport_Click);
             // 
@@ -178,11 +185,41 @@
             this.btnCustomSQL.UseVisualStyleBackColor = true;
             this.btnCustomSQL.Click += new System.EventHandler(this.btnCustomSQL_Click);
             // 
+            // btnDiteBecomeVed
+            // 
+            this.btnDiteBecomeVed.Location = new System.Drawing.Point(6, 77);
+            this.btnDiteBecomeVed.Name = "btnDiteBecomeVed";
+            this.btnDiteBecomeVed.Size = new System.Drawing.Size(119, 23);
+            this.btnDiteBecomeVed.TabIndex = 9;
+            this.btnDiteBecomeVed.Text = "Dítě->vedoucí";
+            this.btnDiteBecomeVed.UseVisualStyleBackColor = true;
+            this.btnDiteBecomeVed.Click += new System.EventHandler(this.btnDiteBecomeVed_Click);
+            // 
+            // btnInfoOVed
+            // 
+            this.btnInfoOVed.Location = new System.Drawing.Point(6, 106);
+            this.btnInfoOVed.Name = "btnInfoOVed";
+            this.btnInfoOVed.Size = new System.Drawing.Size(119, 23);
+            this.btnInfoOVed.TabIndex = 10;
+            this.btnInfoOVed.Text = "Info o vedoucím";
+            this.btnInfoOVed.UseVisualStyleBackColor = true;
+            this.btnInfoOVed.Click += new System.EventHandler(this.btnInfoOVed_Click);
+            // 
+            // btnNejAkce
+            // 
+            this.btnNejAkce.Location = new System.Drawing.Point(6, 135);
+            this.btnNejAkce.Name = "btnNejAkce";
+            this.btnNejAkce.Size = new System.Drawing.Size(119, 38);
+            this.btnNejAkce.TabIndex = 11;
+            this.btnNejAkce.Text = "Vyhledej dítě na nejpočetnější akci";
+            this.btnNejAkce.UseVisualStyleBackColor = true;
+            this.btnNejAkce.Click += new System.EventHandler(this.btnNejAkce_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 450);
+            this.ClientSize = new System.Drawing.Size(932, 450);
             this.Controls.Add(this.btnCustomSQL);
             this.Controls.Add(this.btnCSVExport);
             this.Controls.Add(this.groupBox1);
@@ -197,6 +234,7 @@
             this.Controls.Add(this.label1);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -219,5 +257,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnCSVExport;
         private System.Windows.Forms.Button btnCustomSQL;
+        private System.Windows.Forms.Button btnDiteBecomeVed;
+        private System.Windows.Forms.Button btnNejAkce;
+        private System.Windows.Forms.Button btnInfoOVed;
     }
 }

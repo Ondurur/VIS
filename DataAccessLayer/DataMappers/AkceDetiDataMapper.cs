@@ -105,20 +105,20 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
         //UPDATE not needed on this datamapper 9.3
 
         //DELETE 9.2
-        public void Delete(AkceDeti akcedeti)
+        public void Delete(int aid, int did)
         {
             using (db.GetConnection())
             {
                 db.Connect();
 
                 OracleCommand command = db.CreateCommand("DELETE FROM akcedeti ad WHERE ad.akce_aid = :aid AND ad.deti_did = :did");
-                command.Parameters.AddWithValue(":aid", akcedeti.Akce_aid);
-                command.Parameters.AddWithValue(":did", akcedeti.Deti_did);
+                command.Parameters.AddWithValue(":aid", aid);
+                command.Parameters.AddWithValue(":did", did);
 
                 command.ExecuteNonQuery();
             }
         }
-
+        
         public void ExportToCSV(string path)
         {
             using (db.GetConnection())

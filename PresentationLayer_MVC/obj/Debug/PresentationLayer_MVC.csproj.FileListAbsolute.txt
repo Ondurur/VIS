@@ -85,10 +85,7 @@ C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\obj\Debug\Pre
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\obj\Debug\PresentationLayer_MVC.csproj.CopyComplete
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\obj\Debug\PresentationLayer_MVC.dll
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\obj\Debug\PresentationLayer_MVC.pdb
-C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\bin\BussinessLayer.exe
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\bin\DataAccessLayer.exe
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\bin\Oracle.ManagedDataAccess.dll
-C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\bin\BussinessLayer.pdb
-C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\bin\BussinessLayer.exe.config
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\bin\DataAccessLayer.pdb
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\PresentationLayer_MVC\bin\DataAccessLayer.exe.config

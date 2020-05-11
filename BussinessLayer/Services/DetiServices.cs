@@ -45,10 +45,26 @@ namespace BussinessLayer.Services
             return null;
         }
 
+        public List<Tuple<int, string, int, int>> NejpocetnejsiAkce()
+        {
+            return detiDataMapper.NejpocetnejsiAkce();
+        }
+
         public bool SaveDite(int did, string jmeno, string pw, string nickname, DateTime datumN, string kontaktNR, int hodnostD, int schuzkyD)
         {
             DetiDataMapper ddm = new DetiDataMapper();
             return true;
+        }
+
+        public List<Deti> GetAll()
+        {
+            return detiDataMapper.SelectAll();
+        }
+
+        public void DiteBecomeVedouci(int p_dID)
+        {
+            VedouciDataMapper vdm = new VedouciDataMapper();
+            vdm.DiteBecomeVedouci(p_dID);
         }
 
     }

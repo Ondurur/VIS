@@ -38,3 +38,6 @@ C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\VIS_Desktop\obj\Debug\PresentationL
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\VIS_Desktop\obj\Debug\PresentationLayer_Desktop.csproj.CopyComplete
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\VIS_Desktop\obj\Debug\VIS_Desktop.exe
 C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\VIS_Desktop\obj\Debug\VIS_Desktop.pdb
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\VIS_Desktop\obj\Debug\VIS_Desktop.NejAkce.resources
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\VIS_Desktop\obj\Debug\VIS_Desktop.InfoOVed.resources
+C:\Users\th3bl\OneDrive\Dokumenty\GitHub\VIS\VIS_Desktop\obj\Debug\VIS_Desktop.DiteBecomeVed.resources

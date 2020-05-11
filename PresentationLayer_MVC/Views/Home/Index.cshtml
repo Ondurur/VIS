@@ -4,7 +4,13 @@
 }
 
 <div class="row" style="border:1px solid black;">
-    <h4>Upcoming Events Table</h4>
+    <h4>Tabulka akci</h4>
+    @if (Model.Events.Count == 0)
+    {
+        <div>Neexistuje nadchazejici akce</div>
+    }
+    else
+    {
     <table>
         <tr>
             <th>Name</th>
@@ -22,17 +28,18 @@
             }
 
             <tr>
-                <td width = "30%">@events.Nazev</td>
+                <td width="30%">@events.Nazev</td>
                 <td width="30%">@cena.ToString()</td>
-                <td width = "30%">@events.DatumK.ToShortDateString()</td>
-                <td width = "30%">@events.VedouciA.Jmeno</td>
+                <td width="30%">@events.Datum_konani.ToShortDateString()</td>
+                <td width="30%">@events.Vedouci_vid.Jmeno</td>
             </tr>
         }
     </table>
+    }
 </div>
 
 <div class="row" style="border:1px solid black;">
-    <h4>Leaders Table</h4>
+    <h4>Tabulka Vedoucich</h4>
     <table>
         <tr>
             <th>Name</th>
@@ -45,7 +52,7 @@
 
             <tr>
                 <td width = "30%">@events.Jmeno</td>
-                <td width = "30%">@events.DatumN.ToShortDateString()</td>
+                <td width = "30%">@events.Datum_narozeni.ToShortDateString()</td>
                 <td width = "30%">@events.Kontakt</td>
             </tr>
         }
@@ -53,19 +60,19 @@
 </div>
 
 <div class="row" style="border:1px solid black;">
-    <h4>Scheduled Meetings Table</h4>
+    <h4>Tabulka schuzek</h4>
     <table>
         <tr>
             <th>Name</th>
-            <th>Child Count</th>
-            <th>Day of Week</th>
-            <th>Responsible</th>
+            <th>Pocet Deti</th>
+            <th>Den v tydnu</th>
+            <th>Odpovedny vedouci</th>
         </tr>
         @for (int i = 0; i < Model.Scheduled.Count; i++)
         {
             var events = Model.Scheduled[i];
             string DenVTydnu = "";
-            switch (events.DatumK)
+            switch (events.Datum_konani)
             {
                 case 1:
                     DenVTydnu = "Pondeli";
@@ -94,9 +101,9 @@
 
             <tr>
                 <td width = "30%">@events.Nazev</td>
-                <td width="30%">@events.PocetD.ToString()</td>
+                <td width="30%">@events.Pocet_Deti.ToString()</td>
                 <td width = "30%">@DenVTydnu</td>
-                <td width = "30%">@events.VedouciS.Jmeno</td>
+                <td width = "30%">@events.Vedouci_vid.Jmeno</td>
             </tr>
         }
     </table>

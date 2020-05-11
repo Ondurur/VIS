@@ -83,10 +83,9 @@ namespace VIS_Desktop.DataAccessLayer.DataMappers
             using (db.GetConnection())
             {
                 db.Connect();
-                OracleCommand command = db.CreateCommand("SELECT did, Jmeno, Nickname, Heslo, Datum_Narozeni, stav, hodnosti_hid, schuzky_sid, reg_akci, rodic_rid FROM Deti WHERE (Nickname = :nick OR Jmeno = :jmeno) AND Heslo = :heslo AND rownum = 1");
+                OracleCommand command = db.CreateCommand("SELECT d.did, d.Jmeno, d.Nickname, d.Heslo, d.Datum_Narozeni, d.stav, d.reg_akci,h.hid, h.nazev, h.minimalni_vek, s.sid, s.nazev_druziny, s.pocet_deti, s.datum_konani,v.vid, v.jmeno, v.heslo, v.datum_narozeni, v.kontakt,f.fid, f.nazev, f.povinnosti,r.rid, r.jmeno, r.login, r.heslo, r.kontakt FROM Deti d LEFT JOIN hodnosti h ON h.hid = d.hodnosti_hid LEFT JOIN Schuzky s ON s.sid = d.schuzky_sid LEFT JOIN vedouci v ON v.vid = s.vedouci_vid LEFT JOIN funkce f ON f.fid = v.funkce_fid LEFT JOIN rodic r ON r.rid = d.rodic_rid WHERE d.Nickname = :nick AND d.Heslo = :heslo AND rownum = 1 AND d.stav = 0");
 
                 command.Parameters.AddWithValue(":nick", nick);
-                command.Parameters.AddWithValue(":jmeno", nick);
                 command.Parameters.AddWithValue(":heslo", heslo);
 
                 var reader = command.ExecuteReader();

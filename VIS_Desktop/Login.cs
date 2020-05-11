@@ -15,6 +15,7 @@ namespace VIS_Desktop
     {
         public String username;
         private String pw;
+        public int id;
 
         public Login()
         {
@@ -56,22 +57,26 @@ namespace VIS_Desktop
         {
             DetiServices ds = new DetiServices();
             VedouciServices vs = new VedouciServices();
-
-            if(ds.LoginAs(username, pw)!=null)
+            Tuple<int, string, string> l;
+            l = ds.LoginAs(username, pw);
+            if (l !=null)
             {
-                this.username = ds.LoginAs(username, pw).Item2;
-                MainForm mf = new MainForm(this);
+                
+                this.username = l.Item2;
+                int id = l.Item1;
+                MainForm mf = new MainForm(this, id);
                 mf.Activate();
                 mf.Show();
                 mf.labelSigned.Text = "Signed as: " + ds.LoginAs(username,pw).Item2;
                 mf.labelRole.Text = "Role: " + ds.LoginAs(username,pw).Item3;
-                //MessageBox.Show(ds.LoginAs(username, pw).Item3);
 
                 return true;
             }
-            if(vs.LoginAs(username, pw) != null)
+            l = vs.LoginAs(username, pw);
+            if (l != null)
             {
-                MainForm mf = new MainForm(this);
+                int id = l.Item1;
+                MainForm mf = new MainForm(this, id);
                 mf.Activate();
                 mf.Show();
                 mf.labelSigned.Text = "Signed as: " + username;

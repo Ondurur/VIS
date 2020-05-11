@@ -1,24 +1,24 @@
-﻿using BussinessLayer.Services;
-using PresentationLayer_MVC.Models;
+﻿using PresentationLayer_MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VIS_Desktop.DataAccessLayer.DataMappers;
 
 namespace PresentationLayer_MVC.Controllers
 {
     public class HomeController : Controller
     {
-        AkceServices ac = new AkceServices();
-        VedouciServices vc = new VedouciServices();
-        SchuzkyServices sc = new SchuzkyServices();
+        AkceDataMapper adm = new AkceDataMapper();
+        VedouciDataMapper vdm = new VedouciDataMapper();
+        SchuzkyDataMapper sdm = new SchuzkyDataMapper();
 
         public ActionResult Index()
         {
-            var Akce = ac.all;
-            var Vedouci = vc.GetAll();
-            var Schuzky = sc.GetAll();
+            var Akce = adm.SelectUpcoming();
+            var Vedouci = vdm.SelectAll();
+            var Schuzky = sdm.SelectAll();
 
             return View("Index", new IndexViewModel { Events = Akce, Leaders = Vedouci, Scheduled = Schuzky});
         }

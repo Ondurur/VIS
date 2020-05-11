@@ -11,6 +11,7 @@ namespace BussinessLayer.Services
     public class AkceServices
     {
         AkceDataMapper adm;
+        AkceDetiDataMapper addm;
         VedouciDataMapper vdm;
         HodnostiDataMapper hdm;
         public List<Akce> all;
@@ -35,6 +36,7 @@ namespace BussinessLayer.Services
             restricts = new int[all.Count];
             vdm = new VedouciDataMapper();
             hdm = new HodnostiDataMapper();
+            addm = new AkceDetiDataMapper();
 
             for (int i = 0; i < all.Count; i++)
             {
@@ -57,7 +59,7 @@ namespace BussinessLayer.Services
                 {
                     return false;
                 }
-                else if(Responsible == this.resp[i])
+                else if (Responsible == this.resp[i])
                 {
                     resp = true;
                 }
@@ -82,7 +84,7 @@ namespace BussinessLayer.Services
             prvni.Reverse();
             druhy.Reverse();
 
-            if(prvni == druhy)
+            if (prvni == druhy)
             {
                 return false;
             }
@@ -91,72 +93,43 @@ namespace BussinessLayer.Services
 
         public bool NewEvent()
         {
-            adm.Save(newEvent);
+            adm.Insert(newEvent);
             return true;
         }
 
-        public bool SignMeOnEvent(string events, string Name)
+        public bool SignMeOnEvent(int aid, int did)
         {
-            //string[] IDs = events.Substring(0,events.Length-1).Split(';');
-
-            //for(int i = 0; i< IDs.Length; i++)
-            //{
-            //    int j = Convert.ToInt32(IDs[i]);
-            //    Akce tempAkce = adm.SelectById(j);
-            //    tempAkce.detiList += Name + ";";
-            //    adm.Save(tempAkce);
-            //}
+            addm.AddAkceToDite(did, aid);
             return true;
         }
 
-        public bool RemoveFromEvent(string events,string Name)
+        public bool RemoveFromEvent(int aid, int did)
         {
-            //string[] IDs = events.Substring(0, events.Length - 1).Split(';');
-
-            //for (int i = 0; i < IDs.Length; i++)
-            //{
-            //    int j = Convert.ToInt32(IDs[i]);
-            //    Akce tempAkce = adm.SelectById(j);
-            //    int zacatek = tempAkce.detiList.IndexOf(Name[0]);
-            //    string tempStr = tempAkce.detiList.Remove(zacatek, Name.Length);
-            //    tempAkce.detiList = tempStr;
-            //    adm.Save(tempAkce);
-            //}
+            addm.Delete(aid, did);
             return true;
         }
 
-        public List<string> getSignedOn(string username)
-        {/*
-            List<string> ret = new List<string>();
-            foreach (Akce a in all)
+        public List<int> getSignedOn(int did)
+        {
+            List<AkceDeti> tmp = addm.SelectByDetiId(did);
+            List<int> ret = new List<int>();
+
+            for(int i = 0; i< tmp.Count(); i++)
             {
-                int count = 0;
-                foreach (char c in a.detiList)
-                    if (c == ';') count++;
-                for (int i = 0; i < count; i++)
-                {
-                    int index = a.detiList.IndexOf(';');
-                    if (username == a.detiList.Substring(0, index))
-                    {
-                        ret.Add(a.aid + "\t" + a.Nazev + "\t" + a.Cena + "\t" + a.datum_konani.ToString());
-                    }
-                    else
-                    {
-                        a.detiList = a.detiList.Substring(index + 1);
-                    }
-                }
-            }*/
-            return null;
+                ret.Add(tmp[i].Akce_aid);
+            }
+            return ret;
         }
 
         public void Save()
         {
-            //for(int i = 0; i< 5; i++)
-            //{
-            //    Akce temp = all.ElementAt(i);
-            //    temp.detiList = "";
-            //    adm.Save(temp);
-            //}
+            /*for (int i = 0; i < 5; i++)
+            {
+                Akce temp = all.ElementAt(i);
+                temp.detiList = "";
+                adm.Save(temp);
+            }*/
+            return;
         }
 
         public bool ExportCSV(string lines)
@@ -167,7 +140,7 @@ namespace BussinessLayer.Services
                 l.WriteMessage(lines);
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
