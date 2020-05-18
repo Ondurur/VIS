@@ -35,13 +35,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxEventName = new System.Windows.Forms.TextBox();
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.textBoxResponsible = new System.Windows.Forms.TextBox();
             this.comboBoxRankRestriction = new System.Windows.Forms.ComboBox();
             this.numericUpDownPrice = new System.Windows.Forms.NumericUpDown();
             this.btnCheck = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.errorLabel = new System.Windows.Forms.Label();
+            this.comboBoxResponsible = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrice)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,9 +51,9 @@
             this.label1.ForeColor = System.Drawing.Color.Red;
             this.label1.Location = new System.Drawing.Point(53, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Name:";
+            this.label1.Text = "Název Akce:";
             // 
             // label2
             // 
@@ -61,37 +61,37 @@
             this.label2.ForeColor = System.Drawing.Color.Red;
             this.label2.Location = new System.Drawing.Point(53, 73);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Date:";
+            this.label2.Text = "Datum:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(53, 160);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Price:";
+            this.label3.Text = "Cena:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(53, 99);
+            this.label4.Location = new System.Drawing.Point(53, 103);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(68, 13);
+            this.label4.Size = new System.Drawing.Size(89, 13);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Responsible:";
+            this.label4.Text = "Odpovědný ved.:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(53, 130);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 13);
+            this.label5.Size = new System.Drawing.Size(96, 13);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Rank restriction:";
+            this.label5.Text = "Omezení hodnosti:";
             // 
             // textBoxEventName
             // 
@@ -106,14 +106,7 @@
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker.TabIndex = 6;
-            this.dateTimePicker.Value = new System.DateTime(2019, 12, 1, 0, 0, 0, 0);
-            // 
-            // textBoxResponsible
-            // 
-            this.textBoxResponsible.Location = new System.Drawing.Point(153, 100);
-            this.textBoxResponsible.Name = "textBoxResponsible";
-            this.textBoxResponsible.Size = new System.Drawing.Size(200, 20);
-            this.textBoxResponsible.TabIndex = 7;
+            this.dateTimePicker.Value = new System.DateTime(2020, 5, 18, 0, 0, 0, 0);
             // 
             // comboBoxRankRestriction
             // 
@@ -142,7 +135,7 @@
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(75, 23);
             this.btnCheck.TabIndex = 10;
-            this.btnCheck.Text = "Check";
+            this.btnCheck.Text = "Zkontroluj!";
             this.btnCheck.UseVisualStyleBackColor = true;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
@@ -153,7 +146,7 @@
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(75, 23);
             this.btnAccept.TabIndex = 11;
-            this.btnAccept.Text = "New Event";
+            this.btnAccept.Text = "Vytvoř akci!";
             this.btnAccept.UseVisualStyleBackColor = true;
             this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
             // 
@@ -162,9 +155,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(13, 13);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(131, 13);
+            this.label6.Size = new System.Drawing.Size(133, 13);
             this.label6.TabIndex = 12;
-            this.label6.Text = "Red entries are mandatory";
+            this.label6.Text = "Červené věci jsou povinné";
             // 
             // errorLabel
             // 
@@ -179,18 +172,26 @@
             this.errorLabel.Text = "Error Label";
             this.errorLabel.Visible = false;
             // 
+            // comboBoxResponsible
+            // 
+            this.comboBoxResponsible.FormattingEnabled = true;
+            this.comboBoxResponsible.Location = new System.Drawing.Point(153, 100);
+            this.comboBoxResponsible.Name = "comboBoxResponsible";
+            this.comboBoxResponsible.Size = new System.Drawing.Size(200, 21);
+            this.comboBoxResponsible.TabIndex = 14;
+            // 
             // NewEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(372, 252);
+            this.Controls.Add(this.comboBoxResponsible);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.numericUpDownPrice);
             this.Controls.Add(this.comboBoxRankRestriction);
-            this.Controls.Add(this.textBoxResponsible);
             this.Controls.Add(this.dateTimePicker);
             this.Controls.Add(this.textBoxEventName);
             this.Controls.Add(this.label5);
@@ -215,12 +216,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxEventName;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
-        private System.Windows.Forms.TextBox textBoxResponsible;
         private System.Windows.Forms.ComboBox comboBoxRankRestriction;
         private System.Windows.Forms.NumericUpDown numericUpDownPrice;
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.ComboBox comboBoxResponsible;
     }
 }

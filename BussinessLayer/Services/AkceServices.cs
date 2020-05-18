@@ -68,7 +68,7 @@ namespace BussinessLayer.Services
             {
                 return resp;
             }
-            newEvent = new Akce(adm.SelectAll().Count, Name, dateTime, Price, vdm.SelectByName(Responsible), hdm.SelectById(Restrict), 300);
+            newEvent = new Akce(adm.SelectAll().Count + 1, Name, dateTime, Price, vdm.SelectByName(Responsible), hdm.SelectById(Restrict), 300);
             return true;
         }
 
@@ -144,6 +144,11 @@ namespace BussinessLayer.Services
             {
                 return false;
             }
+        }
+
+        public List<Hodnosti> GetHodnosti()
+        {
+            return hdm.SelectAll();
         }
     }
 }
