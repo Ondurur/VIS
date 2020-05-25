@@ -27,7 +27,10 @@ namespace VIS_Desktop
 
             for (int i = 0; i < all.Count(); i++)
             {
-                comboBoxDeti.Items.Add(all[i].Jmeno);
+                if(all[i].Stav == 0)
+                {
+                    comboBoxDeti.Items.Add(all[i].Jmeno);
+                }
             }
         }
 

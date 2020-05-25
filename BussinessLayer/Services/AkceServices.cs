@@ -50,26 +50,18 @@ namespace BussinessLayer.Services
 
         }
 
-        public bool checkNewEvent(string Name, DateTime dateTime, string Responsible, int Price, int Restrict)
+        public string checkNewEvent(string Name, DateTime dateTime, string Responsible, int Price, int Restrict)
         {
-            bool resp = false;
+            newEvent = null;
             for (int i = 0; i < dateTimes.Length; i++)
             {
                 if (dateTime.DayOfYear == dateTimes[i].DayOfYear && dateTime.Year == dateTimes[i].Year)
                 {
-                    return false;
+                    return names[i] + ">" + dateTime.DayOfYear + ":" + dateTimes[i].DayOfYear + "&&" + dateTime.Year + ":" + dateTimes[i].Year;
                 }
-                else if (Responsible == this.resp[i])
-                {
-                    resp = true;
-                }
-            }
-            if (!resp)
-            {
-                return resp;
             }
             newEvent = new Akce(adm.SelectAll().Count + 1, Name, dateTime, Price, vdm.SelectByName(Responsible), hdm.SelectById(Restrict), 300);
-            return true;
+            return "true";
         }
 
         public bool checkDateCollision(object item, object registeredItem)

@@ -34,17 +34,16 @@
             this.btnAddEvent = new System.Windows.Forms.Button();
             this.btnEventSignIn = new System.Windows.Forms.Button();
             this.eventsListBox = new System.Windows.Forms.CheckedListBox();
-            this.btnChangeInf = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.checkedListBoxSignedOn = new System.Windows.Forms.CheckedListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnRemovePerson = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnNejAkce = new System.Windows.Forms.Button();
+            this.btnInfoOVed = new System.Windows.Forms.Button();
+            this.btnDiteBecomeVed = new System.Windows.Forms.Button();
             this.btnCSVExport = new System.Windows.Forms.Button();
             this.btnCustomSQL = new System.Windows.Forms.Button();
-            this.btnDiteBecomeVed = new System.Windows.Forms.Button();
-            this.btnInfoOVed = new System.Windows.Forms.Button();
-            this.btnNejAkce = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +77,7 @@
             // 
             // btnAddEvent
             // 
-            this.btnAddEvent.Location = new System.Drawing.Point(6, 48);
+            this.btnAddEvent.Location = new System.Drawing.Point(6, 19);
             this.btnAddEvent.Name = "btnAddEvent";
             this.btnAddEvent.Size = new System.Drawing.Size(119, 23);
             this.btnAddEvent.TabIndex = 4;
@@ -104,15 +103,6 @@
             this.eventsListBox.Name = "eventsListBox";
             this.eventsListBox.Size = new System.Drawing.Size(380, 259);
             this.eventsListBox.TabIndex = 7;
-            // 
-            // btnChangeInf
-            // 
-            this.btnChangeInf.Location = new System.Drawing.Point(6, 19);
-            this.btnChangeInf.Name = "btnChangeInf";
-            this.btnChangeInf.Size = new System.Drawing.Size(119, 23);
-            this.btnChangeInf.TabIndex = 8;
-            this.btnChangeInf.Text = "Změnit informace";
-            this.btnChangeInf.UseVisualStyleBackColor = true;
             // 
             // btnRefresh
             // 
@@ -156,7 +146,6 @@
             this.groupBox1.Controls.Add(this.btnNejAkce);
             this.groupBox1.Controls.Add(this.btnInfoOVed);
             this.groupBox1.Controls.Add(this.btnDiteBecomeVed);
-            this.groupBox1.Controls.Add(this.btnChangeInf);
             this.groupBox1.Controls.Add(this.btnAddEvent);
             this.groupBox1.Location = new System.Drawing.Point(782, 65);
             this.groupBox1.Name = "groupBox1";
@@ -164,6 +153,36 @@
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
+            // 
+            // btnNejAkce
+            // 
+            this.btnNejAkce.Location = new System.Drawing.Point(6, 106);
+            this.btnNejAkce.Name = "btnNejAkce";
+            this.btnNejAkce.Size = new System.Drawing.Size(119, 38);
+            this.btnNejAkce.TabIndex = 11;
+            this.btnNejAkce.Text = "Vyhledej dítě na nejpočetnější akci";
+            this.btnNejAkce.UseVisualStyleBackColor = true;
+            this.btnNejAkce.Click += new System.EventHandler(this.btnNejAkce_Click);
+            // 
+            // btnInfoOVed
+            // 
+            this.btnInfoOVed.Location = new System.Drawing.Point(6, 77);
+            this.btnInfoOVed.Name = "btnInfoOVed";
+            this.btnInfoOVed.Size = new System.Drawing.Size(119, 23);
+            this.btnInfoOVed.TabIndex = 10;
+            this.btnInfoOVed.Text = "Info o vedoucím";
+            this.btnInfoOVed.UseVisualStyleBackColor = true;
+            this.btnInfoOVed.Click += new System.EventHandler(this.btnInfoOVed_Click);
+            // 
+            // btnDiteBecomeVed
+            // 
+            this.btnDiteBecomeVed.Location = new System.Drawing.Point(6, 48);
+            this.btnDiteBecomeVed.Name = "btnDiteBecomeVed";
+            this.btnDiteBecomeVed.Size = new System.Drawing.Size(119, 23);
+            this.btnDiteBecomeVed.TabIndex = 9;
+            this.btnDiteBecomeVed.Text = "Dítě->vedoucí";
+            this.btnDiteBecomeVed.UseVisualStyleBackColor = true;
+            this.btnDiteBecomeVed.Click += new System.EventHandler(this.btnDiteBecomeVed_Click);
             // 
             // btnCSVExport
             // 
@@ -184,36 +203,6 @@
             this.btnCustomSQL.Text = "CustomSQL";
             this.btnCustomSQL.UseVisualStyleBackColor = true;
             this.btnCustomSQL.Click += new System.EventHandler(this.btnCustomSQL_Click);
-            // 
-            // btnDiteBecomeVed
-            // 
-            this.btnDiteBecomeVed.Location = new System.Drawing.Point(6, 77);
-            this.btnDiteBecomeVed.Name = "btnDiteBecomeVed";
-            this.btnDiteBecomeVed.Size = new System.Drawing.Size(119, 23);
-            this.btnDiteBecomeVed.TabIndex = 9;
-            this.btnDiteBecomeVed.Text = "Dítě->vedoucí";
-            this.btnDiteBecomeVed.UseVisualStyleBackColor = true;
-            this.btnDiteBecomeVed.Click += new System.EventHandler(this.btnDiteBecomeVed_Click);
-            // 
-            // btnInfoOVed
-            // 
-            this.btnInfoOVed.Location = new System.Drawing.Point(6, 106);
-            this.btnInfoOVed.Name = "btnInfoOVed";
-            this.btnInfoOVed.Size = new System.Drawing.Size(119, 23);
-            this.btnInfoOVed.TabIndex = 10;
-            this.btnInfoOVed.Text = "Info o vedoucím";
-            this.btnInfoOVed.UseVisualStyleBackColor = true;
-            this.btnInfoOVed.Click += new System.EventHandler(this.btnInfoOVed_Click);
-            // 
-            // btnNejAkce
-            // 
-            this.btnNejAkce.Location = new System.Drawing.Point(6, 135);
-            this.btnNejAkce.Name = "btnNejAkce";
-            this.btnNejAkce.Size = new System.Drawing.Size(119, 38);
-            this.btnNejAkce.TabIndex = 11;
-            this.btnNejAkce.Text = "Vyhledej dítě na nejpočetnější akci";
-            this.btnNejAkce.UseVisualStyleBackColor = true;
-            this.btnNejAkce.Click += new System.EventHandler(this.btnNejAkce_Click);
             // 
             // MainForm
             // 
@@ -249,7 +238,6 @@
         private System.Windows.Forms.Button btnAddEvent;
         private System.Windows.Forms.Button btnEventSignIn;
         private System.Windows.Forms.CheckedListBox eventsListBox;
-        private System.Windows.Forms.Button btnChangeInf;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.CheckedListBox checkedListBoxSignedOn;
         private System.Windows.Forms.Label label2;

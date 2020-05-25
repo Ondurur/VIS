@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BussinessLayer\BussinessLayer.csproj">
+      <Project>{7c6d1bc6-fbe4-4f87-9e54-b9da02138a35}</Project>
+      <Name>BussinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
       <Project>{99e8a284-b5be-4e54-a558-fbf261d8d0e0}</Project>
       <Name>DataAccessLayer</Name>

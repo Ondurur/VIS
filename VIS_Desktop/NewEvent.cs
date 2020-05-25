@@ -16,13 +16,15 @@ namespace VIS_Desktop
         AkceServices ac;
         List<DTO.Vedouci> allResp;
         List<DTO.Hodnosti> allHodn;
-        VedouciServices vs; 
+        VedouciServices vs;
+        MainForm mf;
 
-        public NewEvent()
+        public NewEvent(MainForm mainForm)
         {
             InitializeComponent();
             ac = new AkceServices();
             vs = new VedouciServices();
+            mf = mainForm;
 
             this.allResp = vs.GetAll();
             this.allHodn = ac.GetHodnosti();
@@ -45,23 +47,29 @@ namespace VIS_Desktop
         {
             btnAccept.Enabled = false;
             errorLabel.Visible = false;
-            int currHodnost = comboBoxRankRestriction.SelectedIndex;
-            if(textBoxEventName.Text.Length > 0)
+            int currHodnost = 1;
+            if (comboBoxRankRestriction.Text.Length > 0)
             {
-                if (ac.checkNewEvent(textBoxEventName.Text, dateTimePicker.Value, comboBoxResponsible.Text, Convert.ToInt32(numericUpDownPrice.Value), currHodnost))
+                currHodnost = comboBoxRankRestriction.SelectedIndex + 1;
+            }
+            if (textBoxEventName.Text.Length > 0)
+            {
+                if (ac.checkNewEvent(textBoxEventName.Text, dateTimePicker.Value, comboBoxResponsible.Text, Convert.ToInt32(numericUpDownPrice.Value), currHodnost) == "true" )
                 {
+                    errorLabel.Text = dateTimePicker.Value.ToString() + ":" + comboBoxResponsible.Text + ":" + currHodnost;
+                    //errorLabel.Visible = true;
                     btnAccept.Enabled = true;
                 }
                 else
                 {
-                    errorLabel.Text = "Date is colliding with another event";
+                    errorLabel.Text = "Datum koliduje s následujicím eventem v DB: " + ac.checkNewEvent(textBoxEventName.Text, dateTimePicker.Value, comboBoxResponsible.Text, Convert.ToInt32(numericUpDownPrice.Value), currHodnost);
                     errorLabel.Visible = true;
                 }
 
             }
-            else if(comboBoxResponsible.Text.Length <= 0)
+            else if(comboBoxResponsible.Text.Length <= 0 || comboBoxRankRestriction.Text.Length <= 0)
             {
-                errorLabel.Text = "Enter Event Name and Responsible Person";
+                errorLabel.Text = "Název a Odpovědný vedoucí nesmí být prázdné!";
                 errorLabel.Visible = true;
             }
 
@@ -71,6 +79,8 @@ namespace VIS_Desktop
         {
             if (ac.NewEvent())
             {
+                this.mf.refreshListBox();
+                this.mf.refreshSignedOn();
                 this.Close();
             }
             else

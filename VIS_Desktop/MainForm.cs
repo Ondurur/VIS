@@ -42,7 +42,6 @@ namespace VIS_Desktop
                     break;
 
                 case "Child":
-                    btnChangeInf.Visible = false;
                     btnCustomSQL.Visible = false;
                     break;
 
@@ -57,7 +56,7 @@ namespace VIS_Desktop
 
         private void btnAddEvent_Click(object sender, EventArgs e)
         {
-            NewEvent nw = new NewEvent();
+            NewEvent nw = new NewEvent(this);
             nw.Show();
         }
 
@@ -193,6 +192,11 @@ namespace VIS_Desktop
         {
             NejAkce na = new NejAkce();
             na.Show();
+        }
+
+        private void btnChangeInf_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

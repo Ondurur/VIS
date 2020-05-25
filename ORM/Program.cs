@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BussinessLayer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -239,6 +240,9 @@ namespace ORM
             {
                 Console.WriteLine(SelectAkceDeti[i].Akce_aid + "|" + SelectAkceDeti[i].Deti_did);
             }
+
+            Console.WriteLine( '\n');
+            
 
             Console.ReadLine();
         }
